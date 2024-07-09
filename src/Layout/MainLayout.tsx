@@ -6,6 +6,7 @@ import "../styles/background-outlet.css";
 import "../styles/antd-overwrite.css";
 import { Footer } from "antd/es/layout/layout";
 const { Header, Content, Sider } = Layout;
+import logo from "../assets/image/labOneLogo.png";
 
 const menuItems = [
   {
@@ -68,8 +69,8 @@ const MainLayout = () => {
           width={200}
         >
           <Link to="/">
-            <div className="pl-7 pt-2 h-[60px] flex items-center cursor-pointer">
-              <Image src="" alt="logo" />
+            <div className="pl-7 pt-2 !h-[80px] flex items-center cursor-pointer">
+              <Image preview={false} src={logo} alt="logo" className="!h-[80px]" />
             </div>
           </Link>
           <Menu
