@@ -3,6 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 import { CustomIcons } from "./CustomIcon/CustomIcons";
 import NavDropDown from "./NavDropdown";
 const { Header, Content, Sider } = Layout;
+import logo from "../assets/image/labOneLogo.png";
 
 const menuItems = [
   {
@@ -64,8 +65,8 @@ const MainLayout = () => {
         width={200}
       >
         <Link to="/">
-          <div className="pl-7 pt-2 h-[60px] flex items-center cursor-pointer">
-            <Image src="" alt="logo" />
+          <div className="pl-7 pt-2 !h-[80px] flex items-center cursor-pointer">
+            <Image preview={false} src={logo} alt="logo" className="!h-[80px]" />
           </div>
         </Link>
 
