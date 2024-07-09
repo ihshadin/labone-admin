@@ -8,7 +8,7 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <ProtectedRoute isAdmin={true}>
-        <MainLayout />
+        <MainLayout/>
       </ProtectedRoute>
     ),
     children: [
