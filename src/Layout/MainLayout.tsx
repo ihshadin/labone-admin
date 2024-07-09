@@ -2,6 +2,9 @@ import { Image, Layout, Menu } from "antd";
 import { Link, Outlet } from "react-router-dom";
 import { CustomIcons } from "./CustomIcon/CustomIcons";
 import NavDropDown from "./NavDropdown";
+import "../styles/background-outlet.css";
+import "../styles/antd-overwrite.css";
+import { Footer } from "antd/es/layout/layout";
 const { Header, Content, Sider } = Layout;
 import logo from "../assets/image/labOneLogo.png";
 
@@ -51,51 +54,62 @@ const menuItems = [
 
 const MainLayout = () => {
   return (
-    <Layout>
-      <Sider
-        breakpoint="lg"
-        theme="light"
-        collapsedWidth="0"
-        style={{
-          height: "100vh",
-          position: "sticky",
-          top: "0",
-          left: "0",
-        }}
-        width={200}
-      >
-        <Link to="/">
-          <div className="pl-7 pt-2 !h-[80px] flex items-center cursor-pointer">
-            <Image preview={false} src={logo} alt="logo" className="!h-[80px]" />
-          </div>
-        </Link>
-
-        <Menu
-          mode="inline"
-          theme="light"
-          items={menuItems}
-          className="!min-h-[calc(100vh-60px)]"
-        />
-      </Sider>
-
+    <>
       <Layout>
-        <Header className="!px-4 sticky top-0 !bg-white !h-[60px] flex flex-col justify-center text-right border-b z-50">
-          <div className="flex flex-col items-center ms-auto text-right">
-            <NavDropDown />
-          </div>
-        </Header>
-        <Content>
-          <div
-            style={{
-              minHeight: "calc(100vh - 60px)",
-              backgroundColor: "white",
-            }}
-          >
-            <Outlet />
-          </div>
-        </Content>
+        <Sider
+          breakpoint="lg"
+          theme="light"
+          collapsedWidth="0"
+          style={{
+            height: "100vh",
+            position: "sticky",
+            top: "0",
+            left: "0",
+          }}
+          width={200}
+        >
+          <Link to="/">
+            <div className="pl-7 pt-2 !h-[80px] flex items-center cursor-pointer">
+              <Image preview={false} src={logo} alt="logo" className="!h-[80px]" />
+            </div>
+          </Link>
+          <Menu
+            mode="inline"
+            theme="light"
+            defaultSelectedKeys={["1"]}
+            items={menuItems}
+            // className="!min-h-[calc(100vh-60px)]"
+          />
+        </Sider>
+
+        <Layout>
+          <Header className="!px-4 sticky top-0 !bg-white !h-[60px] flex flex-col justify-center text-right border-b z-50">
+            <div className="flex flex-col items-center ms-auto text-right">
+              <NavDropDown />
+            </div>
+          </Header>
+          <Content>
+            <div
+              style={{
+                minHeight: "calc(100vh - 150px)",
+              }}
+            >
+              <div className="labone-body-gradient"></div>
+              <div className="labone-body-gradient-lines">
+                <div className="labone-body-gradient-line"></div>
+                <div className="labone-body-gradient-line"></div>
+                <div className="labone-body-gradient-line"></div>
+                <div className="labone-body-gradient-line"></div>
+              </div>
+              <Outlet />
+            </div>
+          </Content>
+          <Footer style={{ textAlign: "center" }}>
+            Labone Hospital ©{new Date().getFullYear()} Created WebSyner
+          </Footer>
+        </Layout>
       </Layout>
-    </Layout>
+    </>
   );
 };
 
