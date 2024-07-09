@@ -7,6 +7,11 @@ export default {
         Poppins: ["Poppins", "sans-serif"],
         DMSans: ["DM Sans", "sans-serif"],
       },
+      colors: {
+        primary: "#0a8848",
+        secondary: "#f70920",
+        accent: "#333333",
+      },
     },
   },
   plugins: [],
