@@ -1,16 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
-
 import ProtectedRoute from "../Layout/ProtectedRoute";
 import MainLayout from "../Layout/MainLayout";
-import AllDoctors from "../pages/AllDoctors/AllDoctors";
 import AllAppointments from "../pages/Appointments/AllAppointments";
+import AllDoctors from "../pages/Doctors/AllDoctors";
+
+
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <ProtectedRoute isAdmin={true}>
-        <MainLayout/>
+        <MainLayout />
       </ProtectedRoute>
     ),
     children: [

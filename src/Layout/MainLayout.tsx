@@ -113,16 +113,14 @@ const MainLayout = () => {
             left: "0",
           }}
           width={250}
-          collapsible
+          // collapsible
         >
           <Link to="/">
-            <div className="flex items-center justify-center gap-1.5 cursor-pointer py-2 italic font-black">
+            <div className="flex items-center justify-center gap-1.5 cursor-pointer py-2">
               <img className="w-[52px]" src={logoIcon} alt="logo" />
-              <div>
-                <h2 className="text-xl leading-[1em] text-primary">Lab One</h2>
-                <h3 className="text-xl leading-[1em] text-secondary">
-                  Hospital
-                </h3>
+              <div className="text-xl leading-[1em] italic font-extrabold">
+                <h2 className="text-primary">Lab One</h2>
+                <h3 className="text-secondary">Hospital</h3>
               </div>
               {/* <img className="w-14" src={logoIcon} alt="logo" /> */}
             </div>
@@ -133,7 +131,7 @@ const MainLayout = () => {
             theme="light"
             defaultSelectedKeys={["1"]}
             items={menuItems}
-            className="[&_li:hover]:!text-primary [&_a:hover]:!text-primary [&_li:hover>div]:!text-primary *:font-semibold"
+            className="[&_li:hover]:!text-primary [&_li:hover>div]:!text-primary *:font-medium"
             // className="!min-h-[calc(100vh-60px)]"
           />
         </Sider>
@@ -141,7 +139,7 @@ const MainLayout = () => {
         <Layout>
           <Header className="!px-4 sticky top-0 !bg-white !h-[60px] flex flex-col justify-center border-b z-50">
             <div>
-              <h2 className="text-[26px] leading-[1em] font-extrabold text-primary uppercase">
+              <h2 className="text-2xl leading-[1em] font-bold text-primary uppercase">
                 LabOne <span className="text-secondary">Hospital</span>
               </h2>
             </div>
