@@ -81,7 +81,7 @@ const AllDoctorsList = () => {
 
   return (
     <div>
-      <Table columns={columns} dataSource={data} scroll={{ x: 1500, y: 650 }}  />
+      <Table columns={columns} dataSource={data} virtual scroll={{ x: 1500 }}  />
     </div>
   );
 };
