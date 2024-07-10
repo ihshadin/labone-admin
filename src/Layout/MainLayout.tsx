@@ -1,12 +1,13 @@
-import { Image, Layout, Menu } from "antd";
+import { Layout, Menu } from "antd";
 import { Link, Outlet } from "react-router-dom";
 import { CustomIcons } from "./CustomIcon/CustomIcons";
-import NavDropDown from "./NavDropdown";
+// import NavDropDown from "./NavDropdown";
 import "../styles/background-outlet.css";
 import "../styles/antd-overwrite.css";
 import { Footer } from "antd/es/layout/layout";
 const { Header, Content, Sider } = Layout;
-import logo from "../assets/image/labOneLogo.png";
+import logoThik from "../assets/image/labOneLogoThik.png";
+// import logoIcon from "../assets/image/favicon.png";
 
 const menuItems = [
   {
@@ -17,7 +18,7 @@ const menuItems = [
   {
     key: 2,
     icon: <CustomIcons.CustomerIcon />,
-    label: <Link to={"/customers"}>Customers</Link>,
+    label: <Link to={"/all-doctors"}>All Doctors</Link>,
   },
   {
     key: 3,
@@ -67,10 +68,20 @@ const MainLayout = () => {
             left: "0",
           }}
           width={200}
+          collapsible
         >
           <Link to="/">
-            <div className="pl-7 pt-2 !h-[80px] flex items-center cursor-pointer">
-              <Image preview={false} src={logo} alt="logo" className="!h-[80px]" />
+            <div className="flex items-center justify-center gap-3 cursor-pointer py-2">
+              {/* <img className="w-12" src={logo} alt="logo" />
+              <div>
+                <h2 className="text-[26px] leading-[1em] font-bold text-primary">
+                  Lab One
+                </h2>
+                <h3 className="text-[26px] leading-[1em] font-bold text-secondary">
+                  Hospital
+                </h3>
+              </div> */}
+              <img className="w-2/5" src={logoThik} alt="logo" />
             </div>
           </Link>
           <Menu
@@ -83,17 +94,18 @@ const MainLayout = () => {
         </Sider>
 
         <Layout>
-          <Header className="!px-4 sticky top-0 !bg-white !h-[60px] flex flex-col justify-center text-right border-b z-50">
-            <div className="flex flex-col items-center ms-auto text-right">
-              <NavDropDown />
+          <Header className="!px-4 sticky top-0 !bg-white !h-[60px] flex flex-col justify-center border-b z-50">
+            <div>
+              <h2 className="text-[26px] leading-[1em] font-bold text-primary uppercase">
+                LabOne <span className="text-secondary">Hospital</span>
+              </h2>
             </div>
+            {/* <div className="flex flex-col items-center ms-auto text-right">
+              <NavDropDown />
+            </div> */}
           </Header>
           <Content>
-            <div
-              style={{
-                minHeight: "calc(100vh - 150px)",
-              }}
-            >
+            <div className="min-h-[calc(100vh-150px)] p-3 md:p-5">
               <div className="labone-body-gradient"></div>
               <div className="labone-body-gradient-lines">
                 <div className="labone-body-gradient-line"></div>
