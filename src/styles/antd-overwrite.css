@@ -1,0 +1,8 @@
+.ant-layout {
+  background: transparent !important;
+}
+/* uploader box styles */
+.ant-upload-wrapper .ant-upload-drag {
+  height: auto !important;
+  background-color: white !important;
+}
