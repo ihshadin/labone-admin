@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import ProtectedRoute from "../Layout/ProtectedRoute";
 import MainLayout from "../Layout/MainLayout";
+import AllDoctors from "../pages/AllDoctors/AllDoctors";
 
 const router = createBrowserRouter([
   {
@@ -16,12 +17,16 @@ const router = createBrowserRouter([
         path: "/",
         element: <div>this is test routes</div>,
       },
+      {
+        path: "/all-doctors",
+        element: <AllDoctors />,
+      },
     ],
   },
 
   // {
-  //   path: "/login",
-  //   element: <Login />,
+  //   path: "/all-doctors",
+  //   element: <AllDoctors />,
   // },
 ]);
 
