@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "../Layout/ProtectedRoute";
 import MainLayout from "../Layout/MainLayout";
 import AllDoctors from "../pages/AllDoctors/AllDoctors";
+import AllAppointments from "../pages/Appointments/AllAppointments";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/all-doctors",
         element: <AllDoctors />,
+      },
+      {
+        path: "/all-appointments",
+        element: <AllAppointments />,
       },
     ],
   },
