@@ -1,5 +1,6 @@
 import { Divider } from "antd";
 import { Link } from "react-router-dom";
+import DoctorRegForm from "../../components/DoctorsCom/DoctorRegForm";
 
 const AddDoctor = () => {
   return (
@@ -13,7 +14,7 @@ const AddDoctor = () => {
           / Add Doctor
         </div>
       </section>
-      <section className="bg-white/40 bg-blend-color-burn border p-5 rounded-xl w-full max-w-[800px] mx-auto">
+      <section className="bg-white/40 bg-blend-color-burn border p-8 my-10 rounded-xl w-full max-w-[800px] mx-auto">
         <div className=" text-center">
           <h2 className="text-primary text-xl font-semibold">
             Doctor Registration Form
@@ -23,6 +24,9 @@ const AddDoctor = () => {
             If already added on quick addition form. do not add here again. just
             edit that from the doctor list
           </p>
+        </div>
+        <div className="mt-8 md:mt-10">
+          <DoctorRegForm />
         </div>
       </section>
     </>

@@ -3,6 +3,7 @@ import ProtectedRoute from "../Layout/ProtectedRoute";
 import MainLayout from "../Layout/MainLayout";
 import AllDoctors from "../pages/Doctors/AllDoctors";
 import AddDoctor from "../pages/Doctors/AddDoctor";
+import NotFoundPage from "../pages/ErrorPage/NotFoundPage";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/add-doctor",
         element: <AddDoctor />,
+      },
+      {
+        path: "*",
+        element: <NotFoundPage />,
       },
     ],
   },
