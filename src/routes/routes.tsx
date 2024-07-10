@@ -1,15 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
-
 import ProtectedRoute from "../Layout/ProtectedRoute";
 import MainLayout from "../Layout/MainLayout";
-import AllDoctors from "../pages/AllDoctors/AllDoctors";
+import AllDoctors from "../pages/Doctors/AllDoctors";
+import AddDoctor from "../pages/Doctors/AddDoctor";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <ProtectedRoute isAdmin={true}>
-        <MainLayout/>
+        <MainLayout />
       </ProtectedRoute>
     ),
     children: [
@@ -20,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/all-doctors",
         element: <AllDoctors />,
+      },
+      {
+        path: "/add-doctor",
+        element: <AddDoctor />,
       },
     ],
   },

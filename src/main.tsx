@@ -12,6 +12,7 @@ const theme = {
     colorPrimary: "#0a8848",
     colorPrimaryBg: "#f2fff8",
     colorPrimaryHover: "#0a8848",
+    colorLink: "#0a8848",
     colorPrimaryBgHover: "#f2fff8",
     colorBgTextActive: "#f2fff8",
     colorBgTextHover: "#f2fff8",
