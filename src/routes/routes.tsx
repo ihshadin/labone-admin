@@ -5,6 +5,9 @@ import AllAppointments from "../pages/Appointments/AllAppointments";
 import AllDoctors from "../pages/Doctors/AllDoctors";
 import AddDoctor from "../pages/Doctors/AddDoctor";
 import NotFoundPage from "../pages/ErrorPage/NotFoundPage";
+import AllMachines from "../pages/Machines/AllMachines";
+import AllDepartments from "../pages/Departments/AllDepartments";
+
 
 const router = createBrowserRouter([
   {
@@ -29,7 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/all-machines",
-        element: <p>all-appointments</p>,
+        element: <AllMachines/>,
       },
       {
         path: "/add-machine",
@@ -37,7 +40,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/all-departments",
-        element: <p>All Departments</p>,
+        element: <AllDepartments/>,
       },
       {
         path: "/add-department",
