@@ -77,7 +77,7 @@ const DoctorRegForm = () => {
             layout="vertical"
           >
             <Row gutter={16}>
-              <Col span={24}>
+              <Col span={24} md={{ span: 18 }}>
                 <Form.Item
                   label="Full Name"
                   name="fullName"
@@ -91,10 +91,24 @@ const DoctorRegForm = () => {
                   />
                 </Form.Item>
               </Col>
+              <Col span={24} md={{ span: 6 }}>
+                <Form.Item
+                  label="Serial No"
+                  name="serialNumber"
+                  tooltip="Here you have to input the doctor's serial number."
+                  rules={[{ required: true, message: "Serial no is required" }]}
+                >
+                  <Input
+                    type="number"
+                    placeholder="Write here..."
+                    className="h-10 border border-[#C4CAD4] !rounded-lg"
+                  />
+                </Form.Item>
+              </Col>
             </Row>
 
             <Row gutter={16}>
-              <Col span={24} md={{ span: 12 }} lg={{ span: 12 }}>
+              <Col span={24} md={{ span: 12 }}>
                 <Form.Item
                   label="Contact Number"
                   name="contactNumber"
@@ -110,7 +124,7 @@ const DoctorRegForm = () => {
                   />
                 </Form.Item>
               </Col>
-              <Col span={24} md={{ span: 12 }} lg={{ span: 12 }}>
+              <Col span={24} md={{ span: 12 }}>
                 <Form.Item label="Email Address" name="email">
                   <Input
                     type="email"
