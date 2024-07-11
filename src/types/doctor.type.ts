@@ -1,3 +1,5 @@
+import { Dispatch } from "react";
+
 export type TDoctor = {
   _id: string;
   fullName: string;
@@ -8,5 +10,10 @@ export type TDoctor = {
   specialty: string;
   degree: string;
   address?: string;
-  doctorImage?: string;
+  doctorImage: string;
+};
+export type TUpdateDoctor = {
+  updateModalOpen: boolean;
+  setUpdateModalOpen: Dispatch<React.SetStateAction<boolean>>;
+  doctorData: TDoctor;
 };

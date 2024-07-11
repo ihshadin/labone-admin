@@ -1,10 +1,17 @@
-import { Button, Table, TableColumnsType } from "antd";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
+import { Button, Divider, Input, Table, TableColumnsType } from "antd";
 import { AiFillDelete } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { TDoctor } from "../../types/doctor.type";
 import imageTest from "../../assets/image/labOneLogo.png";
+import UpdateDoctor from "./UpdateDoctor";
+import LabonePagination from "../../utils/Pagination/pagination";
+import { IoSearchOutline } from "react-icons/io5";
 
 const AllDoctorsList = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const doctorsColumns: TableColumnsType<TDoctor> = [
     {
       title: "Sort No",
@@ -61,7 +68,7 @@ const AllDoctorsList = () => {
       fixed: "right",
       render: (_, record) => (
         <div className="flex justify-center gap-2">
-          <Button onClick={() => handleEdit(record)}>
+          <Button onClick={() => handleUpdateData(record)}>
             <FiEdit2 fontSize={16} />
           </Button>
           <Button onClick={() => handleDelete(record._id)}>
@@ -72,9 +79,43 @@ const AllDoctorsList = () => {
     },
   ];
 
-  const handleEdit = (record: TDoctor) => {
-    // Handle edit action
-    console.log("Edit", record);
+  const [searchText, setSearchText] = useState("");
+  const [totalItems, setTotalItems] = useState(100);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
+  const [doctorData, setDoctorData] = useState<TDoctor>({} as TDoctor);
+  // const [doctorsData, setDoctorsData] = useState([])
+  console.log(isLoading);
+  //   Filter on object
+  // eslint-disable-next-line prefer-const
+  let params: Record<string, unknown> = {};
+
+  if (searchText?.trim() !== "") {
+    params.searchTerm = searchText;
+  }
+
+  params.limit = 10;
+  params.page = currentPage;
+
+  const dataFetch = async () => {
+    setIsLoading(true);
+
+    // setDoctorsData();
+    setTotalItems(550);
+    setItemsPerPage(10);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    dataFetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchText, currentPage, doctorData]);
+
+  const handleUpdateData = (doctor: TDoctor) => {
+    setUpdateModalOpen(true);
+    setDoctorData(doctor);
+    // console.log("Edit", doctor);
   };
 
   const handleDelete = (id: string) => {
@@ -115,7 +156,7 @@ const AllDoctorsList = () => {
       key: "3",
       _id: "3",
       fullName: "John Brown",
-      serialNumber: 1,
+      serialNumber: 3,
       contactNumber: 123456789,
       email: "john@example.com",
       department: "Cardiology",
@@ -128,11 +169,38 @@ const AllDoctorsList = () => {
 
   return (
     <>
+      <div className="flex items-center gap-5 md:gap-16 mb-8 md:mb-12">
+        <div className="grow">
+          {/* <h2 className="text-primary text-xl font-semibold">Doctor list</h2> */}
+          <Divider orientation="left" className="!my-0 !text-xl !text-primary">
+            All Doctors list
+          </Divider>
+        </div>
+        <div className="w-[250px]">
+          <Input
+            type="primary"
+            prefix={<IoSearchOutline />}
+            placeholder="Search"
+            className="focus:placeholder:!text-primary"
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
+      </div>
       <Table
         columns={doctorsColumns}
         dataSource={data}
         scroll={{ x: 1900 }}
         pagination={false}
+      />
+      <LabonePagination
+        totalItems={totalItems}
+        itemsPerPage={itemsPerPage}
+        setCurrentPage={setCurrentPage}
+      />
+      <UpdateDoctor
+        updateModalOpen={updateModalOpen}
+        setUpdateModalOpen={setUpdateModalOpen}
+        doctorData={doctorData}
       />
     </>
   );
