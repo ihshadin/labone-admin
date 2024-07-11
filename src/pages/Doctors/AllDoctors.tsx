@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import AllDoctorsList from "../../components/Doctors/AllDoctorsList";
 import { LuCornerRightDown } from "react-icons/lu";
+import AllDoctorsList from "../../components/Doctors/AllDoctorsList";
 
 const AllDoctors = () => {
   return (

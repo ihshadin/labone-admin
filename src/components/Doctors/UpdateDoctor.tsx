@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { Col, Form, Input, Row, Select, Modal } from "antd";
+import { Col, Form, Input, Row, Select, Modal, Divider } from "antd";
 import { toast } from "sonner";
 import { TDoctor, TUpdateDoctor } from "../../types/doctor.type";
 import UploadImageWithPreview from "../../utils/UploadImage/UploadImageWithPreview";
@@ -17,7 +17,7 @@ const UpdateDoctor = ({
 
   const onSubmit = async (data: TDoctor) => {
     const formData = new FormData();
-    const toastId = toast.loading("updating new doctor...");
+    const toastId = toast.loading("Updating new doctor...");
 
     const updatedData = {
       fullName: data.fullName,
@@ -35,6 +35,7 @@ const UpdateDoctor = ({
 
     try {
       setIsLoading(true);
+      setUpdateModalOpen(false);
       toast.success("Successfully updated the doctor", { id: toastId });
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
@@ -75,7 +76,7 @@ const UpdateDoctor = ({
   return (
     <>
       <Modal
-        title="Update the doctor's info"
+        title={null}
         centered
         open={updateModalOpen}
         onOk={() => setUpdateModalOpen(false)}
@@ -83,6 +84,18 @@ const UpdateDoctor = ({
         width={1000}
         footer={null}
       >
+        <div className="text-center mb-10">
+          <h2 className="text-primary text-xl font-semibold">
+            Details of the doctor
+          </h2>
+          <Divider plain className="!my-1">
+            Edit doctor's info
+          </Divider>
+          {/* <p>
+            If already added on quick addition form. do not add here again. just
+            edit that from the doctor list
+          </p> */}
+        </div>
         <Form
           form={form}
           initialValues={doctorData}

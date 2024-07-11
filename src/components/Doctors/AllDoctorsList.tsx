@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { Button, Divider, Input, Table, TableColumnsType } from "antd";
+import {
+  Button,
+  Divider,
+  Input,
+  Popconfirm,
+  Table,
+  TableColumnsType,
+} from "antd";
 import { AiFillDelete } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { TDoctor } from "../../types/doctor.type";
@@ -71,9 +78,21 @@ const AllDoctorsList = () => {
           <Button onClick={() => handleUpdateData(record)}>
             <FiEdit2 fontSize={16} />
           </Button>
-          <Button onClick={() => handleDelete(record._id)}>
+          {/* <Button onClick={() => handleDelete(record._id)}>
             <AiFillDelete fontSize={16} />
-          </Button>
+          </Button> */}
+          <Popconfirm
+            title="Delete the doctor"
+            description="Are you sure to delete this Doctor?"
+            placement="topRight"
+            onConfirm={() => handleDelete(record._id)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button>
+              <AiFillDelete fontSize={16} />
+            </Button>
+          </Popconfirm>
         </div>
       ),
     },
@@ -169,7 +188,7 @@ const AllDoctorsList = () => {
 
   return (
     <>
-      <div className="flex items-center gap-5 md:gap-16 mb-8 md:mb-12">
+      <div className="flex items-center gap-5 md:gap-16 mb-5 md:mb-8">
         <div className="grow">
           {/* <h2 className="text-primary text-xl font-semibold">Doctor list</h2> */}
           <Divider orientation="left" className="!my-0 !text-xl !text-primary">
