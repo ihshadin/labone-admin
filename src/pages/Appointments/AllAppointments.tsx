@@ -1,12 +1,11 @@
-import React from 'react';
-import AllAppointmentsList from '../../components/AllAppointmentsList/AllAppointmentsList';
+import AllAppointmentsList from "../../components/Appointments/AllAppointmentsList";
 
 const AllAppointments = () => {
-    return (
-        <div>
-            <AllAppointmentsList/>
-        </div>
-    );
+  return (
+    <div>
+      <AllAppointmentsList />
+    </div>
+  );
 };
 
 export default AllAppointments;
