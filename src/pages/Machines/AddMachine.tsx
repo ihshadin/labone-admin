@@ -1,9 +1,9 @@
 import { Divider } from "antd";
 import { Link } from "react-router-dom";
-import DoctorRegForm from "../../components/Doctors/DoctorRegForm";
 import { LuCornerRightUp } from "react-icons/lu";
+import MachineEntryForm from "../../components/Machines/MachineEntryForm";
 
-const AddDoctor = () => {
+const AddMachine = () => {
   return (
     <>
       <section className="flex items-center justify-between">
@@ -12,34 +12,34 @@ const AddDoctor = () => {
             Lab One
           </Link>
           <span>/</span>
-          <span>Add Doctor</span>
+          <span>Add Machine</span>
         </div>
         <Link
-          to="/all-doctors"
+          to="/all-machines"
           className="flex items-center gap-2 bg-primary hover:bg-accent text-white hover:text-white px-4 py-2.5 rounded-lg transition duration-150"
-          title="All Doctors"
+          title="All Machines"
         >
-          <span>All Doctors</span>
+          <span>All Machines</span>
           <LuCornerRightUp />
         </Link>
       </section>
       <section className="bg-white/40 bg-blend-color-burn border p-3 md:p-8 my-10 rounded-xl w-full max-w-[800px] mx-auto">
         <div className=" text-center">
           <h2 className="text-primary text-xl font-semibold">
-            Doctor Registration Form
+            Machine Entry Form
           </h2>
-          <Divider plain>Add New Doctor</Divider>
+          <Divider plain>New Machine</Divider>
           <p>
             If already added on quick addition form. do not add here again. just
             edit that from the doctor list
           </p>
         </div>
         <div className="mt-8 md:mt-10">
-          <DoctorRegForm />
+          <MachineEntryForm />
         </div>
       </section>
     </>
   );
 };
 
-export default AddDoctor;
+export default AddMachine;

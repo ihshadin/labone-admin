@@ -1,14 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "../Layout/ProtectedRoute";
 import MainLayout from "../Layout/MainLayout";
-import AllAppointments from "../pages/Appointments/AllAppointments";
+import NotFoundPage from "../pages/ErrorPage/NotFoundPage";
+import Home from "../pages/Home/Home";
 import AllDoctors from "../pages/Doctors/AllDoctors";
 import AddDoctor from "../pages/Doctors/AddDoctor";
-import NotFoundPage from "../pages/ErrorPage/NotFoundPage";
 import AllMachines from "../pages/Machines/AllMachines";
+import AddMachine from "../pages/Machines/AddMachine";
+import AllAppointments from "../pages/Appointments/AllAppointments";
 import AllDepartments from "../pages/Departments/AllDepartments";
-import Home from "../pages/Home/Home";
-
+import AddDepartment from "../pages/Departments/AddDepartment";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home/>,
+        element: <Home />,
       },
       {
         path: "/all-doctors",
@@ -33,19 +34,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/all-machines",
-        element: <AllMachines/>,
+        element: <AllMachines />,
       },
       {
         path: "/add-machine",
-        element: <p>add machine</p>,
+        element: <AddMachine />,
       },
       {
         path: "/all-departments",
-        element: <AllDepartments/>,
+        element: <AllDepartments />,
       },
       {
         path: "/add-department",
-        element: <p>Add Department</p>,
+        element: <AddDepartment />,
       },
       {
         path: "/all-chamber-doctors",
