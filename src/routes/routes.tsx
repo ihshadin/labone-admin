@@ -7,6 +7,7 @@ import AddDoctor from "../pages/Doctors/AddDoctor";
 import NotFoundPage from "../pages/ErrorPage/NotFoundPage";
 import AllMachines from "../pages/Machines/AllMachines";
 import AllDepartments from "../pages/Departments/AllDepartments";
+import Home from "../pages/Home/Home";
 
 
 const router = createBrowserRouter([
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <div>this is test routes</div>,
+        element: <Home/>,
       },
       {
         path: "/all-doctors",
