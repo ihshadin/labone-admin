@@ -287,7 +287,7 @@ const AllAppointmentsList = () => {
     },
   ];
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [totalItems, setTotalItems] = useState(100);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
@@ -364,9 +364,9 @@ const AllAppointmentsList = () => {
       <Table
         columns={columns}
         dataSource={data}
-        onChange={onChange}
-        pagination={false}
         scroll={{ x: 1800 }}
+        pagination={false}
+        onChange={onChange}
       />
       <LabonePagination
         totalItems={totalItems}

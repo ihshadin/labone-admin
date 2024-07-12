@@ -1,6 +1,14 @@
-.ant-upload-wrapper .ant-upload-list-item-container {
+.ant-upload-wrapper.defaultRation .ant-upload-list-item-container {
   width: 255px !important;
   height: 326px !important;
+}
+.ant-upload-wrapper.fourThree .ant-upload-list-item-container {
+  width: 255px !important;
+  height: 192px !important;
+}
+.ant-upload-wrapper.oneOne .ant-upload-list-item-container {
+  width: 255px !important;
+  height: 255px !important;
 }
 .ant-upload-wrapper .ant-upload-list.ant-upload-list-picture-circle {
   align-items: center !important;
