@@ -17,7 +17,7 @@ const UpdateDoctor = ({
 
   const onSubmit = async (data: TDoctor) => {
     const formData = new FormData();
-    const toastId = toast.loading("Updating new doctor...");
+    const toastId = toast.loading("Updating doctor info...");
 
     const updatedData = {
       fullName: data.fullName,
