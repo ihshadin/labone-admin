@@ -15,6 +15,55 @@ import { TMachine } from "../../types/machine.type";
 import LabonePagination from "../../utils/Pagination/pagination";
 import UpdateMachine from "./UpdateMachine";
 
+const data = [
+  {
+    key: "1",
+    _id: "1",
+    photo:
+      "https://esskaymachines.com/blog/wp-content/uploads/2020/12/industrial-machinery-imhe-384x288_tcm27-3207.jpg",
+    name: "CT SCAN Machine",
+    country: "Hitachi-Japan",
+    details: "Advanced imaging technology for detailed internal scans.",
+  },
+  {
+    key: "2",
+    _id: "2",
+    photo: "https://i.ytimg.com/vi/l6nysqD9ibc/maxresdefault.jpg",
+    name: "MRI Machine",
+    country: "Siemens-Germany",
+    details:
+      "Uses magnetic fields and radio waves to create detailed images of organs",
+  },
+  {
+    key: "3",
+    _id: "3",
+    photo:
+      "https://esskaymachines.com/blog/wp-content/uploads/2020/12/industrial-machinery-imhe-384x288_tcm27-3207.jpg",
+    name: "Ultrasound Machine",
+    country: "GE Healthcare-USA",
+    details:
+      "Utilizes high-frequency sound waves to capture live images from the inside of the body.",
+  },
+  {
+    key: "4",
+    _id: "4",
+    photo: "https://i.ytimg.com/vi/l6nysqD9ibc/maxresdefault.jpg",
+    name: "X-Ray Machine",
+    country: "Philips-Netherlands",
+    details: "Employs X-rays to view the inside of the body, especially bones.",
+  },
+  {
+    key: "5",
+    _id: "5",
+    photo:
+      "https://esskaymachines.com/blog/wp-content/uploads/2020/12/industrial-machinery-imhe-384x288_tcm27-3207.jpg",
+    name: "PET Scan Machine",
+    country: "Toshiba-Japan",
+    details:
+      "Combines nuclear medicine and biochemical analysis to produce images of the body's function.",
+  },
+];
+
 const AllMachinesList = () => {
   const machinesColumns: TableColumnsType<TMachine> = [
     {
@@ -117,56 +166,6 @@ const AllMachinesList = () => {
     // Handle delete action
     console.log("Delete", id);
   };
-
-  const data = [
-    {
-      key: "1",
-      _id: "1",
-      photo:
-        "https://esskaymachines.com/blog/wp-content/uploads/2020/12/industrial-machinery-imhe-384x288_tcm27-3207.jpg",
-      name: "CT SCAN Machine",
-      country: "Hitachi-Japan",
-      details: "Advanced imaging technology for detailed internal scans.",
-    },
-    {
-      key: "2",
-      _id: "2",
-      photo: "https://i.ytimg.com/vi/l6nysqD9ibc/maxresdefault.jpg",
-      name: "MRI Machine",
-      country: "Siemens-Germany",
-      details:
-        "Uses magnetic fields and radio waves to create detailed images of organs",
-    },
-    {
-      key: "3",
-      _id: "3",
-      photo:
-        "https://esskaymachines.com/blog/wp-content/uploads/2020/12/industrial-machinery-imhe-384x288_tcm27-3207.jpg",
-      name: "Ultrasound Machine",
-      country: "GE Healthcare-USA",
-      details:
-        "Utilizes high-frequency sound waves to capture live images from the inside of the body.",
-    },
-    {
-      key: "4",
-      _id: "4",
-      photo: "https://i.ytimg.com/vi/l6nysqD9ibc/maxresdefault.jpg",
-      name: "X-Ray Machine",
-      country: "Philips-Netherlands",
-      details:
-        "Employs X-rays to view the inside of the body, especially bones.",
-    },
-    {
-      key: "5",
-      _id: "5",
-      photo:
-        "https://esskaymachines.com/blog/wp-content/uploads/2020/12/industrial-machinery-imhe-384x288_tcm27-3207.jpg",
-      name: "PET Scan Machine",
-      country: "Toshiba-Japan",
-      details:
-        "Combines nuclear medicine and biochemical analysis to produce images of the body's function.",
-    },
-  ];
 
   return (
     <>
