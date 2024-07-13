@@ -11,6 +11,7 @@ import AllDepartments from "../pages/Departments/AllDepartments";
 import AddDepartment from "../pages/Departments/AddDepartment";
 import AllAppointments from "../pages/Appointments/AllAppointments";
 import AllSchedules from "../pages/DoctorsSchedules/AllSchedules";
+import Login from "../pages/Auth/Login";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,11 @@ const router = createBrowserRouter([
         element: <NotFoundPage />,
       },
     ],
+    
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 
   // {
