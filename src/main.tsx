@@ -7,6 +7,9 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { ConfigProvider } from "antd";
 
+// Styles
+import "./styles/scrollbar.css";
+
 const theme = {
   token: {
     colorPrimary: "#0a8848",
@@ -16,15 +19,8 @@ const theme = {
     colorPrimaryBgHover: "#f2fff8",
     colorBgTextActive: "#f2fff8",
     colorBgTextHover: "#f2fff8",
-    // colorBgContainer: "#0a8848",
+    tableRowHoverBg: "#0a8848",
     fontFamily: "inherit",
-  },
-  components: {
-    Menu: {
-      itemBg: "",
-      itemBgHover: "#f70920",
-      itemTextHover: "#f70920",
-    },
   },
 };
 
