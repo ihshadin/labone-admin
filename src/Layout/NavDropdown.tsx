@@ -5,7 +5,8 @@ import { FiLogOut } from "react-icons/fi";
 
 const NavDropDown = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  console.log(setIsLoading)
 
   const handleDropdownVisibleChange = (visible: any) => {
     setDropdownVisible(visible);
@@ -18,7 +19,7 @@ const NavDropDown = () => {
       label: (
         <div className="p-2 flex items-center !w-[235px]">
           <Image
-            src=""
+            src="https://i.ibb.co/CtjVFXW/jahid-prof.jpg"
             width={40}
             height={40}
             alt="Profile"
@@ -68,13 +69,13 @@ const NavDropDown = () => {
         <div className="flex items-center justify-end">
           {/* <IoIosNotificationsOutline className="w-8 h-8 text-secondary" /> */}
           <Image
-            src=""
+            src="https://i.ibb.co/CtjVFXW/jahid-prof.jpg"
             alt="Profile"
             width={32}
             height={32}
             className="w-[32px] h-[32px] object-cover rounded-full mr-4"
           />
-          <h2 className="text-sm text-primary mr-2">LabOne</h2>
+          <h2 className="text-sm font-semibold text-primary mx-2">LabOne</h2>
           {dropdownVisible ? (
             <LiaAngleUpSolid className="w-4 h-4 text-secondary" />
           ) : (
