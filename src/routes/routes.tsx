@@ -18,7 +18,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <ProtectedRoute isAdmin={true}>
+      <ProtectedRoute>
         <MainLayout />
       </ProtectedRoute>
     ),
@@ -72,17 +72,11 @@ const router = createBrowserRouter([
         element: <NotFoundPage />,
       },
     ],
-    
   },
   {
     path: "/login",
     element: <Login />,
   },
-
-  // {
-  //   path: "/all-doctors",
-  //   element: <AllDoctors />,
-  // },
 ]);
 
 export default router;
