@@ -14,6 +14,7 @@ import AllSchedules from "../pages/DoctorsSchedules/AllSchedules";
 import Login from "../pages/Auth/Login";
 import Settings from "../pages/Settings/Settings";
 import Users from "../pages/Users/Users";
+import ForgetPassword from "../pages/ForgetPassword/ForgetPassword";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: "/settings",
         element: <Settings />,
+      },
+      {
+        path: "/forget-password",
+        element: <ForgetPassword />,
       },
       {
         path: "*",

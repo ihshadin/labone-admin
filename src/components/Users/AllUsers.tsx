@@ -201,7 +201,7 @@ const AllUsers = () => {
 
 
   console.log(isLoading);
-  let params: Record<string, unknown> = {};
+  const params: Record<string, unknown> = {};
   params.limit = 10;
   params.page = currentPage;
   const dataFetch = async () => {
