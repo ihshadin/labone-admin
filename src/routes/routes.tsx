@@ -12,12 +12,14 @@ import AddDepartment from "../pages/Departments/AddDepartment";
 import AllAppointments from "../pages/Appointments/AllAppointments";
 import AllSchedules from "../pages/DoctorsSchedules/AllSchedules";
 import Login from "../pages/Auth/Login";
+import Settings from "../pages/Settings/Settings";
+import Users from "../pages/Users/Users";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <ProtectedRoute isAdmin={true}>
+      <ProtectedRoute>
         <MainLayout />
       </ProtectedRoute>
     ),
@@ -63,21 +65,23 @@ const router = createBrowserRouter([
         element: <AllAppointments />,
       },
       {
+        path: "/users",
+        element: <Users />,
+      },
+      {
+        path: "/settings",
+        element: <Settings />,
+      },
+      {
         path: "*",
         element: <NotFoundPage />,
       },
     ],
-    
   },
   {
     path: "/login",
     element: <Login />,
   },
-
-  // {
-  //   path: "/all-doctors",
-  //   element: <AllDoctors />,
-  // },
 ]);
 
 export default router;

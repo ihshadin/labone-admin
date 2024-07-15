@@ -15,10 +15,13 @@ import {
   LuCalendarX2,
   LuGitBranch,
   LuGitBranchPlus,
+  LuSettings,
+  LuUserCircle2,
 } from "react-icons/lu";
 
 // import logoThik from "../assets/image/labOneLogoThik.png";
 import logoIcon from "../assets/image/favicon.png";
+import NavDropDown from "./NavDropdown";
 
 const menuItems = [
   {
@@ -96,6 +99,17 @@ const menuItems = [
       },
     ],
   },
+  {
+    key: 7,
+    icon: <LuUserCircle2 />,
+    label: <Link to={"/users"}>Users</Link>,
+  },
+  {
+    key: 8,
+    icon: <LuSettings />,
+    label: <Link to={"/settings"}>Settings</Link>,
+  },
+  
 ];
 
 const MainLayout = () => {
@@ -138,14 +152,14 @@ const MainLayout = () => {
 
         <Layout>
           <Header className="!px-4 sticky top-0 !bg-white !h-[60px] flex flex-col justify-center border-b z-50">
-            <div>
+            {/* <div>
               <h2 className="text-2xl leading-[1em] font-bold text-primary uppercase">
                 LabOne <span className="text-secondary">Hospital</span>
               </h2>
-            </div>
-            {/* <div className="flex flex-col items-center ms-auto text-right">
-              <NavDropDown />
             </div> */}
+            <div className="flex flex-col items-center ms-auto text-right">
+              <NavDropDown />
+            </div>
           </Header>
           <Content>
             <div className="min-h-[calc(100vh-150px)] p-3 md:p-5">
