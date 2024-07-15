@@ -16,6 +16,7 @@ import {
   LuGitBranch,
   LuGitBranchPlus,
   LuSettings,
+  LuUserCircle2,
 } from "react-icons/lu";
 
 // import logoThik from "../assets/image/labOneLogoThik.png";
@@ -100,6 +101,11 @@ const menuItems = [
   },
   {
     key: 7,
+    icon: <LuUserCircle2 />,
+    label: <Link to={"/users"}>Users</Link>,
+  },
+  {
+    key: 8,
     icon: <LuSettings />,
     label: <Link to={"/settings"}>Settings</Link>,
   },

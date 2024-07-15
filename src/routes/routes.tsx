@@ -13,6 +13,7 @@ import AllAppointments from "../pages/Appointments/AllAppointments";
 import AllSchedules from "../pages/DoctorsSchedules/AllSchedules";
 import Login from "../pages/Auth/Login";
 import Settings from "../pages/Settings/Settings";
+import Users from "../pages/Users/Users";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: "/all-appointments",
         element: <AllAppointments />,
+      },
+      {
+        path: "/users",
+        element: <Users />,
       },
       {
         path: "/settings",
