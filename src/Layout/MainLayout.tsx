@@ -56,7 +56,7 @@ const menuItems = [
     label: <Link to={"/all-departments"}>All Departments</Link>,
     children: [
       {
-        key: 31,
+        key: 41,
         icon: <LuGitBranchPlus />,
         label: <Link to={"/add-department"}>Add Department</Link>,
       },

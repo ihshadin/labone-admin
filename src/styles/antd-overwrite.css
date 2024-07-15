@@ -6,3 +6,73 @@
   height: auto !important;
   background-color: white !important;
 }
+/* Table style */
+.ant-table-wrapper .ant-table {
+  background: transparent !important;
+  position: relative;
+}
+.ant-table-wrapper .ant-table::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  /* background-color: rgba(10, 136, 73, 0.1); */
+  background-image: conic-gradient(
+    rgba(167, 255, 211, 0.4),
+    rgba(247, 9, 33, 0.1),
+    rgba(10, 136, 73, 0.2),
+    rgba(10, 136, 73, 0.2),
+    rgba(247, 9, 33, 0.1),
+    rgba(10, 136, 73, 0.2),
+    rgba(247, 9, 33, 0.1)
+  );
+  filter: blur(30px);
+}
+.ant-table thead tr th {
+  background-color: white !important;
+  color: #0a8848 !important;
+}
+.ant-table-tbody > tr:hover > td {
+  background: #f2fff8 !important;
+}
+/* Modal Background Change */
+.ant-modal .ant-modal-content {
+  background: rgba(255, 255, 255, 0.9) !important;
+  position: relative;
+}
+.ant-modal .ant-modal-content::after {
+  content: "";
+  /* width: 100%;
+  height: 100%; */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  background-color: rgba(10, 136, 73, 0.2);
+  /* background-image: conic-gradient(
+    rgba(167, 255, 211, 0.1),
+    rgba(247, 9, 33, 0.05),
+    rgba(10, 136, 73, 0.1),
+    rgba(10, 136, 73, 0.1),
+    rgba(247, 9, 33, 0.05),
+    rgba(10, 136, 73, 0.1),
+    rgba(247, 9, 33, 0.05)
+  ); */
+  background-image: conic-gradient(
+    rgba(167, 255, 211, 0.2),
+    rgba(247, 9, 33, 0.1),
+    rgba(10, 136, 73, 0.2),
+    rgba(10, 136, 73, 0.2),
+    rgba(247, 9, 33, 0.15),
+    rgba(10, 136, 73, 0.2),
+    rgba(247, 9, 33, 0.15)
+  );
+  filter: blur(20px);
+}

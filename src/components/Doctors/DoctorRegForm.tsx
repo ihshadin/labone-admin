@@ -1,20 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Col, Form, Input, Row, Select, UploadProps } from "antd";
-import Dragger from "antd/es/upload/Dragger";
 import { useState } from "react";
-import { LuUploadCloud } from "react-icons/lu";
+import { Col, Form, Input, Row, Select } from "antd";
+// import Dragger from "antd/es/upload/Dragger";
+// import { LuUploadCloud } from "react-icons/lu";
 import { toast } from "sonner";
+import { TDoctor } from "../../types/doctor.type";
+import UploadImageWithPreview from "../../utils/UploadImage/UploadImageWithPreview";
 
 const DoctorRegForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<any>([]);
   const [form] = Form.useForm();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: TDoctor) => {
     const formData = new FormData();
     const toastId = toast.loading("Adding new doctor...");
 
-    const customerNewData = {
+    const doctorNewData = {
       fullName: data.fullName,
       contactNumber: data.contactNumber,
       email: data.email,
@@ -23,10 +25,10 @@ const DoctorRegForm = () => {
       degree: data.degree,
       address: data.address,
     };
-    console.log({ customerNewData });
+    console.log({ doctorNewData });
 
     formData.append("file", file[0]?.originFileObj);
-    formData.append("data", JSON.stringify(customerNewData));
+    formData.append("data", JSON.stringify(doctorNewData));
 
     try {
       setIsLoading(true);
@@ -38,9 +40,9 @@ const DoctorRegForm = () => {
     }
   };
   console.log({ file });
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
-    setFile(newFileList);
-  };
+  // const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+  //   setFile(newFileList);
+  // };
 
   // Interest Church Options
   const interestOptions = [
@@ -77,7 +79,7 @@ const DoctorRegForm = () => {
             layout="vertical"
           >
             <Row gutter={16}>
-              <Col span={24}>
+              <Col span={24} md={{ span: 18 }}>
                 <Form.Item
                   label="Full Name"
                   name="fullName"
@@ -91,10 +93,24 @@ const DoctorRegForm = () => {
                   />
                 </Form.Item>
               </Col>
+              <Col span={24} md={{ span: 6 }}>
+                <Form.Item
+                  label="Serial No"
+                  name="serialNumber"
+                  tooltip="Here you have to input the doctor's serial number."
+                  rules={[{ required: true, message: "Serial no is required" }]}
+                >
+                  <Input
+                    type="number"
+                    placeholder="Write here..."
+                    className="h-10 border border-[#C4CAD4] !rounded-lg"
+                  />
+                </Form.Item>
+              </Col>
             </Row>
 
             <Row gutter={16}>
-              <Col span={24} md={{ span: 12 }} lg={{ span: 12 }}>
+              <Col span={24} md={{ span: 12 }}>
                 <Form.Item
                   label="Contact Number"
                   name="contactNumber"
@@ -110,7 +126,7 @@ const DoctorRegForm = () => {
                   />
                 </Form.Item>
               </Col>
-              <Col span={24} md={{ span: 12 }} lg={{ span: 12 }}>
+              <Col span={24} md={{ span: 12 }}>
                 <Form.Item label="Email Address" name="email">
                   <Input
                     type="email"
@@ -182,6 +198,13 @@ const DoctorRegForm = () => {
             </Row>
 
             <Row>
+              <Col span={24}>
+                <p className="font-medium mb-1.5">Doctor Image</p>
+                <UploadImageWithPreview setFile={setFile} />
+              </Col>
+            </Row>
+
+            {/* <Row>
               <div className="w-full pb-4">
                 <p className="font-medium mb-1.5">Doctor Image</p>
                 <Dragger onChange={handleChange} maxCount={1}>
@@ -196,7 +219,7 @@ const DoctorRegForm = () => {
                   </p>
                 </Dragger>
               </div>
-            </Row>
+            </Row> */}
 
             <Row>
               <div className="flex items-center justify-end w-full">
