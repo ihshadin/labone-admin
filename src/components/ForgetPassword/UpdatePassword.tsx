@@ -3,27 +3,26 @@ import { Col, Form, Input, Row } from "antd";
 // import Dragger from "antd/es/upload/Dragger";
 // import { LuUploadCloud } from "react-icons/lu";
 import { toast } from "sonner";
-import { TChangePass } from "../../types/changPass.type";
+import { TForgetPass } from "../../types/forgetPass.type";
 
-const ChangePassForm = () => {
 
+const UpdatePassword = () => {
     const [isLoading, setIsLoading] = useState(false);
     // const [file, setFile] = useState<any>([]);
     const [form] = Form.useForm();
   
-    const onSubmit = async (data: TChangePass) => {
+    const onSubmit = async (data: TForgetPass) => {
       const formData = new FormData();
-      const toastId = toast.loading("Change Password...");
+      const toastId = toast.loading("Update Password...");
   
-      const changePassData = {
-        currentPassword: data.currentPassword,
+      const updatePassData = {
         newPassword : data.newPassword,
         confirmPassword : data.confirmPassword,
       };
-      console.log({changePassData});
+      console.log({updatePassData});
   
     //   formData.append("file", file[0]?.originFileObj);
-      formData.append("data", JSON.stringify(changePassData));
+      formData.append("data", JSON.stringify(updatePassData));
   
       try {
         setIsLoading(true);
@@ -40,7 +39,7 @@ const ChangePassForm = () => {
     // };
   
     return (
-      <>
+      <div>
         <Row>
           <Col span={24}>
             <Form
@@ -52,10 +51,10 @@ const ChangePassForm = () => {
             <Row gutter={16}>
                 <Col span={24} md={{ span: 24 }}>
                 <Form.Item
-                    label="Current Password"
-                    name="currentPassword"
-                    tooltip="Here you have to input your Current Password."
-                    rules={[{ required: true, message: "Current Password is required" }]}
+                    label="New Password"
+                    name="newPassword"
+                    tooltip="Here you have to input your New Password."
+                    rules={[{ required: true, message: "New Password is required" }]}
                   >
                     <Input.Password
                       type="password"
@@ -66,23 +65,7 @@ const ChangePassForm = () => {
                 </Col>
               </Row>
               <Row gutter={16}>
-
-                <Col span={24} md={{ span: 12 }}>
-                  <Form.Item
-                    label="New Password"
-                    name="newPassword"
-                    tooltip="Here you have to input your new Password."
-                    rules={[{ required: true, message: "New Password is required" }]}
-                  >
-                    <Input.Password
-                      type="password"
-                      placeholder="********"
-                      className="h-10 border border-[#C4CAD4] !rounded-lg"
-                    />
-                     
-                  </Form.Item>
-                </Col>
-                <Col span={24} md={{ span: 12 }}>
+                <Col span={24} md={{ span: 24 }}>
                 <Form.Item
                     label="Confirm Password"
                     name="confirmPassword"
@@ -131,8 +114,8 @@ const ChangePassForm = () => {
             </Form>
           </Col>
         </Row>
-      </>
+      </div>
     );
 };
 
-export default ChangePassForm;
+export default UpdatePassword;
