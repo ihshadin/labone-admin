@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useAppDispatch } from "../../redux/hooks";
 import { toast } from "sonner";
 import image from "../../assets/image/labOneLogo.png";
@@ -11,7 +9,7 @@ import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { verifyToken } from "../../utils/verifyToken";
 import { setUser } from "../../redux/features/auth/authSlice";
 
-const Login = () => {
+const ForgetPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
@@ -20,7 +18,7 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     setIsLoading(true);
-    const toastId = toast.loading("Admin login...");
+    const toastId = toast.loading("Reset Password...");
 
     try {
       const userInfo = await login(data).unwrap();
@@ -31,7 +29,7 @@ const Login = () => {
       if (user?.role === "admin") {
         toast.success("Logged In successful!", { id: toastId, duration: 2000 });
         localStorage.setItem("accessToken", userInfo?.data?.accessToken);
-        navigate("/");
+        navigate("/forget-password");
         setIsLoading(false);
       } else {
         toast.error("Your are Unauthorized!", {
@@ -48,22 +46,19 @@ const Login = () => {
       }
     }
   };
-
   return (
     <div className="bg-white/40 bg-blend-color-burn border pl-3  my-10 rounded-xl w-full max-w-[470px] mx-auto shadow-lg">
-      <div className="bg-white min-h-[430px] rounded-xl px-6 mt-5 ">
+      <div className="bg-white min-h-[430px] rounded-xl px-6 mt-5">
         <div className="w-full text-center pb-10 pt-5 flex justify-center items-center gap-5">
           <img className="inline-block w-20 mt-5" src={image} alt="img" />
           <div className="flex flex-col justify-start items-start">
-            <h1 className="text-xl font-bold pt-4 pb-2">Let’s Sign You In</h1>
-            <p>Welcome back, you’ve been missed!</p>
-          </div>
-        </div>
-        {/* <div className="w-full text-center pb-8">
-          <img className="inline-block mt-10" src={image} alt="img" />
-          <h1 className="text-2xl font-bold pt-4 pb-2">Let’s Sign You In</h1>
+          <h1 className="text-xl font-bold pt-4 pb-2">
+            Let’s reset your password
+          </h1>
           <p>Welcome back, you’ve been missed!</p>
-        </div> */}
+          </div>
+          
+        </div>
 
         <Row>
           <Col span={24}>
@@ -88,34 +83,18 @@ const Login = () => {
                       className="h-10 border border-[#C4CAD4] !rounded-lg"
                     />
                   </Form.Item>
-                </Col>
-                <Col span={24} className="!w-full">
-                  <Form.Item
-                    label="Your Password"
-                    name="password"
-                    initialValue={"Jahid00@11"}
-                    tooltip="Here you have to input your Password."
-                    rules={[
-                      { required: true, message: "Password is Required!" },
-                    ]}
-                  >
-                    <Input.Password
-                      type="password"
-                      placeholder="Enter type your password..."
-                      className="h-10 border border-[#C4CAD4] !rounded-lg"
-                    />
-                  </Form.Item>
+                  <p className="pb-5 text-center">We’ll send a verification link to this email if it matches an existing Labone Hospital account.</p>
                 </Col>
               </Row>
 
-              <Row>
+              <Row >
                 <div className="flex items-center justify-center w-[96%]">
                   <button
                     className="cursor-pointer w-full hover:bg-gray-950 py-2 bg-primary font-medium  text-white rounded-lg"
                     type="submit"
                     disabled={isLoading ? true : false}
                   >
-                    {isLoading ? "Loading..." : "Login"}
+                    {isLoading ? "Loading..." : "Submit"}
                   </button>
                 </div>
               </Row>
@@ -127,4 +106,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgetPassword;

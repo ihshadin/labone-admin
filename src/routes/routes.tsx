@@ -14,8 +14,8 @@ import AllSchedules from "../pages/DoctorsSchedules/AllSchedules";
 import Login from "../pages/Auth/Login";
 import Settings from "../pages/Settings/Settings";
 import Users from "../pages/Users/Users";
-import ForgetPassword from "../pages/ForgetPassword/ForgetPassword";
-import ResetPassword from "../pages/ResetPassword/ResetPassword";
+import ForgetPassword from "../pages/Auth/ResetPassword";
+import ResetPassword from "../pages/Auth/ForgetPassword";
 
 const router = createBrowserRouter([
   {
@@ -75,10 +75,6 @@ const router = createBrowserRouter([
         element: <Settings />,
       },
       {
-        path: "/forget-password",
-        element: <ForgetPassword />,
-      },
-      {
         path: "*",
         element: <NotFoundPage />,
       },
@@ -91,6 +87,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/forget-password",
+    element: <ForgetPassword />,
   },
 ]);
 

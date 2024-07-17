@@ -103,7 +103,7 @@ const UpdatePassword = () => {
               <Row>
                 <div className="flex items-center justify-end w-full">
                   <button
-                    className="cursor-pointer hover:bg-gray-950 px-4 py-1.5 bg-primary font-medium  text-white rounded-lg"
+                    className="cursor-pointer w-full hover:bg-gray-950 py-2 bg-primary font-medium  text-white rounded-lg mt-3 mb-5"
                     type="submit"
                     disabled={isLoading ? true : false}
                   >
