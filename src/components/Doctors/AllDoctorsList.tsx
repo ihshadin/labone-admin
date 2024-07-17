@@ -15,9 +15,11 @@ import imageTest from "../../assets/image/labOneLogo.png";
 import UpdateDoctor from "./UpdateDoctor";
 import LabonePagination from "../../utils/Pagination/pagination";
 import { IoSearchOutline } from "react-icons/io5";
+import { useGetAllDoctorsQuery } from "../../redux/features/doctor/doctorApi";
 
 const AllDoctorsList = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(undefined);
 
   const doctorsColumns: TableColumnsType<TDoctor> = [
     {
@@ -29,29 +31,34 @@ const AllDoctorsList = () => {
     },
     {
       title: "Full Name",
-      dataIndex: "fullName",
-      key: "fullName",
+      render: (data: TDoctor) => (
+        <p>
+          {data?.firstName} {data?.lastName}
+        </p>
+      ),
       width: 170,
     },
     {
       title: "Contact Number",
       dataIndex: "contactNumber",
       key: "contactNumber",
+      width: 150,
     },
     {
       title: "Email Address",
       dataIndex: "email",
       key: "email",
+      width: 250,
     },
     {
       title: "Department",
-      dataIndex: "department",
       key: "department",
+      render: (record: TDoctor) => <p>{record?.departmentID?.name}</p>,
     },
     {
       title: "Specialty",
-      dataIndex: "specialty",
-      key: "specialty",
+      dataIndex: "specialization",
+      key: "specialization",
       width: 250,
     },
     {
@@ -142,7 +149,7 @@ const AllDoctorsList = () => {
     console.log("Delete", id);
   };
 
-  const data = [
+  const datas = [
     {
       key: "1",
       _id: "1",
@@ -207,8 +214,9 @@ const AllDoctorsList = () => {
       </div>
       <Table
         columns={doctorsColumns}
-        dataSource={data}
+        dataSource={data?.data?.result}
         scroll={{ x: 1900 }}
+        loading={isDataLoading}
         pagination={false}
       />
       <LabonePagination

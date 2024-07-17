@@ -9,7 +9,6 @@ const appointmentApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: ["appointments"],
     }),
 
     getAllOnetimeAppointment: builder.query({
@@ -19,7 +18,6 @@ const appointmentApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: ["appointments"],
     }),
 
     addAppointment: builder.mutation({
@@ -30,7 +28,7 @@ const appointmentApi = baseApi.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ["appointments"],
+     
     }),
 
     getAllRecurringAppointment: builder.query({

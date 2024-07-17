@@ -16,6 +16,7 @@ import {
   LuGitBranch,
   LuGitBranchPlus,
   LuSettings,
+  LuStopCircle,
   LuUserCircle2,
 } from "react-icons/lu";
 
@@ -108,6 +109,11 @@ const menuItems = [
     key: 8,
     icon: <LuSettings />,
     label: <Link to={"/settings"}>Settings</Link>,
+  },
+  {
+    key: 9,
+    icon: <LuStopCircle />,
+    label: <Link to={"/forget-password"}>Forget Password</Link>,
   },
   
 ];

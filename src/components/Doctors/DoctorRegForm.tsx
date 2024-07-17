@@ -6,24 +6,33 @@ import { Col, Form, Input, Row, Select } from "antd";
 import { toast } from "sonner";
 import { TDoctor } from "../../types/doctor.type";
 import UploadImageWithPreview from "../../utils/UploadImage/UploadImageWithPreview";
+import { useAddDoctorMutation } from "../../redux/features/doctor/doctorApi";
+import { useGetAllDepartmentQuery } from "../../redux/features/department/departmentApi";
 
 const DoctorRegForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<any>([]);
   const [form] = Form.useForm();
+  const [addDoctor] = useAddDoctorMutation(undefined);
+  const { data } = useGetAllDepartmentQuery(undefined);
+  console.log("Department data", data);
 
   const onSubmit = async (data: TDoctor) => {
     const formData = new FormData();
     const toastId = toast.loading("Adding new doctor...");
 
     const doctorNewData = {
-      fullName: data.fullName,
-      contactNumber: data.contactNumber,
+      firstName: data.fullName,
+      lastName: data.fullName,
+      serialNumber: data.contactNumber,
+      image: data.contactNumber,
       email: data.email,
       department: data.department,
-      specialty: data.specialty,
+      specialization: data.specialization,
       degree: data.degree,
       address: data.address,
+      contactNumber: data.address,
+      departmentID: data.address,
     };
     console.log({ doctorNewData });
 
@@ -31,6 +40,7 @@ const DoctorRegForm = () => {
     formData.append("data", JSON.stringify(doctorNewData));
 
     try {
+      // addDoctor();
       setIsLoading(true);
       toast.success("Successfully added the doctor", { id: toastId });
     } catch (error: any) {
