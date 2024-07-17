@@ -1,7 +1,7 @@
-import { Dispatch } from "react";
+import { IMeta } from "./global.type";
 
 export type TPagination = {
-  totalItems: number;
-  itemsPerPage: number;
-  setCurrentPage: Dispatch<React.SetStateAction<number>>;
+  meta: IMeta;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  handlePaginationChange: (value: number) => void;
 };
