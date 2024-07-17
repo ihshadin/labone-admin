@@ -42,6 +42,7 @@ const AllDoctorsList = () => {
       title: "Contact Number",
       dataIndex: "contactNumber",
       key: "contactNumber",
+      width: 150,
     },
     {
       title: "Email Address",

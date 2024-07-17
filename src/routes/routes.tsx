@@ -15,6 +15,7 @@ import Login from "../pages/Auth/Login";
 import Settings from "../pages/Settings/Settings";
 import Users from "../pages/Users/Users";
 import ForgetPassword from "../pages/ForgetPassword/ForgetPassword";
+import ResetPassword from "../pages/ResetPassword/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
         element: <NotFoundPage />,
       },
     ],
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
   },
   {
     path: "/login",
