@@ -2,9 +2,9 @@ import { Divider } from "antd";
 import UpdatePassword from "../../components/ForgetPassword/UpdatePassword";
 import { Link } from "react-router-dom";
 
-const ForgetPassword = () => {
-    return (
-        <>
+const ResetPassword = () => {
+  return (
+    <>
       <section className="flex items-center justify-between">
         <div className="text-base flex items-center gap-2 md:gap-3">
           <Link to="/" className="text-primary">
@@ -20,14 +20,13 @@ const ForgetPassword = () => {
             Forget Password
           </h2>
           <Divider plain>Update your Password</Divider>
-          
         </div>
         <div className="mt-8 md:mt-10">
           <UpdatePassword />
         </div>
       </section>
     </>
-    );
+  );
 };
 
-export default ForgetPassword;
+export default ResetPassword;
