@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Divider,
@@ -11,15 +11,20 @@ import {
 import { AiFillDelete } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { TDoctor } from "../../types/doctor.type";
-import imageTest from "../../assets/image/labOneLogo.png";
 import UpdateDoctor from "./UpdateDoctor";
 import LabonePagination from "../../utils/Pagination/pagination";
 import { IoSearchOutline } from "react-icons/io5";
 import { useGetAllDoctorsQuery } from "../../redux/features/doctor/doctorApi";
+import { TQueryParam } from "../../types/global.type";
 
 const AllDoctorsList = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(undefined);
+  const [params, setParams] = useState<TQueryParam[]>([]);
+
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
+  const [doctorData, setDoctorData] = useState<TDoctor>({} as TDoctor);
+
+  const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(params);
+  // const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(undefined);
 
   const doctorsColumns: TableColumnsType<TDoctor> = [
     {
@@ -105,43 +110,12 @@ const AllDoctorsList = () => {
     },
   ];
 
-  const [searchText, setSearchText] = useState("");
-  const [totalItems, setTotalItems] = useState(100);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [updateModalOpen, setUpdateModalOpen] = useState(false);
-  const [doctorData, setDoctorData] = useState<TDoctor>({} as TDoctor);
-  // const [doctorsData, setDoctorsData] = useState([])
-  console.log(isLoading);
-  //   Filter on object
-  // eslint-disable-next-line prefer-const
-  let params: Record<string, unknown> = {};
+  console.log(params);
 
-  if (searchText?.trim() !== "") {
-    params.searchTerm = searchText;
-  }
-
-  params.limit = 10;
-  params.page = currentPage;
-
-  const dataFetch = async () => {
-    setIsLoading(true);
-
-    // setDoctorsData();
-    setTotalItems(550);
-    setItemsPerPage(10);
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    dataFetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText, currentPage, doctorData]);
 
   const handleUpdateData = (doctor: TDoctor) => {
     setUpdateModalOpen(true);
     setDoctorData(doctor);
-    // console.log("Edit", doctor);
   };
 
   const handleDelete = (id: string) => {
@@ -149,49 +123,61 @@ const AllDoctorsList = () => {
     console.log("Delete", id);
   };
 
-  const datas = [
-    {
-      key: "1",
-      _id: "1",
-      fullName: "ডাঃ আরিফা আখতার",
-      serialNumber: 1,
-      contactNumber: 123456789,
-      email: "john@example.com",
-      department: "Gynaecology",
-      specialty: "স্ত্রী রোগ, প্রসূতি বিদ্যা ও বন্ধ্যাত্ব বিশেষজ্ঞ ও সার্জন।",
-      degree:
-        "এমবিবিএস (ডিএমসি), বিসিএস (স্বাস্থ্য), এমসিপিএস, এফসিপিএস (গাইনি এন্ড অবস), এমআরসিওজি (লন্ডন,ইউকে), রিপ্রোডাক্টিভ এন্ডোক্রাইনোলজি এন্ড ইনফার্টিলিটি কোর্স (বিএসএমএমইউ) কনসালটেন্ট (গাইনি এন্ড অবস), ঢাকা মেডিকেল কলেজ হাসপাতাল, ঢাকা।",
-      address: "মোজারমিল বাসস্ট্যান্ড, কাশিমপুর, গাজীপুর।",
-      doctorImage: imageTest,
-    },
-    {
-      key: "2",
-      _id: "2",
-      fullName: "ডাঃ রুখসানা পারভীন",
-      serialNumber: 2,
-      contactNumber: 123456789,
-      email: "john@example.com",
-      department: "Gynaecology",
-      specialty: "স্ত্রী রোগ ও প্রসূতি বিদ্যা বিশেষজ্ঞ ও সার্জন।",
-      degree:
-        "এমবিবিএস, বিসিএস (স্বাস্থ্য), স্পেশাল ট্রেনিং ইন গাইনি অনকলোজী এমসিপিএস (গাইনি এন্ড অবস্), এফসিপিএস (গাইনি এন্ড অবস্)। আর এস, জাতীয় ক্যান্সার গবেষণা ইনস্টিটিউট ও হাসপাতাল, মহাখালী, ঢাকা ।",
-      address: "মোজারমিল বাসস্ট্যান্ড, কাশিমপুর, গাজীপুর।",
-      doctorImage: imageTest,
-    },
-    {
-      key: "3",
-      _id: "3",
-      fullName: "John Brown",
-      serialNumber: 3,
-      contactNumber: 123456789,
-      email: "john@example.com",
-      department: "Cardiology",
-      specialty: "Cardiologist",
-      degree: "MD",
-      address: "123 Street, City",
-      doctorImage: imageTest,
-    },
-  ];
+  console.log(data);
+
+  // const datas = [
+  //   {
+  //     key: "1",
+  //     _id: "1",
+  //     fullName: "ডাঃ আরিফা আখতার",
+  //     serialNumber: 1,
+  //     contactNumber: 123456789,
+  //     email: "john@example.com",
+  //     department: "Gynaecology",
+  //     specialty: "স্ত্রী রোগ, প্রসূতি বিদ্যা ও বন্ধ্যাত্ব বিশেষজ্ঞ ও সার্জন।",
+  //     degree:
+  //       "এমবিবিএস (ডিএমসি), বিসিএস (স্বাস্থ্য), এমসিপিএস, এফসিপিএস (গাইনি এন্ড অবস), এমআরসিওজি (লন্ডন,ইউকে), রিপ্রোডাক্টিভ এন্ডোক্রাইনোলজি এন্ড ইনফার্টিলিটি কোর্স (বিএসএমএমইউ) কনসালটেন্ট (গাইনি এন্ড অবস), ঢাকা মেডিকেল কলেজ হাসপাতাল, ঢাকা।",
+  //     address: "মোজারমিল বাসস্ট্যান্ড, কাশিমপুর, গাজীপুর।",
+  //     doctorImage: imageTest,
+  //   },
+  //   {
+  //     key: "2",
+  //     _id: "2",
+  //     fullName: "ডাঃ রুখসানা পারভীন",
+  //     serialNumber: 2,
+  //     contactNumber: 123456789,
+  //     email: "john@example.com",
+  //     department: "Gynaecology",
+  //     specialty: "স্ত্রী রোগ ও প্রসূতি বিদ্যা বিশেষজ্ঞ ও সার্জন।",
+  //     degree:
+  //       "এমবিবিএস, বিসিএস (স্বাস্থ্য), স্পেশাল ট্রেনিং ইন গাইনি অনকলোজী এমসিপিএস (গাইনি এন্ড অবস্), এফসিপিএস (গাইনি এন্ড অবস্)। আর এস, জাতীয় ক্যান্সার গবেষণা ইনস্টিটিউট ও হাসপাতাল, মহাখালী, ঢাকা ।",
+  //     address: "মোজারমিল বাসস্ট্যান্ড, কাশিমপুর, গাজীপুর।",
+  //     doctorImage: imageTest,
+  //   },
+  //   {
+  //     key: "3",
+  //     _id: "3",
+  //     fullName: "John Brown",
+  //     serialNumber: 3,
+  //     contactNumber: 123456789,
+  //     email: "john@example.com",
+  //     department: "Cardiology",
+  //     specialty: "Cardiologist",
+  //     degree: "MD",
+  //     address: "123 Street, City",
+  //     doctorImage: imageTest,
+  //   },
+  // ];
+
+  const handlePaginationChange = (page: number) => {
+    setParams((prevParams) => [
+      ...prevParams.filter((param) => param.name !== "page"),
+      { name: "page", value: page },
+    ]);
+  };
+
+  const meta = data?.data?.meta;
+  const result = data?.data?.result;
 
   return (
     <>
@@ -208,21 +194,22 @@ const AllDoctorsList = () => {
             prefix={<IoSearchOutline />}
             placeholder="Search"
             className="focus:placeholder:!text-primary"
-            onChange={(e) => setSearchText(e.target.value)}
+            onChange={(e) =>
+              setParams([{ name: "searchTerm", value: e.target.value }])
+            }
           />
         </div>
       </div>
       <Table
         columns={doctorsColumns}
-        dataSource={data?.data?.result}
+        dataSource={result}
         scroll={{ x: 1900 }}
         loading={isDataLoading}
         pagination={false}
       />
       <LabonePagination
-        totalItems={totalItems}
-        itemsPerPage={itemsPerPage}
-        setCurrentPage={setCurrentPage}
+        meta={meta}
+        handlePaginationChange={handlePaginationChange}
       />
       <UpdateDoctor
         updateModalOpen={updateModalOpen}

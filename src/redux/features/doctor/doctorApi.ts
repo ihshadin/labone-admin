@@ -1,12 +1,22 @@
+import { TQueryParam } from "../../../types/global.type";
 import { baseApi } from "../../api/baseApi";
 
 const doctorsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllDoctors: builder.query({
-      query: () => {
+      query: (args) => {
+        const params = new URLSearchParams();
+
+        if (args) {
+          args?.forEach((item: TQueryParam) => {
+            params?.append(item.name, item.value as string);
+          });
+        }
+
         return {
           url: "/doctor",
           method: "GET",
+          params,
         };
       },
     }),

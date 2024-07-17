@@ -19,32 +19,33 @@ const ResetPassword = () => {
   const onSubmit = async (data: any) => {
     setIsLoading(true);
     const toastId = toast.loading("Reset Password...");
+    console.log(data)
 
-    try {
-      const userInfo = await login(data).unwrap();
-      const user = verifyToken(userInfo?.data?.accessToken);
+    // try {
+    //   const userInfo = await login(data).unwrap();
+    //   const user = verifyToken(userInfo?.data?.accessToken);
 
-      dispatch(setUser({ user: user, token: userInfo?.data?.accessToken }));
+    //   dispatch(setUser({ user: user, token: userInfo?.data?.accessToken }));
 
-      if (user?.role === "admin") {
-        toast.success("Logged In successful!", { id: toastId, duration: 2000 });
-        localStorage.setItem("accessToken", userInfo?.data?.accessToken);
-        navigate("/forget-password");
-        setIsLoading(false);
-      } else {
-        toast.error("Your are Unauthorized!", {
-          id: toastId,
-          duration: 2000,
-        });
-        setIsLoading(false);
-      }
-    } catch (error: any) {
-      setIsLoading(false);
+    //   if (user?.role === "admin") {
+    //     toast.success("Logged In successful!", { id: toastId, duration: 2000 });
+    //     localStorage.setItem("accessToken", userInfo?.data?.accessToken);
+    //     navigate("/forget-password");
+    //     setIsLoading(false);
+    //   } else {
+    //     toast.error("Your are Unauthorized!", {
+    //       id: toastId,
+    //       duration: 2000,
+    //     });
+    //     setIsLoading(false);
+    //   }
+    // } catch (error: any) {
+    //   setIsLoading(false);
 
-      if (error?.data?.message) {
-        toast.error(error?.data?.message, { id: toastId });
-      }
-    }
+    //   if (error?.data?.message) {
+    //     toast.error(error?.data?.message, { id: toastId });
+    //   }
+    // }
   };
     return (
         <div className="max-w-[450px] mx-auto">
