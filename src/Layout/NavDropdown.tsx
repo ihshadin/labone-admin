@@ -2,17 +2,23 @@ import { Dropdown, Image, MenuProps } from "antd";
 import { useState } from "react";
 import { LiaAngleDownSolid, LiaAngleUpSolid } from "react-icons/lia";
 import { FiLogOut } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const NavDropDown = () => {
+
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(setIsLoading)
+  console.log(setIsLoading);
+  const navigate = useNavigate();
 
   const handleDropdownVisibleChange = (visible: any) => {
     setDropdownVisible(visible);
   };
 
-  const handelLogOut = async () => {};
+  const handelLogOut = async () => {
+    localStorage.removeItem("accessToken");
+    navigate('/login')
+  };
 
   const items: MenuProps["items"] = [
     {
