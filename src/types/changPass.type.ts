@@ -7,6 +7,7 @@ export type TChangePass = {
   confirmPassword : string;
 
 };
+
 export type TUpdatePass= {
   updateModalOpen: boolean;
   setUpdateModalOpen: Dispatch<React.SetStateAction<boolean>>;

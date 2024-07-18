@@ -1,12 +1,11 @@
-
-import ProfileSettings from '../../components/Settings/ProfileSettings';
+import ProfileSettings from "../../components/Settings/ProfileSettings";
 
 const Settings = () => {
-    return (
-        <>
-            <ProfileSettings/>
-        </>
-    );
+  return (
+    <>
+      <ProfileSettings />
+    </>
+  );
 };
 
 export default Settings;
