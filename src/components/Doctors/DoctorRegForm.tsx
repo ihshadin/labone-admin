@@ -8,6 +8,7 @@ import { TDoctor } from "../../types/doctor.type";
 import UploadImageWithPreview from "../../utils/UploadImage/UploadImageWithPreview";
 import { useAddDoctorMutation } from "../../redux/features/doctor/doctorApi";
 import { useGetAllDepartmentQuery } from "../../redux/features/department/departmentApi";
+import { uploadImageInCloudinary } from "../../utils/UploadImage/UploadImageInCloudinay";
 
 type Interest = {
   _id: string;
@@ -17,41 +18,45 @@ type Interest = {
 const DoctorRegForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<any>([]);
+  const [imageLink, setImageLink] = useState<string>("");
   const [form] = Form.useForm();
-  const [addDoctor] = useAddDoctorMutation(undefined);
+  const [addDoctor] = useAddDoctorMutation();
   const { data } = useGetAllDepartmentQuery(undefined);
 
   const onSubmit = async (data: TDoctor) => {
-    const formData = new FormData();
     const toastId = toast.loading("Adding new doctor...");
 
-    const doctorNewData = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      serialNumber: data.contactNumber,
-      image: data.contactNumber,
-      email: data.email,
-      department: data.department,
-      specialization: data.specialization,
-      degree: data.degree,
-      address: data.address,
-      contactNumber: data.address,
-      departmentID: data.address,
-    };
-    console.log({ doctorNewData });
-
-    formData.append("file", file[0]?.originFileObj);
-    formData.append("data", JSON.stringify(doctorNewData));
-
-    try {
-      // addDoctor();
-      setIsLoading(true);
-      toast.success("Successfully added the doctor", { id: toastId });
-    } catch (error: any) {
-      toast.error(error.message, { id: toastId });
-    } finally {
-      setIsLoading(false);
+    let imageLink;
+    if (file) {
+      imageLink = await uploadImageInCloudinary(file, toastId);
     }
+
+    console.log({ imageLink });
+
+    // const doctorNewData = {
+    //   firstName: data.firstName,
+    //   lastName: data.lastName,
+    //   serialNumber: data.contactNumber,
+    //   image: data.contactNumber,
+    //   email: data.email,
+    //   department: data.department,
+    //   specialization: data.specialization,
+    //   degree: data.degree,
+    //   address: data.address,
+    //   contactNumber: data.address,
+    //   departmentID: data.address,
+    // };
+    // console.log({ doctorNewData });
+
+    // try {
+    //   // addDoctor();
+    //   setIsLoading(true);
+    //   toast.success("Successfully added the doctor", { id: toastId });
+    // } catch (error: any) {
+    //   toast.error(error.message, { id: toastId });
+    // } finally {
+    //   setIsLoading(false);
+    // }
   };
 
   // const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
