@@ -1,4 +1,6 @@
 import { BiSolidDashboard, BiUserPlus } from "react-icons/bi";
+import { FaHospital } from "react-icons/fa";
+
 import { FaUserDoctor } from "react-icons/fa6";
 import { GrVirtualMachine, GrVmMaintenance } from "react-icons/gr";
 import {
@@ -91,33 +93,35 @@ export const sidebarItems = [
   },
   {
     key: 10,
-    icon: <LuSettings />,
+    icon: <FaHospital />,
     label: <span>Diagnostics</span>,
   },
   {
     key: 7,
     icon: <FaUserDoctor />,
-    label: <Link  to="/all-diagnostics-doctor">All Doctor's</Link>,
+    label: <Link  to="/all-diagnostics-doctor">Di. All Doctor's</Link>,
     children: [
       {
         key: 70,
         icon: <BiUserPlus />,
-        label: <Link to={"/add-diagnostics-doctor"}>Add Diagnostics Doctor</Link>,
-      },
-      {
-        key: 71,
-        icon: <LuCalendarCheck2 />,
-        label: <Link to={"/approved-appointments"}>Approved Appointments</Link>,
-      },
-      {
-        key: 72,
-        icon: <LuCalendarX2 />,
-        label: <Link to={"/cancel-appointments"}>Cancel Appointments</Link>,
+        label: <Link to={"/add-diagnostics-doctor"}>Di. Add Doctor</Link>,
       },
     ],
   },
   {
-    key: 8,
+    key: 74,
+    icon: <GrVirtualMachine />,
+    label: <Link to={"/all-diagnostic-machines"}>Di. All Machines</Link>,
+    children: [
+      {
+        key: 84,
+        icon: <GrVmMaintenance />,
+        label: <Link to={"/add-diagnostic-machine"}>Di. Add Machine</Link>,
+      },
+    ],
+  },
+  {
+    key: 45,
     icon: <LuUserCircle2 />,
     label: <Link to={"/users"}>Users</Link>,
   },

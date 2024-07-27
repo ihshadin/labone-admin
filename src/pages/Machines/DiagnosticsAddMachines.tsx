@@ -2,9 +2,9 @@
 import { Divider } from "antd";
 import { Link } from "react-router-dom";
 import { LuCornerRightUp } from "react-icons/lu";
-import DiagnosticsDoctorRegForm from "../../components/DiagnosticDoctor/DiagnosticsDoctorRegForm";
+import DiagnosticsEntryFormMachines from "../../components/DiagnositicMachine/DiagnosticsEntryFormMachines";
 
-const AddDiagnosticsDoctor = () => {
+const DiagnosticsAddMachines = () => {
   return (
     <>
       <section className="flex items-center justify-between">
@@ -13,34 +13,34 @@ const AddDiagnosticsDoctor = () => {
             Lab One
           </Link>
           <span>/</span>
-          <span>Add Diagnostic Doctor</span>
+          <span>Add Diagnostic Machine</span>
         </div>
         <Link
-          to="/all-diagnostics-doctor"
+          to="/all-diagnostic-machines"
           className="flex items-center gap-2 bg-primary hover:bg-accent text-white hover:text-white px-4 py-2.5 rounded-lg transition duration-150"
-          title="All Doctors"
+          title="All Machines"
         >
-          <span>All Diagnostic Doctors</span>
+          <span>All Diagnostic Machines</span>
           <LuCornerRightUp />
         </Link>
       </section>
       <section className="bg-white/40 bg-blend-color-burn border p-3 md:p-8 my-10 rounded-xl w-full max-w-[800px] mx-auto">
         <div className=" text-center">
           <h2 className="text-primary text-xl font-semibold">
-          Diagnostics Doctor Registration Form 
+          Diagnostic Machine Entry Form
           </h2>
-          <Divider plain>Add New Diagnostic Doctor</Divider>
+          <Divider plain>New Diagnostic Machine</Divider>
           <p>
             If already added on quick addition form. do not add here again. just
             edit that from the doctor list
           </p>
         </div>
         <div className="mt-8 md:mt-10">
-          <DiagnosticsDoctorRegForm />
+          <DiagnosticsEntryFormMachines />
         </div>
       </section>
     </>
   );
 };
 
-export default AddDiagnosticsDoctor;
+export default DiagnosticsAddMachines;

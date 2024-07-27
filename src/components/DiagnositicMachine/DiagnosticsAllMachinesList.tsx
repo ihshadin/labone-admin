@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -13,7 +14,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { IoSearchOutline } from "react-icons/io5";
 import { TMachine } from "../../types/machine.type";
 import LabonePagination from "../../utils/Pagination/pagination";
-import UpdateMachine from "./UpdateMachine";
+import UpdateMachine from "../Machines/UpdateMachine";
 
 const data = [
   {
@@ -64,7 +65,7 @@ const data = [
   },
 ];
 
-const AllMachinesList = () => {
+const DiagnosticsAllMachinesList = () => {
   const machinesColumns: TableColumnsType<TMachine> = [
     {
       title: "Machine Image",
@@ -172,7 +173,7 @@ const AllMachinesList = () => {
       <div className="flex items-center gap-5 md:gap-16 mb-5 md:mb-8">
         <div className="grow">
           <Divider orientation="left" className="!my-0 !text-xl !text-primary">
-            All Machine List
+            All Diagnostic Machine List
           </Divider>
         </div>
         <div className="w-[250px]">
@@ -205,4 +206,4 @@ const AllMachinesList = () => {
   );
 };
 
-export default AllMachinesList;
+export default DiagnosticsAllMachinesList;
