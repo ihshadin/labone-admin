@@ -18,6 +18,8 @@ import ForgetPassword from "../pages/Auth/ResetPassword";
 import ResetPassword from "../pages/Auth/ForgetPassword";
 import AddDiagnosticsDoctor from "../pages/Doctors/AddDiagnosticsDoctor";
 import AllDiagnosticsDoctors from "../pages/Doctors/AllDiagnosticsDoctors";
+import DiagnosticsAddMachines from "../pages/Machines/DiagnosticsAddMachines";
+import DiagnosticsAllMachines from "../pages/Machines/DiagnosticsAllMachines";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +53,14 @@ const router = createBrowserRouter([
       {
         path: "/all-machines",
         element: <AllMachines />,
+      },
+      {
+        path: "/all-diagnostic-machines",
+        element: <DiagnosticsAllMachines />,
+      },
+      {
+        path: "/add-diagnostic-machine",
+        element: <DiagnosticsAddMachines />,
       },
       {
         path: "/add-machine",
