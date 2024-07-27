@@ -1,3 +1,5 @@
+
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import {
@@ -11,13 +13,13 @@ import {
 import { AiFillDelete } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { TDoctor } from "../../types/doctor.type";
-import UpdateDoctor from "./UpdateDoctor";
 import LabonePagination from "../../utils/Pagination/pagination";
 import { IoSearchOutline } from "react-icons/io5";
 import { useDeleteDoctorMutation, useGetAllDoctorsQuery } from "../../redux/features/doctor/doctorApi";
 import { TQueryParam } from "../../types/global.type";
+import UpdateDoctor from "../Doctors/UpdateDoctor";
 
-const AllDoctorsList = () => {
+const DiagnosticsAllDoctorList = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
 
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
@@ -185,7 +187,7 @@ const AllDoctorsList = () => {
         <div className="grow">
           {/* <h2 className="text-primary text-xl font-semibold">Doctor list</h2> */}
           <Divider orientation="left" className="!my-0 !text-xl !text-primary">
-            All Doctors list
+            Diagnostic All Doctors list
           </Divider>
         </div>
         <div className="w-[250px]">
@@ -220,4 +222,4 @@ const AllDoctorsList = () => {
   );
 };
 
-export default AllDoctorsList;
+export default DiagnosticsAllDoctorList;

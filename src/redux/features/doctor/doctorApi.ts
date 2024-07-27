@@ -30,7 +30,16 @@ const doctorsApi = baseApi.injectEndpoints({
         };
       },
     }),
+
+    deleteDoctor: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/doctor/${id}`,
+          method: "DELETE",
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetAllDoctorsQuery, useAddDoctorMutation } = doctorsApi;
+export const { useGetAllDoctorsQuery, useAddDoctorMutation, useDeleteDoctorMutation } = doctorsApi;
