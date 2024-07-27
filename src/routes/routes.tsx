@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import ProtectedRoute from "../Layout/ProtectedRoute";
+// import ProtectedRoute from "../Layout/ProtectedRoute";
 import MainLayout from "../Layout/MainLayout";
 import NotFoundPage from "../pages/ErrorPage/NotFoundPage";
 import Home from "../pages/Home/Home";
@@ -16,14 +16,16 @@ import Settings from "../pages/Settings/Settings";
 import Users from "../pages/Users/Users";
 import ForgetPassword from "../pages/Auth/ResetPassword";
 import ResetPassword from "../pages/Auth/ForgetPassword";
+import AddDiagnosticsDoctor from "../pages/Doctors/AddDiagnosticsDoctor";
+import AllDiagnosticsDoctors from "../pages/Doctors/AllDiagnosticsDoctors";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <ProtectedRoute>
+      // <ProtectedRoute>
         <MainLayout />
-      </ProtectedRoute>
+      // </ProtectedRoute>
     ),
     children: [
       {
@@ -37,6 +39,14 @@ const router = createBrowserRouter([
       {
         path: "/add-doctor",
         element: <AddDoctor />,
+      },
+      {
+        path: "/add-diagnostics-doctor",
+        element: <AddDiagnosticsDoctor />,
+      },
+      {
+        path: "/all-diagnostics-doctor",
+        element: <AllDiagnosticsDoctors />,
       },
       {
         path: "/all-machines",

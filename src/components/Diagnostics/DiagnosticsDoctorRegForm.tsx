@@ -15,7 +15,7 @@ export type Interest = {
   name: string;
 };
 
-const DoctorRegForm = () => {
+const DiagnosticsDoctorRegForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<any>([]);
   const [imageLink, setImageLink] = useState<string>("");
@@ -252,7 +252,7 @@ const DoctorRegForm = () => {
                   type="submit"
                   disabled={isLoading ? true : false}
                 >
-                  {isLoading ? "Loading..." : "Add Doctor"}
+                  {isLoading ? "Loading..." : "Add Diagnostic Doctor"}
                 </button>
               </div>
             </Row>
@@ -263,4 +263,4 @@ const DoctorRegForm = () => {
   );
 };
 
-export default DoctorRegForm;
+export default DiagnosticsDoctorRegForm;
