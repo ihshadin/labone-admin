@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Modal } from "antd";
 import { TViewAppointmentModal } from "../../types/appointment.type";
 
@@ -7,11 +6,8 @@ const AppointmentDetails = ({
   setViewDetailsModalOpen,
   appointmentData,
 }: TViewAppointmentModal) => {
-  const [isLoading, setIsLoading] = useState(false);
 
   console.log(appointmentData);
-  console.log(isLoading);
-  console.log(() => setIsLoading(true));
 
   return (
     <>
@@ -21,10 +17,67 @@ const AppointmentDetails = ({
         open={viewDetailsModalOpen}
         onOk={() => setViewDetailsModalOpen(false)}
         onCancel={() => setViewDetailsModalOpen(false)}
-        width={1000}
+        width={700}
         footer={null}
       >
-        details
+        <h1 className="text-lg font-semibold">Appointment Details</h1>
+        <div className="flex justify-center items-center gap-6 pb-4 pt-6 ">
+        
+          <div className="w-full">
+            <div className="flex items-center font-medium border-b py-2">
+              <p className="w-2/4">Patient Name</p>
+              <div className="flex items-center  gap-2">
+                <p>{appointmentData?.patientName}</p>
+              </div>
+            </div>
+            <div className="flex items-center font-medium border-b py-2">
+              <p className="w-2/4 ">Appointment Date</p>
+              <div className="flex items-center  gap-2">
+                <p>
+                  {appointmentData?.date}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center font-medium border-b py-2">
+              <p className="w-2/4 ">Patient Mobile</p>
+              <div className="flex items-center  gap-2">
+                <p>
+                  {appointmentData?.mobile}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center font-medium border-b py-2">
+              <p className="w-2/4 ">Patient Address</p>
+              <div className="flex items-center  gap-2">
+                <p>
+                  {appointmentData?.address}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center font-medium   border-b py-4">
+              <p className="w-2/4">Appointment Status</p>
+              <p className="capitalize">{appointmentData?.status}</p>
+            </div>
+           
+            <div className="flex items-center font-medium   border-b py-4">
+              <p className="w-2/4 ">Doctor Name</p>{" "}
+              <p>{appointmentData?.doctor}</p>
+            </div>
+            <div className="font-medium border-b py-2">
+              <p className="w-2/4 ">Patient Message</p>{" "}
+              <p>{appointmentData?.message}</p>
+            </div>
+           
+          </div>
+        </div>
+        <div className="flex items-center justify-end w-full mb-2">
+          <button
+            className="cursor-pointer border py-1.5 px-4 font-medium rounded-lg "
+            onClick={() => setViewDetailsModalOpen(false)}
+          >
+            Close
+          </button>
+        </div>
       </Modal>
     </>
   );

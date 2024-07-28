@@ -20,6 +20,9 @@ import AddDiagnosticsDoctor from "../pages/Doctors/AddDiagnosticsDoctor";
 import AllDiagnosticsDoctors from "../pages/Doctors/AllDiagnosticsDoctors";
 import DiagnosticsAddMachines from "../pages/Machines/DiagnosticsAddMachines";
 import DiagnosticsAllMachines from "../pages/Machines/DiagnosticsAllMachines";
+import PendingAppointments from "../pages/Appointments/PendingAppointments";
+import ApprovedAppointments from "../pages/Appointments/ApprovedAppointments";
+import CancelAppointments from "../pages/Appointments/CancelAppointments";
 
 const router = createBrowserRouter([
   {
@@ -85,6 +88,18 @@ const router = createBrowserRouter([
       {
         path: "/all-appointments",
         element: <AllAppointments />,
+      },
+      {
+        path: "/pending-appointments",
+        element: <PendingAppointments />,
+      },
+      {
+        path: "/approved-appointments",
+        element: <ApprovedAppointments />,
+      },
+      {
+        path: "/cancel-appointments",
+        element: <CancelAppointments />,
       },
       {
         path: "/users",
