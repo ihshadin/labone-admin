@@ -7,6 +7,8 @@ import { TDoctor, TUpdateDoctor } from "../../types/doctor.type";
 import UploadImageWithPreview from "../../utils/UploadImage/UploadImageWithPreview";
 import { useGetAllDepartmentQuery } from "../../redux/features/department/departmentApi";
 import { Interest } from "./DoctorRegForm";
+import { uploadImageInCloudinary } from "../../utils/UploadImage/UploadImageInCloudinay";
+import { useUpdateDoctorMutation } from "../../redux/features/doctor/doctorApi";
 
 const UpdateDoctor = ({
   updateModalOpen,
@@ -17,37 +19,55 @@ const UpdateDoctor = ({
   const [file, setFile] = useState<any>([]);
   const [form] = Form.useForm();
   const { data } = useGetAllDepartmentQuery(undefined);
-  
+  const [updateDoctor] = useUpdateDoctorMutation();
 
   const onSubmit = async (data: TDoctor) => {
-    const formData = new FormData();
     const toastId = toast.loading("Updating doctor info...");
 
-    const updatedData = {
-      fullName: data.fullName,
-      contactNumber: data.contactNumber,
-      email: data.email,
-      department: data.department,
-      specialty: data.specialty,
-      degree: data.degree,
-      address: data.address,
-    };
-    console.log({ updatedData });
+    let imageLink;
 
-    formData.append("file", file[0]?.originFileObj);
-    formData.append("data", JSON.stringify(updatedData));
+    if (file) {
+      imageLink = await uploadImageInCloudinary(file, toastId);
+    }
+
+    const doctorNewData = {
+      firstName: data?.firstName,
+      lastName: data?.lastName,
+      serialNumber: Number(data?.serialNumber),
+      image: imageLink ? imageLink : doctorData?.image,
+      email: data?.email,
+      specialization: data?.specialization,
+      degree: data?.degree,
+      address: data?.address,
+      contactNumber: data?.contactNumber,
+      departmentID: data?.department
+        ? data.department
+        : doctorData?.departmentID?._id,
+    };
+
+    // console.log({ doctorNewData });
+
+    const updateInfo = {
+      id: doctorData?._id,
+      data: doctorNewData,
+    };
 
     try {
-      setIsLoading(true);
-      setUpdateModalOpen(false);
-      toast.success("Successfully updated the doctor", { id: toastId });
+      const res = await updateDoctor(updateInfo);
+      
+      if (res) {
+        setIsLoading(true);
+        setUpdateModalOpen(false);
+        toast.success("Successfully updated the doctor", { id: toastId });
+      } else {
+        toast.error("Something want wrong!", { id: toastId });
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     } finally {
       setIsLoading(false);
     }
   };
-  console.log(doctorData);
 
   // const interestOptions = [
   //   { value: "Travel", label: "Travel" },
@@ -100,10 +120,6 @@ const UpdateDoctor = ({
           <Divider plain className="!my-1">
             Edit doctor's info
           </Divider>
-          {/* <p>
-            If already added on quick addition form. do not add here again. just
-            edit that from the doctor list
-          </p> */}
         </div>
         <Form
           form={form}
@@ -112,55 +128,55 @@ const UpdateDoctor = ({
           requiredMark={false}
           layout="vertical"
         >
-         <Row gutter={16}>
-              <Col span={24} md={{ span: 12 }}>
-                <Form.Item
-                  label="First Name"
-                  name="firstName"
-                  tooltip="Here you have to input the doctor's first name."
-                  rules={[{ required: true, message: "First Name is required" }]}
-                >
-                  <Input
-                    type="text"  autoComplete="off"
-                    placeholder="Write here..."
-                    className="h-10 border border-[#C4CAD4] !rounded-lg"
-                  />
-                </Form.Item>
-              </Col>
-              <Col span={24} md={{ span: 12 }}>
-                <Form.Item
-                  label="Last Name"
-                  name="lastName"
-                  tooltip="Here you have to input the doctor's last name."
-                  rules={[{ required: true, message: "Last Name is required" }]}
-                >
-                  <Input
-                    type="text"
-                    autoComplete="off"
-                    placeholder="Write here..."
-                    className="h-10 border border-[#C4CAD4] !rounded-lg"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
+          <Row gutter={16}>
+            <Col span={24} md={{ span: 12 }}>
+              <Form.Item
+                label="First Name"
+                name="firstName"
+                tooltip="Here you have to input the doctor's first name."
+                rules={[{ required: true, message: "First Name is required" }]}
+              >
+                <Input
+                  type="text"
+                  autoComplete="off"
+                  placeholder="Write here..."
+                  className="h-10 border border-[#C4CAD4] !rounded-lg"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={24} md={{ span: 12 }}>
+              <Form.Item
+                label="Last Name"
+                name="lastName"
+                tooltip="Here you have to input the doctor's last name."
+                rules={[{ required: true, message: "Last Name is required" }]}
+              >
+                <Input
+                  type="text"
+                  autoComplete="off"
+                  placeholder="Write here..."
+                  className="h-10 border border-[#C4CAD4] !rounded-lg"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
-            <Row gutter={16}>
-              
-              <Col span={24} md={{ span: 24 }}>
-                <Form.Item
+          <Row gutter={16}>
+            <Col span={24} md={{ span: 24 }}>
+              <Form.Item
                 tooltip="Here you have to input the doctor's email."
                 rules={[{ required: true, message: "Email is required" }]}
-
-                label="Email Address" name="email">
-                  <Input
-                    type="email"
-                    placeholder="Write here..."
-                    className="h-10 border border-[#C4CAD4] !rounded-lg"
-                  />
-                </Form.Item>
-               
-              </Col>
-            </Row>
+                label="Email Address"
+                name="email"
+              >
+                <Input
+                  type="email"
+                  placeholder="Write here..."
+                  className="h-10 border border-[#C4CAD4] !rounded-lg"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
           <Row gutter={16}>
             <Col span={24} md={{ span: 12 }}>
@@ -180,18 +196,18 @@ const UpdateDoctor = ({
               </Form.Item>
             </Col>
             <Col span={24} md={{ span: 12 }}>
-            <Form.Item
-                  label="Serial No"
-                  name="serialNumber"
-                  tooltip="Here you have to input the doctor's serial number."
-                  rules={[{ required: true, message: "Serial no is required" }]}
-                >
-                  <Input
-                    type="number"
-                    placeholder="Write here..."
-                    className="h-10 border border-[#C4CAD4] !rounded-lg"
-                  />
-                </Form.Item>
+              <Form.Item
+                label="Serial No"
+                name="serialNumber"
+                tooltip="Here you have to input the doctor's serial number."
+                rules={[{ required: true, message: "Serial no is required" }]}
+              >
+                <Input
+                  type="number"
+                  placeholder="Write here..."
+                  className="h-10 border border-[#C4CAD4] !rounded-lg"
+                />
+              </Form.Item>
             </Col>
           </Row>
 
@@ -201,7 +217,6 @@ const UpdateDoctor = ({
                 label="Department"
                 name="department"
                 tooltip="Here you have to input the doctor's department."
-                rules={[{ required: true, message: "Department is required" }]}
               >
                 <Select
                   showSearch
@@ -256,7 +271,10 @@ const UpdateDoctor = ({
           <Row>
             <Col span={24}>
               <p className="font-medium mb-1.5">Doctor Image</p>
-              <UploadImageWithPreview defaultImage={doctorData?.image} setFile={setFile} />
+              <UploadImageWithPreview
+                defaultImage={doctorData?.image}
+                setFile={setFile}
+              />
             </Col>
           </Row>
 

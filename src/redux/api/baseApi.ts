@@ -33,7 +33,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 > = async (args, api, extraOptions): Promise<any> => {
   let result = await baseQuery(args, api, extraOptions);
 
-  console.log("result from base query--------=>", result);
 
   if (result?.error?.status === 404) {
     const errorData = result?.error?.data as { message?: string }; // Define type with optional message property
@@ -45,7 +44,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   }
 
   if (result?.error?.status === 401) {
-    console.log("sending refreshToken-----=>");
     const res = await fetch("http://localhost:5000/api/v1/auth/refresh-token", {
       method: "POST",
       credentials: "include",
@@ -68,7 +66,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: [],
+  tagTypes: ["doctor"],
   refetchOnMountOrArgChange: 30,
   endpoints: () => ({}),
 });
