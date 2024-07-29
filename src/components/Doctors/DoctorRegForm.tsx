@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Col, Form, Input, Row, Select } from "antd";
-// import Dragger from "antd/es/upload/Dragger";
-// import { LuUploadCloud } from "react-icons/lu";
 import { toast } from "sonner";
 import { TDoctor } from "../../types/doctor.type";
 import UploadImageWithPreview from "../../utils/UploadImage/UploadImageWithPreview";
@@ -18,7 +16,6 @@ export type Interest = {
 const DoctorRegForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<any>([]);
-  const [imageLink, setImageLink] = useState<string>("");
   const [form] = Form.useForm();
   const [addDoctor] = useAddDoctorMutation();
   const { data } = useGetAllDepartmentQuery(undefined);
@@ -31,43 +28,42 @@ const DoctorRegForm = () => {
       imageLink = await uploadImageInCloudinary(file, toastId);
     }
 
-    console.log({ imageLink });
+    const doctorNewData = {
+      firstName: data?.firstName,
+      lastName: data?.lastName,
+      serialNumber: Number(data?.serialNumber),
+      image: imageLink,
+      email: data?.email,
+      specialization: data?.specialization,
+      degree: data?.degree,
+      address: data?.address,
+      contactNumber: data?.contactNumber,
+      departmentID: data.department,
+    };
 
-    // const doctorNewData = {
-    //   firstName: data.firstName,
-    //   lastName: data.lastName,
-    //   serialNumber: data.contactNumber,
-    //   image: data.contactNumber,
-    //   email: data.email,
-    //   department: data.department,
-    //   specialization: data.specialization,
-    //   degree: data.degree,
-    //   address: data.address,
-    //   contactNumber: data.address,
-    //   departmentID: data.address,
-    // };
-    // console.log({ doctorNewData });
-
-    // try {
-    //   // addDoctor();
-    //   setIsLoading(true);
-    //   toast.success("Successfully added the doctor", { id: toastId });
-    // } catch (error: any) {
-    //   toast.error(error.message, { id: toastId });
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    try {
+      const res = await addDoctor(doctorNewData);
+      if(res){
+        setIsLoading(true);
+        toast.success("Successfully added the doctor", { id: toastId });
+        form.resetFields();
+        setFile([]); 
+      } else{
+        toast.error("Something want wrong!", { id: toastId });
+      }
+      
+    } catch (error: any) {
+      toast.error(error.message, { id: toastId });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
-  //   setFile(newFileList);
-  // };
 
   const interestOptions = data?.data?.result?.map((int: Interest) => ({
     value: int?._id,
     label: int?.name,
   }));
-  // console.log(interests)
 
   return (
     <>
@@ -182,7 +178,7 @@ const DoctorRegForm = () => {
               <Col span={24} md={{ span: 12 }} lg={{ span: 12 }}>
                 <Form.Item
                   label="Specialty"
-                  name="specialty"
+                  name="specialization"
                   tooltip="Here you have to input the doctor's specialty."
                   rules={[{ required: true, message: "Specialty is required" }]}
                 >

@@ -12,13 +12,13 @@ const doctorsApi = baseApi.injectEndpoints({
             params?.append(item.name, item.value as string);
           });
         }
-
         return {
           url: "/doctor",
           method: "GET",
           params,
         };
       },
+      providesTags: ["doctor"],
     }),
 
     addDoctor: builder.mutation({
@@ -29,6 +29,7 @@ const doctorsApi = baseApi.injectEndpoints({
           body: data,
         };
       },
+      invalidatesTags: ["doctor"],
     }),
 
     deleteDoctor: builder.mutation({
@@ -38,8 +39,25 @@ const doctorsApi = baseApi.injectEndpoints({
           method: "DELETE",
         };
       },
+      invalidatesTags: ["doctor"],
+    }),
+
+    updateDoctor: builder.mutation({
+      query: (args) => {
+        return {
+          url: `/doctor/${args?.id}`,
+          method: "PATCH",
+          body: args?.data,
+        };
+      },
+      invalidatesTags: ["doctor"],
     }),
   }),
 });
 
-export const { useGetAllDoctorsQuery, useAddDoctorMutation, useDeleteDoctorMutation } = doctorsApi;
+export const {
+  useGetAllDoctorsQuery,
+  useAddDoctorMutation,
+  useDeleteDoctorMutation,
+  useUpdateDoctorMutation
+} = doctorsApi;

@@ -29,7 +29,6 @@ export const uploadImageInCloudinary = async (
 
     return result?.url;
   } catch (error: any) {
-    console.log("error from image upload---=>", error);
     toastId && toast.error("Failed to upload image", { id: toastId });
     return;
   }

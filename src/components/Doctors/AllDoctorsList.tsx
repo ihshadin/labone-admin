@@ -14,8 +14,12 @@ import { TDoctor } from "../../types/doctor.type";
 import UpdateDoctor from "./UpdateDoctor";
 import LabonePagination from "../../utils/Pagination/pagination";
 import { IoSearchOutline } from "react-icons/io5";
-import { useDeleteDoctorMutation, useGetAllDoctorsQuery } from "../../redux/features/doctor/doctorApi";
+import {
+  useDeleteDoctorMutation,
+  useGetAllDoctorsQuery,
+} from "../../redux/features/doctor/doctorApi";
 import { TQueryParam } from "../../types/global.type";
+import { toast } from "sonner";
 
 const AllDoctorsList = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
@@ -24,10 +28,12 @@ const AllDoctorsList = () => {
   const [doctorData, setDoctorData] = useState<TDoctor>({} as TDoctor);
 
   const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(params);
-  const [deleteDoctor, {data: deletedData}] = useDeleteDoctorMutation()
-  console.log("deleted data",deletedData)
-  // const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(undefined);
+  const [deleteDoctor, { data: deletedData }] = useDeleteDoctorMutation();
 
+  if (deletedData?.success) {
+    toast.success("Doctor Delete Successful");
+  }
+  
   const doctorsColumns: TableColumnsType<TDoctor> = [
     {
       title: "Sort No",
@@ -112,18 +118,14 @@ const AllDoctorsList = () => {
     },
   ];
 
-
   const handleUpdateData = (doctor: TDoctor) => {
     setUpdateModalOpen(true);
     setDoctorData(doctor);
   };
 
   const handleDelete = async (id: string) => {
-    // Handle delete action
-     await  deleteDoctor(id)
-    console.log("Delete", id);
+    await deleteDoctor(id);
   };
-
 
   // const datas = [
   //   {
