@@ -1,9 +1,9 @@
 import { TQueryParam } from "../../../types/global.type";
 import { baseApi } from "../../api/baseApi";
 
-const departmentApi = baseApi.injectEndpoints({
+const machineApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllDepartment: builder.query({
+    getAllMachine: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
 
@@ -13,52 +13,51 @@ const departmentApi = baseApi.injectEndpoints({
           });
         }
         return {
-          url: "/department",
+          url: "/machine",
           method: "GET",
           params,
         };
       },
-      
-      providesTags: ["department"],
+      providesTags: ["machine"],
     }),
 
-    addDepartment: builder.mutation({
+    addMachine: builder.mutation({
       query: (data) => {
         return {
-          url: "/department",
+          url: "/machine",
           method: "POST",
           body: data,
         };
       },
-      invalidatesTags: ["department"],
+      invalidatesTags: ["machine"],
     }),
 
-    deleteDepartment: builder.mutation({
+    deleteMachine: builder.mutation({
       query: (id) => {
         return {
-          url: `/department/${id}`,
+          url: `/machine/${id}`,
           method: "DELETE",
         };
       },
-      invalidatesTags: ["department"],
+      invalidatesTags: ["machine"],
     }),
 
-    updateDepartment: builder.mutation({
+    updateMachine: builder.mutation({
       query: (args) => {
         return {
-          url: `/department/${args?.id}`,
+          url: `/machine/${args?.id}`,
           method: "PATCH",
           body: args?.data,
         };
       },
-      invalidatesTags: ["department"],
+      invalidatesTags: ["machine"],
     }),
   }),
 });
 
 export const {
-  useGetAllDepartmentQuery,
-  useAddDepartmentMutation,
-  useDeleteDepartmentMutation,
-  useUpdateDepartmentMutation,
-} = departmentApi;
+  useAddMachineMutation,
+  useDeleteMachineMutation,
+  useGetAllMachineQuery,
+  useUpdateMachineMutation,
+} = machineApi;

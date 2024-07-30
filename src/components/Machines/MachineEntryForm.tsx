@@ -4,29 +4,42 @@ import { Col, Form, Input, Row } from "antd";
 import { toast } from "sonner";
 import { TMachine } from "../../types/machine.type";
 import UploadImageWithPreview from "../../utils/UploadImage/UploadImageWithPreview";
+import { uploadImageInCloudinary } from "../../utils/UploadImage/UploadImageInCloudinay";
+import { useAddMachineMutation } from "../../redux/features/machine/machineApi";
 
 const MachineEntryForm = () => {
+  const [addMachine] = useAddMachineMutation();
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<any>([]);
   const [form] = Form.useForm();
 
   const onSubmit = async (data: TMachine) => {
-    const formData = new FormData();
     const toastId = toast.loading("Add New Machine info...");
+
+    let imageLink;
+    if (file) {
+      imageLink = await uploadImageInCloudinary(file, toastId);
+    }
 
     const machineNewData = {
       name: data.name,
       country: data.country,
       details: data.details,
+      photo: imageLink,
     };
 
-    formData.append("file", file[0]?.originFileObj);
-    formData.append("data", JSON.stringify(machineNewData));
-    console.log({ machineNewData });
+    console.log(machineNewData);
 
     try {
-      setIsLoading(true);
-      toast.success("Successfully added the Machine", { id: toastId });
+      const res = await addMachine(machineNewData);
+      if (res) {
+        setIsLoading(true);
+        toast.success("Successfully added the Machine", { id: toastId });
+        form.resetFields();
+        setFile([]);
+      } else {
+        toast.error("Something want wrong!", { id: toastId });
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     } finally {
@@ -98,7 +111,7 @@ const MachineEntryForm = () => {
 
             <Row>
               <Col span={24}>
-                <p className="font-medium mb-1.5">Doctor Image</p>
+                <p className="font-medium mb-1.5">Machine Image</p>
                 <UploadImageWithPreview
                   setFile={setFile}
                   aspectRatio={4 / 3}

@@ -33,7 +33,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 > = async (args, api, extraOptions): Promise<any> => {
   let result = await baseQuery(args, api, extraOptions);
 
-
   if (result?.error?.status === 404) {
     const errorData = result?.error?.data as { message?: string }; // Define type with optional message property
     if (errorData && errorData.message) {
@@ -66,7 +65,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["doctor"],
+  tagTypes: ["doctor", "machine", "department"],
   refetchOnMountOrArgChange: 30,
   endpoints: () => ({}),
 });
