@@ -60,12 +60,12 @@ export const sidebarItems = [
   {
     key: 5,
     icon: <FaUserDoctor />,
-    label: <Link to={"/all-chamber-doctors"}>All Chamber Doctor's</Link>,
+    label: <Link to={"/all-doctors-schedules"}>All Doctor's Schedules</Link>,
     children: [
       {
         key: 51,
         icon: <BiUserPlus />,
-        label: <Link to={"/add-chamber-doctor"}>Add Chamber Doctor's</Link>,
+        label: <Link to={"/add-doctor-schedules"}>Add Doctor's Schedules</Link>,
       },
     ],
   },
