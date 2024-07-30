@@ -5,41 +5,51 @@ import { TMachine, TUpdateMachine } from "../../types/machine.type";
 import { Col, Divider, Form, Input, Modal, Row } from "antd";
 import UploadImageWithPreview from "../../utils/UploadImage/UploadImageWithPreview";
 import { toast } from "sonner";
+import { uploadImageInCloudinary } from "../../utils/UploadImage/UploadImageInCloudinay";
+import { useUpdateMachineMutation } from "../../redux/features/machine/machineApi";
 
 const UpdateMachine = ({
   updateModalOpen,
   setUpdateModalOpen,
   machineData,
 }: TUpdateMachine) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<any>([]);
   const [form] = Form.useForm();
+  const [updateMachine] = useUpdateMachineMutation();
 
   const onSubmit = async (data: TMachine) => {
-    const formData = new FormData();
     const toastId = toast.loading("Updating Machine info...");
+    let imageLink;
+
+    if (file) {
+      imageLink = await uploadImageInCloudinary(file, toastId);
+    }
 
     const updatedData = {
-      name: data.name,
-      country: data.country,
-      details: data.details,
+      name: data?.name,
+      country: data?.country,
+      details: data?.details,
+      photo: imageLink ? imageLink : data?.photo,
     };
-    console.log({ updatedData });
 
-    formData.append("file", file[0]?.originFileObj);
-    formData.append("data", JSON.stringify(updatedData));
+    const updateInfo = {
+      id: machineData?._id,
+      data: updatedData,
+    };
 
     try {
-      setIsLoading(true);
-      setUpdateModalOpen(false);
-      toast.success("Successfully updated the Machine", { id: toastId });
+      const res = await updateMachine(updateInfo).unwrap();
+
+      if (res?.success) {
+        setUpdateModalOpen(false);
+        toast.success("Successfully updated the machine", { id: toastId });
+      } else {
+        toast.error("Something want wrong!", { id: toastId });
+      }
     } catch (error: any) {
-      toast.error(error.message, { id: toastId });
-    } finally {
-      setIsLoading(false);
+      toast.error("Something want wrong!", { id: toastId });
     }
   };
-  console.log(machineData);
 
   useEffect(() => {
     form.resetFields();
@@ -145,9 +155,9 @@ const UpdateMachine = ({
               <button
                 className="cursor-pointer hover:bg-gray-950 px-4 py-1.5 bg-primary font-medium  text-white rounded-lg"
                 type="submit"
-                disabled={isLoading ? true : false}
+        
               >
-                {isLoading ? "Loading..." : "Update Doctor"}
+                Update Machine
               </button>
             </div>
           </Col>

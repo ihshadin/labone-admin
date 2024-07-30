@@ -28,11 +28,10 @@ const MachineEntryForm = () => {
       photo: imageLink,
     };
 
-    console.log(machineNewData);
-
     try {
-      const res = await addMachine(machineNewData);
-      if (res) {
+      const res = await addMachine(machineNewData).unwrap();
+
+      if (res?.success) {
         setIsLoading(true);
         toast.success("Successfully added the Machine", { id: toastId });
         form.resetFields();
@@ -41,9 +40,7 @@ const MachineEntryForm = () => {
         toast.error("Something want wrong!", { id: toastId });
       }
     } catch (error: any) {
-      toast.error(error.message, { id: toastId });
-    } finally {
-      setIsLoading(false);
+      toast.error("Something want wrong!", { id: toastId });
     }
   };
 

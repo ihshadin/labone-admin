@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Divider,
@@ -14,55 +14,61 @@ import { IoSearchOutline } from "react-icons/io5";
 import { TMachine } from "../../types/machine.type";
 import LabonePagination from "../../utils/Pagination/pagination";
 import UpdateMachine from "./UpdateMachine";
+import { TQueryParam } from "../../types/global.type";
+import {
+  useDeleteMachineMutation,
+  useGetAllMachineQuery,
+} from "../../redux/features/machine/machineApi";
+import { toast } from "sonner";
 
-const data = [
-  {
-    key: "1",
-    _id: "1",
-    photo:
-      "https://esskaymachines.com/blog/wp-content/uploads/2020/12/industrial-machinery-imhe-384x288_tcm27-3207.jpg",
-    name: "CT SCAN Machine",
-    country: "Hitachi-Japan",
-    details: "Advanced imaging technology for detailed internal scans.",
-  },
-  {
-    key: "2",
-    _id: "2",
-    photo: "https://i.ytimg.com/vi/l6nysqD9ibc/maxresdefault.jpg",
-    name: "MRI Machine",
-    country: "Siemens-Germany",
-    details:
-      "Uses magnetic fields and radio waves to create detailed images of organs",
-  },
-  {
-    key: "3",
-    _id: "3",
-    photo:
-      "https://esskaymachines.com/blog/wp-content/uploads/2020/12/industrial-machinery-imhe-384x288_tcm27-3207.jpg",
-    name: "Ultrasound Machine",
-    country: "GE Healthcare-USA",
-    details:
-      "Utilizes high-frequency sound waves to capture live images from the inside of the body.",
-  },
-  {
-    key: "4",
-    _id: "4",
-    photo: "https://i.ytimg.com/vi/l6nysqD9ibc/maxresdefault.jpg",
-    name: "X-Ray Machine",
-    country: "Philips-Netherlands",
-    details: "Employs X-rays to view the inside of the body, especially bones.",
-  },
-  {
-    key: "5",
-    _id: "5",
-    photo:
-      "https://esskaymachines.com/blog/wp-content/uploads/2020/12/industrial-machinery-imhe-384x288_tcm27-3207.jpg",
-    name: "PET Scan Machine",
-    country: "Toshiba-Japan",
-    details:
-      "Combines nuclear medicine and biochemical analysis to produce images of the body's function.",
-  },
-];
+// const data = [
+//   {
+//     key: "1",
+//     _id: "1",
+//     photo:
+//       "https://esskaymachines.com/blog/wp-content/uploads/2020/12/industrial-machinery-imhe-384x288_tcm27-3207.jpg",
+//     name: "CT SCAN Machine",
+//     country: "Hitachi-Japan",
+//     details: "Advanced imaging technology for detailed internal scans.",
+//   },
+//   {
+//     key: "2",
+//     _id: "2",
+//     photo: "https://i.ytimg.com/vi/l6nysqD9ibc/maxresdefault.jpg",
+//     name: "MRI Machine",
+//     country: "Siemens-Germany",
+//     details:
+//       "Uses magnetic fields and radio waves to create detailed images of organs",
+//   },
+//   {
+//     key: "3",
+//     _id: "3",
+//     photo:
+//       "https://esskaymachines.com/blog/wp-content/uploads/2020/12/industrial-machinery-imhe-384x288_tcm27-3207.jpg",
+//     name: "Ultrasound Machine",
+//     country: "GE Healthcare-USA",
+//     details:
+//       "Utilizes high-frequency sound waves to capture live images from the inside of the body.",
+//   },
+//   {
+//     key: "4",
+//     _id: "4",
+//     photo: "https://i.ytimg.com/vi/l6nysqD9ibc/maxresdefault.jpg",
+//     name: "X-Ray Machine",
+//     country: "Philips-Netherlands",
+//     details: "Employs X-rays to view the inside of the body, especially bones.",
+//   },
+//   {
+//     key: "5",
+//     _id: "5",
+//     photo:
+//       "https://esskaymachines.com/blog/wp-content/uploads/2020/12/industrial-machinery-imhe-384x288_tcm27-3207.jpg",
+//     name: "PET Scan Machine",
+//     country: "Toshiba-Japan",
+//     details:
+//       "Combines nuclear medicine and biochemical analysis to produce images of the body's function.",
+//   },
+// ];
 
 const AllMachinesList = () => {
   const machinesColumns: TableColumnsType<TMachine> = [
@@ -121,40 +127,13 @@ const AllMachinesList = () => {
       ),
     },
   ];
+  const [params, setParams] = useState<TQueryParam[]>([]);
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchText, setSearchText] = useState("");
-  const [totalItems, setTotalItems] = useState<number>(100);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
+  const { data, isLoading: isDataLoading } = useGetAllMachineQuery(params);
+  const [deleteMachine] = useDeleteMachineMutation();
+
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [machineData, setMachineData] = useState<TMachine>({} as TMachine);
-
-  console.log(isLoading);
-  //   Filter on object
-  // eslint-disable-next-line prefer-const
-  let params: Record<string, unknown> = {};
-
-  if (searchText?.trim() !== "") {
-    params.searchTerm = searchText;
-  }
-
-  params.limit = 10;
-  params.page = currentPage;
-
-  const dataFetch = async () => {
-    setIsLoading(true);
-
-    // setDoctorsData();
-    setTotalItems(550);
-    setItemsPerPage(10);
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    dataFetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText, currentPage, machineData]);
 
   const handleUpdateData = (machine: TMachine) => {
     setUpdateModalOpen(true);
@@ -162,10 +141,25 @@ const AllMachinesList = () => {
     // console.log("Edit", machine);
   };
 
-  const handleDelete = (id: string) => {
-    // Handle delete action
-    console.log("Delete", id);
+  const handleDelete = async (id: string) => {
+    const res = await deleteMachine(id).unwrap();
+    console.log(res)
+    if (res?.data?.success) {
+      toast.success("Machine Delete Successful");
+    } else {
+      toast.error("Something want wrong!");
+    }
   };
+
+  const handlePaginationChange = (page: number) => {
+    setParams((prevParams) => [
+      ...prevParams.filter((param) => param.name !== "page"),
+      { name: "page", value: page },
+    ]);
+  };
+
+  const meta = data?.data?.meta;
+  const result = data?.data?.result;
 
   return (
     <>
@@ -181,20 +175,22 @@ const AllMachinesList = () => {
             prefix={<IoSearchOutline />}
             placeholder="Search"
             className="focus:placeholder:!text-primary"
-            onChange={(e) => setSearchText(e.target.value)}
+            onChange={(e) =>
+              setParams([{ name: "searchTerm", value: e.target.value }])
+            }
           />
         </div>
       </div>
       <Table
         columns={machinesColumns}
-        dataSource={data}
+        dataSource={result}
         scroll={{ x: 900 }}
+        loading={isDataLoading}
         pagination={false}
       />
       <LabonePagination
-        totalItems={totalItems}
-        itemsPerPage={itemsPerPage}
-        setCurrentPage={setCurrentPage}
+        meta={meta}
+        handlePaginationChange={handlePaginationChange}
       />
       <UpdateMachine
         updateModalOpen={updateModalOpen}
