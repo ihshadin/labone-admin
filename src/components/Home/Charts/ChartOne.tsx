@@ -130,7 +130,7 @@ const ChartOne = () => {
   ];
 
   return (
-    <div className="col-span-12 rounded-xl border border-stroke bg-white px-5 sm:px-8 pt-5 pb-5 shadow-default xl:col-span-7">
+    <div className="col-span-12 rounded-xl border border-stroke bg-white px-5 sm:px-8 pt-5 pb-5 shadow-default xl:col-span-6">
       <div className="flex flex-wrap sm:flex-nowrap items-start justify-between gap-3">
         <div className="flex flex-wrap w-full gap-3 sm:gap-5">
           <div className="flex items-center gap-2">
@@ -143,10 +143,11 @@ const ChartOne = () => {
           </div>
         </div>
         <div className="flex w-full max-w-45 justify-end">
-          <div className="inline-flex items-center rounded-md bg-whiter gap-2 *:rounded-md *:py-1 *:px-3 *:text-xs *:font-medium *:bg-primary *:text-white [&_*:hover]:bg-primary/80">
-            <button>Day</button>
-            <button>Week</button>
-            <button>Month</button>
+          <div className="inline-flex items-center rounded-md bg-whiter gap-2 *:rounded-md *:py-1 *:px-3 *:text-xs *:bg-primary *:text-white [&_*:hover]:bg-primary/80">
+            <button>12 Months</button>
+            <button>30 Days</button>
+            <button>7 Days</button>
+            <button>24 Hours</button>
           </div>
         </div>
       </div>
