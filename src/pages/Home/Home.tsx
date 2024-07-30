@@ -1,9 +1,13 @@
-import { Divider } from "antd";
 import { Link } from "react-router-dom";
 import HeroSection from "../../components/Home/HeroSection";
 import DataContainer from "../../components/Home/DataContainer";
 import ChartOne from "../../components/Home/Charts/ChartOne";
 import ChartTwo from "../../components/Home/Charts/ChartTwo";
+import RecentAppointments from "../../components/Home/RecentAppointments";
+import { LuCornerRightUp } from "react-icons/lu";
+import LiveSchedule from "../../components/Home/LiveSchedule";
+import LiveTimer from "../../components/Home/LiveTimer";
+import { IoCalendarOutline } from "react-icons/io5";
 
 const Home = () => {
   return (
@@ -24,28 +28,42 @@ const Home = () => {
         <ChartOne />
         <ChartTwo />
       </div>
-      <div className="flex gap-5">
-        <section className="bg-white/40 bg-blend-color-burn border p-5 rounded-xl w-[60%] ">
-          <div className="">
-            {/* <h2 className="text-primary text-xl font-semibold">Doctor list</h2> */}
-            <Divider orientation="left" className="!mt-0">
-              Welcome to Labone Hospital
-            </Divider>
+      <div className="grid grid-cols-12 gap-3 md:gap-5">
+        <section className="bg-white/40 bg-blend-color-burn border p-5 rounded-xl col-span-12 xl:col-span-5">
+          <div className="flex justify-between mb-3 sm:mb-5">
+            <div className="flex items-center gap-2">
+              <span className="flex h-4 w-4 items-center justify-center rounded-full border border-primary">
+                <span className="block h-2.5 w-2.5 rounded-full bg-primary"></span>
+              </span>
+              <p className="font-semibold text-primary grow">
+                Recent Appointments
+              </p>
+            </div>
+            <Link
+              to={"/all-appointments"}
+              className="flex items-center gap-1 leading-[1rem]"
+            >
+              See All
+              <LuCornerRightUp size={13} />
+            </Link>
           </div>
-          <div className="mt-8 md:mt-10">
-            <HeroSection />
-          </div>
+          <>
+            <RecentAppointments />
+          </>
         </section>
 
-        <section className="bg-white/40 bg-blend-color-burn border p-5 rounded-xl w-[40%]  ">
-          <div className="">
-            {/* <h2 className="text-primary text-xl font-semibold">Doctor list</h2> */}
-            <Divider orientation="left" className="!mt-0">
-              Welcome to Labone Hospital
-            </Divider>
+        <section className="bg-white/40 bg-blend-color-burn border p-5 rounded-xl col-span-12 xl:col-span-7">
+          <div className="flex justify-between mb-3 sm:mb-5">
+            <div className="flex items-center gap-2">
+              <span className="flex h-4 w-4 items-center justify-center rounded-full border border-primary">
+                <span className="block h-2.5 w-2.5 rounded-full bg-primary"></span>
+              </span>
+              <p className="font-semibold text-primary grow">Live Schedules</p>
+            </div>
+            <LiveTimer />
           </div>
-          <div className="mt-8 md:mt-10">
-            <HeroSection />
+          <div>
+            <LiveSchedule />
           </div>
         </section>
       </div>
