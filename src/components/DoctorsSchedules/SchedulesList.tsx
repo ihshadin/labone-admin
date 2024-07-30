@@ -74,6 +74,7 @@ const SchedulesList = () => {
       title: "Doctor Specialty",
       dataIndex: "doctorInfo",
       key: "doctorSpecialty",
+      width: 270,
       render: (record) => <p>{record.specialty}</p>,
     },
     {

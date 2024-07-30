@@ -23,6 +23,7 @@ import DiagnosticsAllMachines from "../pages/Machines/DiagnosticsAllMachines";
 import PendingAppointments from "../pages/Appointments/PendingAppointments";
 import ApprovedAppointments from "../pages/Appointments/ApprovedAppointments";
 import CancelAppointments from "../pages/Appointments/CancelAppointments";
+import AddDoctorSchedules from "../pages/DoctorsSchedules/AddDoctorSchedules";
 
 const router = createBrowserRouter([
   {
@@ -78,12 +79,12 @@ const router = createBrowserRouter([
         element: <AddDepartment />,
       },
       {
-        path: "/all-chamber-doctors",
+        path: "/all-doctors-schedules",
         element: <AllSchedules />,
       },
       {
-        path: "/add-chamber-doctor",
-        element: <p>Add Chamber Doctor</p>,
+        path: "/add-doctor-schedules",
+        element: <AddDoctorSchedules/>,
       },
       {
         path: "/all-appointments",
