@@ -28,12 +28,8 @@ const AllDoctorsList = () => {
   const [doctorData, setDoctorData] = useState<TDoctor>({} as TDoctor);
 
   const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(params);
-  const [deleteDoctor, { data: deletedData }] = useDeleteDoctorMutation();
+  const [deleteDoctor] = useDeleteDoctorMutation();
 
-  if (deletedData?.success) {
-    toast.success("Doctor Delete Successful");
-  }
-  
   const doctorsColumns: TableColumnsType<TDoctor> = [
     {
       title: "Sort No",
@@ -125,6 +121,7 @@ const AllDoctorsList = () => {
 
   const handleDelete = async (id: string) => {
     await deleteDoctor(id);
+    toast.success("Doctor Delete Successful");
   };
 
   // const datas = [

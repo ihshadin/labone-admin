@@ -4,28 +4,40 @@ import { Col, Form, Input, Row } from "antd";
 import { toast } from "sonner";
 import { TDepartment } from "../../types/department.type";
 import UploadImageWithPreview from "../../utils/UploadImage/UploadImageWithPreview";
+import { uploadImageInCloudinary } from "../../utils/UploadImage/UploadImageInCloudinay";
+import { useAddDepartmentMutation } from "../../redux/features/department/departmentApi";
 
 const DepartmentEntryForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<any>([]);
   const [form] = Form.useForm();
 
-  const onSubmit = async (data: TDepartment) => {
-    const formData = new FormData();
-    const toastId = toast.loading("Add New Machine info...");
+  const [addDepartment] = useAddDepartmentMutation();
 
-    const machineNewData = {
+  const onSubmit = async (data: TDepartment) => {
+    const toastId = toast.loading("Add New Department info...");
+
+    let imageLink;
+    if (file) {
+      imageLink = await uploadImageInCloudinary(file, toastId);
+    }
+
+    const departmentData = {
       name: data.name,
       details: data.details,
+      icon: imageLink,
     };
 
-    formData.append("file", file[0]?.originFileObj);
-    formData.append("data", JSON.stringify(machineNewData));
-    console.log({ machineNewData });
-
     try {
-      setIsLoading(true);
-      toast.success("Successfully added the Machine", { id: toastId });
+      const res = await addDepartment(departmentData);
+      if (res) {
+        setIsLoading(true);
+        toast.success("Successfully added the Department", { id: toastId });
+        form.resetFields();
+        setFile([]);
+      } else {
+        toast.error("Something want wrong!", { id: toastId });
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     } finally {

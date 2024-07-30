@@ -5,6 +5,8 @@ import { Col, Divider, Form, Input, Modal, Row } from "antd";
 import { toast } from "sonner";
 import UploadImageWithPreview from "../../utils/UploadImage/UploadImageWithPreview";
 import { TDepartment, TUpdateDepartment } from "../../types/department.type";
+import { uploadImageInCloudinary } from "../../utils/UploadImage/UploadImageInCloudinay";
+import { useUpdateDepartmentMutation } from "../../redux/features/department/departmentApi";
 
 const UpdateDepartment = ({
   updateModalOpen,
@@ -15,30 +17,43 @@ const UpdateDepartment = ({
   const [file, setFile] = useState<any>([]);
   const [form] = Form.useForm();
 
+  const [updateDepartment] = useUpdateDepartmentMutation();
+
   const onSubmit = async (data: TDepartment) => {
-    const formData = new FormData();
     const toastId = toast.loading("Updating Department info...");
 
-    const updatedData = {
+    let imageLink;
+    if (file) {
+      imageLink = await uploadImageInCloudinary(file, toastId);
+    }
+
+    const updateDepartmentData = {
       name: data.name,
       details: data.details,
+      icon: imageLink ? imageLink : departmentData?.icon,
     };
-    console.log({ updatedData });
 
-    formData.append("file", file[0]?.originFileObj);
-    formData.append("data", JSON.stringify(updatedData));
+    const updateInfo = {
+      id: departmentData?._id,
+      data: updateDepartmentData,
+    };
 
     try {
-      setIsLoading(true);
-      setUpdateModalOpen(false);
-      toast.success("Successfully updated the Department", { id: toastId });
+      const res = await updateDepartment(updateInfo);
+
+      if (res) {
+        setIsLoading(true);
+        setUpdateModalOpen(false);
+        toast.success("Successfully updated the Department", { id: toastId });
+      } else {
+        toast.error("Something want wrong!", { id: toastId });
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     } finally {
       setIsLoading(false);
     }
   };
-  console.log(departmentData);
 
   useEffect(() => {
     form.resetFields();
