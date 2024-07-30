@@ -1,12 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import {
-  UserOutlined,
-  CalendarOutlined,
-  ScheduleOutlined,
-  UsergroupAddOutlined,
-  DesktopOutlined,
-} from "@ant-design/icons";
+import { FaUserDoctor } from "react-icons/fa6";
 
 // import Swiper and modules styles
 import "swiper/css";
@@ -15,32 +9,40 @@ import "swiper/css/pagination";
 
 // Custom CSS
 import "./DataContainer.css";
+import { LuCalendarClock, LuCalendarSearch, LuGitBranch } from "react-icons/lu";
+import { GrVirtualMachine } from "react-icons/gr";
+import { BiUserPlus } from "react-icons/bi";
 
 const items = [
   {
-    title: "Total Customers",
-    quentity: 361,
-    icon: <UserOutlined />,
-  },
-  {
     title: "Total Appointments",
     quentity: 4744,
-    icon: <CalendarOutlined />,
+    icon: <LuCalendarClock />,
   },
   {
-    title: "New Appointments",
+    title: "Pending Appointments",
     quentity: 500,
-    icon: <ScheduleOutlined />,
+    icon: <LuCalendarSearch />,
   },
   {
-    title: "All Doctors",
+    title: "Total Doctors",
     quentity: 900,
-    icon: <UsergroupAddOutlined />,
+    icon: <FaUserDoctor />,
   },
   {
-    title: "All Machines",
+    title: "Total Machines",
     quentity: 20,
-    icon: <DesktopOutlined />,
+    icon: <GrVirtualMachine />,
+  },
+  {
+    title: "Total Departments",
+    quentity: 361,
+    icon: <LuGitBranch />,
+  },
+  {
+    title: "Total Schedules",
+    quentity: 361,
+    icon: <BiUserPlus />,
   },
 ];
 
@@ -58,11 +60,11 @@ const DataContainer = () => {
           },
           768: {
             slidesPerView: 3,
-            spaceBetween: 40,
+            spaceBetween: 20,
           },
           1024: {
             slidesPerView: 4,
-            spaceBetween: 50,
+            spaceBetween: 20,
           },
         }}
         loop={true}
