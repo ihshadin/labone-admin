@@ -45,7 +45,7 @@ const AllDoctorsList = () => {
           {data?.firstName} {data?.lastName}
         </p>
       ),
-      width: 170,
+      width: 230,
     },
     {
       title: "Contact Number",
@@ -57,11 +57,11 @@ const AllDoctorsList = () => {
       title: "Email Address",
       dataIndex: "email",
       key: "email",
-      width: 250,
+      width: 270,
     },
     {
       title: "Department",
-      key: "department",
+      key: "department",    width: 250,
       render: (record: TDoctor) => <p>{record?.departmentID?.name}</p>,
     },
     {
