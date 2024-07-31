@@ -1,14 +1,31 @@
 import React, { useEffect, useState } from "react";
+import "../../styles/flip.css";
 
 const LiveTimer: React.FC = () => {
   const [time, setTime] = useState<Date>(new Date());
+  const [flip, setFlip] = useState({
+    hours: false,
+    minutes: false,
+    seconds: false,
+  });
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTime(new Date());
+      const newTime = new Date();
+      setTime(newTime);
+      setFlip({
+        hours: newTime.getHours() !== time.getHours(),
+        minutes: newTime.getMinutes() !== time.getMinutes(),
+        seconds: newTime.getSeconds() !== time.getSeconds(),
+      });
+
+      setTimeout(
+        () => setFlip({ hours: false, minutes: false, seconds: false }),
+        1000
+      );
     }, 1000);
     return () => clearInterval(intervalId);
-  }, []);
+  }, [time]);
 
   const formatTimeParts = (date: Date) => {
     const days = [
@@ -41,9 +58,21 @@ const LiveTimer: React.FC = () => {
   return (
     <div className="flex items-center gap-2 text-base font-medium *:py-1 *:px-2 *:rounded-lg *:border *:border-primary/20 [&_>_*:hover]:border-primary/40 [&_>_*:hover]:bg-primary/5 *:cursor-pointer">
       <span>{dayName}</span>
-      <span>{hours}</span>
-      <span>{minutes}</span>
-      <span>{seconds}</span>
+      <span className="bg-primary/10">
+        <span className={`inline-block ${flip.hours ? "flip" : ""}`}>
+          {hours}
+        </span>
+      </span>
+      <span className="bg-primary/10">
+        <span className={`inline-block ${flip.minutes ? "flip" : ""}`}>
+          {minutes}
+        </span>
+      </span>
+      <span className="bg-primary/10">
+        <span className={`inline-block ${flip.seconds ? "flip" : ""}`}>
+          {seconds}
+        </span>
+      </span>
       <span>{ampm}</span>
     </div>
   );
