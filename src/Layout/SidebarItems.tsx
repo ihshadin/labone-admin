@@ -4,10 +4,7 @@ import { FaHospital } from "react-icons/fa";
 import { FaUserDoctor } from "react-icons/fa6";
 import { GrVirtualMachine, GrVmMaintenance } from "react-icons/gr";
 import {
-  LuCalendarCheck2,
   LuCalendarClock,
-  LuCalendarSearch,
-  LuCalendarX2,
   LuGitBranch,
   LuGitBranchPlus,
   LuSettings,
@@ -73,23 +70,6 @@ export const sidebarItems = [
     key: 6,
     icon: <LuCalendarClock />,
     label: <Link to={"/all-appointments"}>All Appointments</Link>,
-    children: [
-      {
-        key: 61,
-        icon: <LuCalendarSearch />,
-        label: <Link to={"/pending-appointments"}>Pending Appointments</Link>,
-      },
-      {
-        key: 62,
-        icon: <LuCalendarCheck2 />,
-        label: <Link to={"/approved-appointments"}>Approved Appointments</Link>,
-      },
-      {
-        key: 63,
-        icon: <LuCalendarX2 />,
-        label: <Link to={"/cancel-appointments"}>Cancel Appointments</Link>,
-      },
-    ],
   },
   {
     key: 10,
@@ -99,7 +79,7 @@ export const sidebarItems = [
   {
     key: 7,
     icon: <FaUserDoctor />,
-    label: <Link  to="/all-diagnostics-doctor">Di. All Doctor's</Link>,
+    label: <Link to="/all-diagnostics-doctor">Di. All Doctor's</Link>,
     children: [
       {
         key: 70,
