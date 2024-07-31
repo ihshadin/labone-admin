@@ -5,7 +5,7 @@ const appointmentApi = baseApi.injectEndpoints({
     getAllAppointment: builder.query({
       query: () => {
         return {
-          url: "/admin/appointments",
+          url: "/appointments",
           method: "GET",
         };
       },
@@ -14,7 +14,7 @@ const appointmentApi = baseApi.injectEndpoints({
     getAllOnetimeAppointment: builder.query({
       query: () => {
         return {
-          url: "/admin/appointments/available-dates",
+          url: "/appointments/available-dates",
           method: "GET",
         };
       },
@@ -23,18 +23,17 @@ const appointmentApi = baseApi.injectEndpoints({
     addAppointment: builder.mutation({
       query: (data) => {
         return {
-          url: "/admin/appointments/add-appointment-date",
+          url: "/appointments/add-appointment-date",
           method: "POST",
           body: data,
         };
       },
-     
     }),
 
     getAllRecurringAppointment: builder.query({
       query: () => {
         return {
-          url: "/admin/appointments/recurring-appointment",
+          url: "/appointments/recurring-appointment",
           method: "GET",
         };
       },
@@ -43,7 +42,7 @@ const appointmentApi = baseApi.injectEndpoints({
     getAppointmentAvailableDate: builder.query({
       query: () => {
         return {
-          url: "/admin/appointments/available-dates",
+          url: "/appointments/available-dates",
           method: "GET",
         };
       },

@@ -124,50 +124,6 @@ const AllDoctorsList = () => {
     toast.success("Doctor Delete Successful");
   };
 
-  // const datas = [
-  //   {
-  //     key: "1",
-  //     _id: "1",
-  //     fullName: "ডাঃ আরিফা আখতার",
-  //     serialNumber: 1,
-  //     contactNumber: 123456789,
-  //     email: "john@example.com",
-  //     department: "Gynaecology",
-  //     specialty: "স্ত্রী রোগ, প্রসূতি বিদ্যা ও বন্ধ্যাত্ব বিশেষজ্ঞ ও সার্জন।",
-  //     degree:
-  //       "এমবিবিএস (ডিএমসি), বিসিএস (স্বাস্থ্য), এমসিপিএস, এফসিপিএস (গাইনি এন্ড অবস), এমআরসিওজি (লন্ডন,ইউকে), রিপ্রোডাক্টিভ এন্ডোক্রাইনোলজি এন্ড ইনফার্টিলিটি কোর্স (বিএসএমএমইউ) কনসালটেন্ট (গাইনি এন্ড অবস), ঢাকা মেডিকেল কলেজ হাসপাতাল, ঢাকা।",
-  //     address: "মোজারমিল বাসস্ট্যান্ড, কাশিমপুর, গাজীপুর।",
-  //     doctorImage: imageTest,
-  //   },
-  //   {
-  //     key: "2",
-  //     _id: "2",
-  //     fullName: "ডাঃ রুখসানা পারভীন",
-  //     serialNumber: 2,
-  //     contactNumber: 123456789,
-  //     email: "john@example.com",
-  //     department: "Gynaecology",
-  //     specialty: "স্ত্রী রোগ ও প্রসূতি বিদ্যা বিশেষজ্ঞ ও সার্জন।",
-  //     degree:
-  //       "এমবিবিএস, বিসিএস (স্বাস্থ্য), স্পেশাল ট্রেনিং ইন গাইনি অনকলোজী এমসিপিএস (গাইনি এন্ড অবস্), এফসিপিএস (গাইনি এন্ড অবস্)। আর এস, জাতীয় ক্যান্সার গবেষণা ইনস্টিটিউট ও হাসপাতাল, মহাখালী, ঢাকা ।",
-  //     address: "মোজারমিল বাসস্ট্যান্ড, কাশিমপুর, গাজীপুর।",
-  //     doctorImage: imageTest,
-  //   },
-  //   {
-  //     key: "3",
-  //     _id: "3",
-  //     fullName: "John Brown",
-  //     serialNumber: 3,
-  //     contactNumber: 123456789,
-  //     email: "john@example.com",
-  //     department: "Cardiology",
-  //     specialty: "Cardiologist",
-  //     degree: "MD",
-  //     address: "123 Street, City",
-  //     doctorImage: imageTest,
-  //   },
-  // ];
-
   const handlePaginationChange = (page: number) => {
     setParams((prevParams) => [
       ...prevParams.filter((param) => param.name !== "page"),
