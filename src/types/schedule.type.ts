@@ -1,9 +1,9 @@
+import { Dispatch } from "react";
 import { TDoctor } from "./doctor.type";
 
 export type TSchedule = {
   _id: string;
-  doctorInfo?: TDoctor;
-  specialty: string;
+  doctorID?: TDoctor;
   scheduleDay:
     | "Monday"
     | "Tuesday"
@@ -13,7 +13,11 @@ export type TSchedule = {
     | "Saturday"
     | "Sunday";
   startTime: string;
-  startTimePeriod: "sokal" | "dupur" | "bikal" | "sondha" | "rat";
   endTime: string;
-  endTimePeriod: "sokal" | "dupur" | "bikal" | "sondha" | "rat";
+};
+
+export type TUpdateSchedule = {
+  updateModalOpen: boolean;
+  setUpdateModalOpen: Dispatch<React.SetStateAction<boolean>>;
+  scheduleData: TSchedule;
 };

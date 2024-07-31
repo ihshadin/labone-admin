@@ -20,9 +20,6 @@ import AddDiagnosticsDoctor from "../pages/Doctors/AddDiagnosticsDoctor";
 import AllDiagnosticsDoctors from "../pages/Doctors/AllDiagnosticsDoctors";
 import DiagnosticsAddMachines from "../pages/Machines/DiagnosticsAddMachines";
 import DiagnosticsAllMachines from "../pages/Machines/DiagnosticsAllMachines";
-import PendingAppointments from "../pages/Appointments/PendingAppointments";
-import ApprovedAppointments from "../pages/Appointments/ApprovedAppointments";
-import CancelAppointments from "../pages/Appointments/CancelAppointments";
 import AddDoctorSchedules from "../pages/DoctorsSchedules/AddDoctorSchedules";
 
 const router = createBrowserRouter([
@@ -30,7 +27,7 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       // <ProtectedRoute>
-        <MainLayout />
+      <MainLayout />
       // </ProtectedRoute>
     ),
     children: [
@@ -84,23 +81,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/add-doctor-schedules",
-        element: <AddDoctorSchedules/>,
+        element: <AddDoctorSchedules />,
       },
       {
         path: "/all-appointments",
         element: <AllAppointments />,
-      },
-      {
-        path: "/pending-appointments",
-        element: <PendingAppointments />,
-      },
-      {
-        path: "/approved-appointments",
-        element: <ApprovedAppointments />,
-      },
-      {
-        path: "/cancel-appointments",
-        element: <CancelAppointments />,
       },
       {
         path: "/users",

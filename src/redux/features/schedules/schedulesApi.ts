@@ -1,9 +1,9 @@
 import { TQueryParam } from "../../../types/global.type";
 import { baseApi } from "../../api/baseApi";
 
-const appointmentApi = baseApi.injectEndpoints({
+const schedulesApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllAppointment: builder.query({
+    getAllSchedule: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
 
@@ -14,51 +14,51 @@ const appointmentApi = baseApi.injectEndpoints({
         }
 
         return {
-          url: "/appointment",
+          url: "/schedule",
           method: "GET",
           params,
         };
       },
-      providesTags: ["appointment"],
+      providesTags: ["schedule"],
     }),
 
-    addAppointment: builder.mutation({
+    addSchedule: builder.mutation({
       query: (data) => {
         return {
-          url: "/appointment",
+          url: "/schedule",
           method: "POST",
           body: data,
         };
       },
-      invalidatesTags: ["appointment"],
+      invalidatesTags: ["schedule"],
     }),
 
-    deleteAppointment: builder.mutation({
+    deleteSchedule: builder.mutation({
       query: (id) => {
         return {
-          url: `/appointment/${id}`,
+          url: `/schedule/${id}`,
           method: "DELETE",
         };
       },
-      invalidatesTags: ["appointment"],
+      invalidatesTags: ["schedule"],
     }),
 
-    updateAppointment: builder.mutation({
+    updateSchedule: builder.mutation({
       query: (args) => {
         return {
-          url: `/appointment/${args?.id}`,
+          url: `/schedule/${args?.id}`,
           method: "PATCH",
           body: args?.data,
         };
       },
-      invalidatesTags: ["appointment"],
+      invalidatesTags: ["schedule"],
     }),
   }),
 });
 
 export const {
-  useAddAppointmentMutation,
-  useDeleteAppointmentMutation,
-  useGetAllAppointmentQuery,
-  useUpdateAppointmentMutation,
-} = appointmentApi;
+  useAddScheduleMutation,
+  useDeleteScheduleMutation,
+  useGetAllScheduleQuery,
+  useUpdateScheduleMutation,
+} = schedulesApi;
