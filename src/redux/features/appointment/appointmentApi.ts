@@ -1,75 +1,64 @@
+import { TQueryParam } from "../../../types/global.type";
 import { baseApi } from "../../api/baseApi";
 
 const appointmentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllAppointment: builder.query({
-      query: () => {
-        return {
-          url: "/admin/appointments",
-          method: "GET",
-        };
-      },
-      providesTags: ["appointments"],
-    }),
+      query: (args) => {
+        const params = new URLSearchParams();
 
-    getAllOnetimeAppointment: builder.query({
-      query: () => {
+        if (args) {
+          args?.forEach((item: TQueryParam) => {
+            params?.append(item.name, item.value as string);
+          });
+        }
+
         return {
-          url: "/admin/appointments/available-dates",
+          url: "/appointment",
           method: "GET",
+          params,
         };
       },
-      providesTags: ["appointments"],
+      providesTags: ["appointment"],
     }),
 
     addAppointment: builder.mutation({
       query: (data) => {
         return {
-          url: "/admin/appointments/add-appointment-date",
+          url: "/appointment",
           method: "POST",
           body: data,
         };
       },
-      invalidatesTags: ["appointments"],
+      invalidatesTags: ["appointment"],
     }),
 
-    getAllRecurringAppointment: builder.query({
-      query: () => {
+    deleteAppointment: builder.mutation({
+      query: (id) => {
         return {
-          url: "/admin/appointments/recurring-appointment",
-          method: "GET",
+          url: `/appointment/${id}`,
+          method: "DELETE",
         };
       },
+      invalidatesTags: ["appointment"],
     }),
 
-    getAppointmentAvailableDate: builder.query({
-      query: () => {
-        return {
-          url: "/admin/appointments/available-dates",
-          method: "GET",
-        };
-      },
-    }),
-    getAppointmentDateView: builder.query({
+    updateAppointment: builder.mutation({
       query: (args) => {
-        const params = new URLSearchParams();
-        params.append("date", args);
-
         return {
-          url: "/admin/appointments/add-appointment-date",
-          method: "GET",
-          params,
+          url: `/appointment/${args?.id}`,
+          method: "PATCH",
+          body: args?.data,
         };
       },
+      invalidatesTags: ["appointment"],
     }),
   }),
 });
 
 export const {
-  useGetAllAppointmentQuery,
   useAddAppointmentMutation,
-  useGetAllRecurringAppointmentQuery,
-  useGetAppointmentAvailableDateQuery,
-  useGetAppointmentDateViewQuery,
-  useGetAllOnetimeAppointmentQuery,
+  useDeleteAppointmentMutation,
+  useGetAllAppointmentQuery,
+  useUpdateAppointmentMutation,
 } = appointmentApi;

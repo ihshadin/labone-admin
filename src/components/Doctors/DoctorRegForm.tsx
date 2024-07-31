@@ -1,70 +1,69 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Col, Form, Input, Row, Select, UploadProps } from "antd";
-import Dragger from "antd/es/upload/Dragger";
 import { useState } from "react";
-import { LuUploadCloud } from "react-icons/lu";
+import { Col, Form, Input, Row, Select } from "antd";
 import { toast } from "sonner";
+import { TDoctor } from "../../types/doctor.type";
+import UploadImageWithPreview from "../../utils/UploadImage/UploadImageWithPreview";
+import { useAddDoctorMutation } from "../../redux/features/doctor/doctorApi";
+import { useGetAllDepartmentQuery } from "../../redux/features/department/departmentApi";
+import { uploadImageInCloudinary } from "../../utils/UploadImage/UploadImageInCloudinay";
+
+export type Interest = {
+  _id: string;
+  name: string;
+};
 
 const DoctorRegForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<any>([]);
   const [form] = Form.useForm();
-
-  const onSubmit = async (data: any) => {
-    const formData = new FormData();
+  const [addDoctor] = useAddDoctorMutation();
+  const { data } = useGetAllDepartmentQuery(undefined);
+  
+  const onSubmit = async (data: TDoctor) => {
     const toastId = toast.loading("Adding new doctor...");
 
-    const customerNewData = {
-      fullName: data.fullName,
-      contactNumber: data.contactNumber,
-      email: data.email,
-      department: data.department,
-      specialty: data.specialty,
-      degree: data.degree,
-      address: data.address,
-    };
-    console.log({ customerNewData });
+    let imageLink;
+    if (file) {
+      imageLink = await uploadImageInCloudinary(file, toastId);
+    }
 
-    formData.append("file", file[0]?.originFileObj);
-    formData.append("data", JSON.stringify(customerNewData));
+    const doctorNewData = {
+      firstName: data?.firstName,
+      lastName: data?.lastName,
+      serialNumber: Number(data?.serialNumber),
+      image: imageLink,
+      email: data?.email,
+      specialization: data?.specialization,
+      degree: data?.degree,
+      address: data?.address,
+      contactNumber: data?.contactNumber,
+      departmentID: data.department,
+    };
 
     try {
-      setIsLoading(true);
-      toast.success("Successfully added the doctor", { id: toastId });
+      const res = await addDoctor(doctorNewData);
+      if(res){
+        setIsLoading(true);
+        toast.success("Successfully added the doctor", { id: toastId });
+        form.resetFields();
+        setFile([]); 
+      } else{
+        toast.error("Something want wrong!", { id: toastId });
+      }
+      
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     } finally {
       setIsLoading(false);
     }
   };
-  console.log({ file });
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
-    setFile(newFileList);
-  };
 
-  // Interest Church Options
-  const interestOptions = [
-    { value: "Travel", label: "Travel" },
-    { value: "Food and Cooking", label: "Food and Cooking" },
-    { value: "Fitness and Health", label: "Fitness and Health" },
-    { value: "Music", label: "Music" },
-    { value: "Art and Design", label: "Art and Design" },
-    { value: "Reading", label: "Reading" },
-    { value: "Technology", label: "Technology" },
-    { value: "Sports", label: "Sports" },
-    { value: "Gardening", label: "Gardening" },
-    { value: "Movies and TV Shows", label: "Movies and TV Shows" },
-    { value: "Photography", label: "Photography" },
-    { value: "Writing", label: "Writing" },
-    { value: "Gaming", label: "Gaming" },
-    { value: "Fashion", label: "Fashion" },
-    { value: "DIY Projects", label: "DIY Projects" },
-    { value: "Learning Languages", label: "Learning Languages" },
-    { value: "Social Media", label: "Social Media" },
-    { value: "Volunteering", label: "Volunteering" },
-    { value: "Pets", label: "Pets" },
-    { value: "Outdoors", label: "Outdoors" },
-  ];
+
+  const interestOptions = data?.data?.result?.map((int: Interest) => ({
+    value: int?._id,
+    label: int?.name,
+  }));
 
   return (
     <>
@@ -77,15 +76,30 @@ const DoctorRegForm = () => {
             layout="vertical"
           >
             <Row gutter={16}>
-              <Col span={24}>
+              <Col span={24} md={{ span: 12 }}>
                 <Form.Item
-                  label="Full Name"
-                  name="fullName"
-                  tooltip="Here you have to input the doctor's full name."
-                  rules={[{ required: true, message: "Full Name is required" }]}
+                  label="First Name"
+                  name="firstName"
+                  tooltip="Here you have to input the doctor's first name."
+                  rules={[{ required: true, message: "First Name is required" }]}
+                >
+                  <Input
+                    type="text"  autoComplete="off"
+                    placeholder="Write here..."
+                    className="h-10 border border-[#C4CAD4] !rounded-lg"
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={24} md={{ span: 12 }}>
+                <Form.Item
+                  label="Last Name"
+                  name="lastName"
+                  tooltip="Here you have to input the doctor's last name."
+                  rules={[{ required: true, message: "Last Name is required" }]}
                 >
                   <Input
                     type="text"
+                    autoComplete="off"
                     placeholder="Write here..."
                     className="h-10 border border-[#C4CAD4] !rounded-lg"
                   />
@@ -94,7 +108,24 @@ const DoctorRegForm = () => {
             </Row>
 
             <Row gutter={16}>
-              <Col span={24} md={{ span: 12 }} lg={{ span: 12 }}>
+              
+              <Col span={24} md={{ span: 24 }}>
+                <Form.Item
+                tooltip="Here you have to input the doctor's email."
+                rules={[{ required: true, message: "Email is required" }]}
+
+                label="Email Address" name="email">
+                  <Input
+                    type="email"
+                    placeholder="Write here..."
+                    className="h-10 border border-[#C4CAD4] !rounded-lg"
+                  />
+                </Form.Item>
+               
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={24} md={{ span: 12 }}>
                 <Form.Item
                   label="Contact Number"
                   name="contactNumber"
@@ -110,10 +141,15 @@ const DoctorRegForm = () => {
                   />
                 </Form.Item>
               </Col>
-              <Col span={24} md={{ span: 12 }} lg={{ span: 12 }}>
-                <Form.Item label="Email Address" name="email">
+              <Col span={24} md={{ span: 12 }}>
+              <Form.Item
+                  label="Serial No"
+                  name="serialNumber"
+                  tooltip="Here you have to input the doctor's serial number."
+                  rules={[{ required: true, message: "Serial no is required" }]}
+                >
                   <Input
-                    type="email"
+                    type="number"
                     placeholder="Write here..."
                     className="h-10 border border-[#C4CAD4] !rounded-lg"
                   />
@@ -142,7 +178,7 @@ const DoctorRegForm = () => {
               <Col span={24} md={{ span: 12 }} lg={{ span: 12 }}>
                 <Form.Item
                   label="Specialty"
-                  name="specialty"
+                  name="specialization"
                   tooltip="Here you have to input the doctor's specialty."
                   rules={[{ required: true, message: "Specialty is required" }]}
                 >
@@ -182,6 +218,13 @@ const DoctorRegForm = () => {
             </Row>
 
             <Row>
+              <Col span={24}>
+                <p className="font-medium mb-1.5">Doctor Image</p>
+                <UploadImageWithPreview setFile={setFile} />
+              </Col>
+            </Row>
+
+            {/* <Row>
               <div className="w-full pb-4">
                 <p className="font-medium mb-1.5">Doctor Image</p>
                 <Dragger onChange={handleChange} maxCount={1}>
@@ -196,7 +239,7 @@ const DoctorRegForm = () => {
                   </p>
                 </Dragger>
               </div>
-            </Row>
+            </Row> */}
 
             <Row>
               <div className="flex items-center justify-end w-full">

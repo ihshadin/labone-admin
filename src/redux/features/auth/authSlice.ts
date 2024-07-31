@@ -3,7 +3,7 @@ import { RootState } from "../../store";
 
 export type TUser = {
   id: number;
-  isAdmin: boolean;
+  admin: boolean;
   churchId: number;
   iat: number;
 };

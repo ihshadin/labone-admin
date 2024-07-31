@@ -1,0 +1,6 @@
+.hero-section {
+    min-height: 20vh;
+    background-image: url("../../assets/image/heroimg.png") !important;
+    background-size: cover !important;
+    border-radius:5px;
+}

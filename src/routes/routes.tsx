@@ -1,23 +1,39 @@
 import { createBrowserRouter } from "react-router-dom";
-import ProtectedRoute from "../Layout/ProtectedRoute";
+// import ProtectedRoute from "../Layout/ProtectedRoute";
 import MainLayout from "../Layout/MainLayout";
-import AllAppointments from "../pages/Appointments/AllAppointments";
+import NotFoundPage from "../pages/ErrorPage/NotFoundPage";
+import Home from "../pages/Home/Home";
 import AllDoctors from "../pages/Doctors/AllDoctors";
 import AddDoctor from "../pages/Doctors/AddDoctor";
-import NotFoundPage from "../pages/ErrorPage/NotFoundPage";
+import AllMachines from "../pages/Machines/AllMachines";
+import AddMachine from "../pages/Machines/AddMachine";
+import AllDepartments from "../pages/Departments/AllDepartments";
+import AddDepartment from "../pages/Departments/AddDepartment";
+import AllAppointments from "../pages/Appointments/AllAppointments";
+import AllSchedules from "../pages/DoctorsSchedules/AllSchedules";
+import Login from "../pages/Auth/Login";
+import Settings from "../pages/Settings/Settings";
+import Users from "../pages/Users/Users";
+import ForgetPassword from "../pages/Auth/ResetPassword";
+import ResetPassword from "../pages/Auth/ForgetPassword";
+import AddDiagnosticsDoctor from "../pages/Doctors/AddDiagnosticsDoctor";
+import AllDiagnosticsDoctors from "../pages/Doctors/AllDiagnosticsDoctors";
+import DiagnosticsAddMachines from "../pages/Machines/DiagnosticsAddMachines";
+import DiagnosticsAllMachines from "../pages/Machines/DiagnosticsAllMachines";
+import AddDoctorSchedules from "../pages/DoctorsSchedules/AddDoctorSchedules";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <ProtectedRoute isAdmin={true}>
-        <MainLayout />
-      </ProtectedRoute>
+      // <ProtectedRoute>
+      <MainLayout />
+      // </ProtectedRoute>
     ),
     children: [
       {
         path: "/",
-        element: <div>this is test routes</div>,
+        element: <Home />,
       },
       {
         path: "/all-doctors",
@@ -28,32 +44,56 @@ const router = createBrowserRouter([
         element: <AddDoctor />,
       },
       {
+        path: "/add-diagnostics-doctor",
+        element: <AddDiagnosticsDoctor />,
+      },
+      {
+        path: "/all-diagnostics-doctor",
+        element: <AllDiagnosticsDoctors />,
+      },
+      {
         path: "/all-machines",
-        element: <p>all-appointments</p>,
+        element: <AllMachines />,
+      },
+      {
+        path: "/all-diagnostic-machines",
+        element: <DiagnosticsAllMachines />,
+      },
+      {
+        path: "/add-diagnostic-machine",
+        element: <DiagnosticsAddMachines />,
       },
       {
         path: "/add-machine",
-        element: <p>add machine</p>,
+        element: <AddMachine />,
       },
       {
         path: "/all-departments",
-        element: <p>All Departments</p>,
+        element: <AllDepartments />,
       },
       {
         path: "/add-department",
-        element: <p>Add Department</p>,
+        element: <AddDepartment />,
       },
       {
-        path: "/all-chamber-doctors",
-        element: <p>All Chamber Doctors</p>,
+        path: "/all-doctors-schedules",
+        element: <AllSchedules />,
       },
       {
-        path: "/add-chamber-doctor",
-        element: <p>Add Chamber Doctor</p>,
+        path: "/add-doctor-schedules",
+        element: <AddDoctorSchedules />,
       },
       {
         path: "/all-appointments",
         element: <AllAppointments />,
+      },
+      {
+        path: "/users",
+        element: <Users />,
+      },
+      {
+        path: "/settings",
+        element: <Settings />,
       },
       {
         path: "*",
@@ -61,11 +101,18 @@ const router = createBrowserRouter([
       },
     ],
   },
-
-  // {
-  //   path: "/all-doctors",
-  //   element: <AllDoctors />,
-  // },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/forget-password",
+    element: <ForgetPassword />,
+  },
 ]);
 
 export default router;

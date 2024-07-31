@@ -1,20 +1,29 @@
 import { Divider } from "antd";
 import { Link } from "react-router-dom";
-import DoctorRegForm from "../../components/DoctorsCom/DoctorRegForm";
+import DoctorRegForm from "../../components/Doctors/DoctorRegForm";
+import { LuCornerRightUp } from "react-icons/lu";
 
 const AddDoctor = () => {
   return (
     <>
-      <section className="flex justify-between">
-        <h2 className="text-primary text-xl font-semibold">Add Doctor</h2>
-        <div className="text-base">
+      <section className="flex items-center justify-between">
+        <div className="text-base flex items-center gap-2 md:gap-3">
           <Link to="/" className="text-primary">
             Lab One
-          </Link>{" "}
-          / Add Doctor
+          </Link>
+          <span>/</span>
+          <span>Add Doctor</span>
         </div>
+        <Link
+          to="/all-doctors"
+          className="flex items-center gap-2 bg-primary hover:bg-accent text-white hover:text-white px-4 py-2.5 rounded-lg transition duration-150"
+          title="All Doctors"
+        >
+          <span>All Doctors</span>
+          <LuCornerRightUp />
+        </Link>
       </section>
-      <section className="bg-white/40 bg-blend-color-burn border p-8 my-10 rounded-xl w-full max-w-[800px] mx-auto">
+      <section className="bg-white/40 bg-blend-color-burn border p-3 md:p-8 my-10 rounded-xl w-full max-w-[800px] mx-auto">
         <div className=" text-center">
           <h2 className="text-primary text-xl font-semibold">
             Doctor Registration Form

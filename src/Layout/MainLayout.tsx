@@ -5,98 +5,11 @@ import "../styles/background-outlet.css";
 import "../styles/antd-overwrite.css";
 import { Footer } from "antd/es/layout/layout";
 const { Header, Content, Sider } = Layout;
-import { BiSolidDashboard, BiUserPlus } from "react-icons/bi";
-import { FaUserDoctor } from "react-icons/fa6";
-import { GrVirtualMachine, GrVmMaintenance } from "react-icons/gr";
-import {
-  LuCalendarCheck2,
-  LuCalendarClock,
-  LuCalendarSearch,
-  LuCalendarX2,
-  LuGitBranch,
-  LuGitBranchPlus,
-} from "react-icons/lu";
 
 // import logoThik from "../assets/image/labOneLogoThik.png";
 import logoIcon from "../assets/image/favicon.png";
-
-const menuItems = [
-  {
-    key: 1,
-    icon: <BiSolidDashboard />,
-    label: <Link to={"/"}>Dashboard</Link>,
-  },
-  {
-    key: 2,
-    icon: <FaUserDoctor />,
-    label: <Link to={"/all-doctors"}>All Doctors</Link>,
-    children: [
-      {
-        key: 21,
-        icon: <BiUserPlus />,
-        label: <Link to={"/add-doctor"}>Add Doctor</Link>,
-      },
-    ],
-  },
-  {
-    key: 3,
-    icon: <GrVirtualMachine />,
-    label: <Link to={"/all-machines"}>All Machines</Link>,
-    children: [
-      {
-        key: 31,
-        icon: <GrVmMaintenance />,
-        label: <Link to={"/add-machine"}>Add Machine</Link>,
-      },
-    ],
-  },
-  {
-    key: 4,
-    icon: <LuGitBranch />,
-    label: <Link to={"/all-departments"}>All Departments</Link>,
-    children: [
-      {
-        key: 31,
-        icon: <LuGitBranchPlus />,
-        label: <Link to={"/add-department"}>Add Department</Link>,
-      },
-    ],
-  },
-  {
-    key: 5,
-    icon: <FaUserDoctor />,
-    label: <Link to={"/all-chamber-doctors"}>All Chamber Doctor's</Link>,
-    children: [
-      {
-        key: 51,
-        icon: <BiUserPlus />,
-        label: <Link to={"/add-chamber-doctor"}>Add Chamber Doctor's</Link>,
-      },
-    ],
-  },
-  {
-    key: 6,
-    icon: <LuCalendarClock />,
-    label: <Link to={"/all-appointments"}>All Appointments</Link>,
-    children: [
-      {
-        key: 61,
-        icon: <LuCalendarSearch />,
-        label: <Link to={"/pending-appointments"}>Pending Appointments</Link>,
-      },
-      {
-        key: 62,
-        icon: <LuCalendarCheck2 />,
-        label: <Link to={"/approved-appointments"}>Approved Appointments</Link>,
-      },
-      {
-        key: 63,
-        icon: <LuCalendarX2 />,
-        label: <Link to={"/cancel-appointments"}>Cancel Appointments</Link>,
-      },
-    ],
-  },
-];
+import NavDropDown from "./NavDropdown";
+import { sidebarItems } from "./SidebarItems";
 
 const MainLayout = () => {
   return (
@@ -116,7 +29,7 @@ const MainLayout = () => {
           // collapsible
         >
           <Link to="/">
-            <div className="flex items-center justify-center gap-1.5 cursor-pointer py-2">
+            <div className="flex items-center justify-center md:justify-start md:ml-7 gap-1.5 cursor-pointer py-2">
               <img className="w-[52px]" src={logoIcon} alt="logo" />
               <div className="text-xl leading-[1em] italic font-extrabold">
                 <h2 className="text-primary">Lab One</h2>
@@ -130,7 +43,7 @@ const MainLayout = () => {
             mode="inline"
             theme="light"
             defaultSelectedKeys={["1"]}
-            items={menuItems}
+            items={sidebarItems}
             className="[&_li:hover]:!text-primary [&_li:hover>div]:!text-primary *:font-medium"
             // className="!min-h-[calc(100vh-60px)]"
           />
@@ -138,14 +51,14 @@ const MainLayout = () => {
 
         <Layout>
           <Header className="!px-4 sticky top-0 !bg-white !h-[60px] flex flex-col justify-center border-b z-50">
-            <div>
+            {/* <div>
               <h2 className="text-2xl leading-[1em] font-bold text-primary uppercase">
                 LabOne <span className="text-secondary">Hospital</span>
               </h2>
-            </div>
-            {/* <div className="flex flex-col items-center ms-auto text-right">
-              <NavDropDown />
             </div> */}
+            <div className="flex flex-col items-center ms-auto text-right">
+              <NavDropDown />
+            </div>
           </Header>
           <Content>
             <div className="min-h-[calc(100vh-150px)] p-3 md:p-5">
@@ -160,7 +73,7 @@ const MainLayout = () => {
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
-            Labone Hospital ©{new Date().getFullYear()} Created WebSyner
+            Labone Hospital ©{new Date().getFullYear()} Created by WebSyner
           </Footer>
         </Layout>
       </Layout>
