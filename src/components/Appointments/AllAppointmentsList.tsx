@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Divider,
@@ -8,15 +8,27 @@ import {
   Popconfirm,
   Table,
   TableColumnsType,
-  TableProps,
 } from "antd";
 import { AiFillDelete } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
 import { TAppointment } from "../../types/appointment.type";
 import AppointmentDetails from "./AppointmentDetails";
 import LabonePagination from "../../utils/Pagination/pagination";
+import {
+  useDeleteAppointmentMutation,
+  useGetAllAppointmentQuery,
+  useUpdateAppointmentMutation,
+} from "../../redux/features/appointment/appointmentApi";
+import { TQueryParam } from "../../types/global.type";
+import { toast } from "sonner";
 
 const AllAppointmentsList = () => {
+  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [deleteAppointment] = useDeleteAppointmentMutation();
+
+  const { data, isLoading: isDataLoading } = useGetAllAppointmentQuery(params);
+  const [updateAppointment] = useUpdateAppointmentMutation();
+
   const statusItems: MenuProps["items"] = [
     {
       label: (
@@ -37,12 +49,27 @@ const AllAppointmentsList = () => {
       key: "cancel",
     },
   ];
+
+  const handleViewDetails = (data: TAppointment) => {
+    setAppointmentData(data);
+    setViewDetailsModalOpen(true);
+  };
+
+  const handleDelete = async (id: string) => {
+    const res = await deleteAppointment(id).unwrap();
+    if (res?.success) {
+      toast.success("Appointment Delete Successful");
+    } else {
+      toast.error("Something want wrong!");
+    }
+  };
+
   const columns: TableColumnsType<TAppointment> = [
     {
       title: "SL",
-      dataIndex: "key",
       width: 50,
       align: "center",
+      render: (_: any, __: TAppointment, index: number) => <p>{index + 1}</p>,
     },
     {
       title: "Patient Name",
@@ -55,19 +82,19 @@ const AllAppointmentsList = () => {
     },
     {
       title: "Mobile",
-      dataIndex: "mobile",
+      dataIndex: "mobileNumber",
     },
     {
       title: "Date",
-      dataIndex: "date",
-    },
-    {
-      title: "Department",
-      dataIndex: "department",
+      dataIndex: "appointmentDate",
     },
     {
       title: "Doctor",
-      dataIndex: "doctor",
+      render: (data: TAppointment) => (
+        <p>
+          {data?.doctorID?.firstName} {data?.doctorID?.lastName}
+        </p>
+      ),
     },
     {
       title: "Message",
@@ -154,202 +181,42 @@ const AllAppointmentsList = () => {
       ),
     },
   ];
-  const data = [
-    {
-      key: "1",
-      _id: "01",
-      patientName: "Mukta Khatun",
-      address: "Mozarmil Bus Stand, Kashimpur, Gazipur.",
-      mobile: "01829566586",
-      date: "02/05/2024",
-      department: "Gynecology",
-      doctor: "Dr. Arifa Akhter",
-      message:
-        "Your recent test results are available. Please visit the clinic for a detailed discussion.",
-      status: "cancel",
-    },
-    {
-      key: "2",
-      _id: "02",
-      patientName: "Rahim Uddin",
-      address: "Dhanmondi, Dhaka.",
-      mobile: "01711223344",
-      date: "03/05/2024",
-      department: "Cardiology",
-      doctor: "Dr. Mahmudul Hasan",
-      message:
-        "Your recent test results are available. Please visit the clinic for a detailed discussion.",
-      status: "pending",
-    },
-    {
-      key: "3",
-      _id: "03",
-      patientName: "Ayesha Siddiqua",
-      address: "Uttara, Dhaka.",
-      mobile: "01999887766",
-      date: "04/05/2024",
-      department: "Pediatrics",
-      doctor: "Dr. Jannatul Ferdous",
-      message:
-        "Your child's vaccination schedule is due next week. Please book an appointment.",
-      status: "cancel",
-    },
-    {
-      key: "4",
-      _id: "04",
-      patientName: "Karim Hossain",
-      address: "Chittagong Road, Narayanganj.",
-      mobile: "01612345678",
-      date: "05/05/2024",
-      department: "Orthopedics",
-      doctor: "Dr. Anisur Rahman",
-      message:
-        "The X-ray reports are ready. Kindly collect them from the reception.",
-      status: "approve",
-    },
-    {
-      key: "5",
-      _id: "05",
-      patientName: "Sumaiya Begum",
-      address: "Sylhet Sadar, Sylhet.",
-      mobile: "01876543210",
-      date: "06/05/2024",
-      department: "Dermatology",
-      doctor: "Dr. Fatema Tuz Zohra",
-      message:
-        "Your follow-up appointment is scheduled for next Monday. Please confirm your availability.",
-      status: "pending",
-    },
-    {
-      key: "6",
-      _id: "06",
-      patientName: "Hassan Ali",
-      address: "Banani, Dhaka.",
-      mobile: "01722334455",
-      date: "07/05/2024",
-      department: "Neurology",
-      doctor: "Dr. Rafiqul Islam",
-      message:
-        "Please bring your previous medical records during your next visit.",
-      status: "cancel",
-    },
-    {
-      key: "7",
-      _id: "07",
-      patientName: "Fatema Khatun",
-      address: "Mirpur, Dhaka.",
-      mobile: "01633445566",
-      date: "08/05/2024",
-      department: "Ophthalmology",
-      doctor: "Dr. Farzana Rahman",
-      message:
-        "Your eye examination results are ready. Please collect them from the clinic.",
-      status: "approve",
-    },
-    {
-      key: "8",
-      _id: "08",
-      patientName: "Rashid Khan",
-      address: "Bashundhara, Dhaka.",
-      mobile: "01944556677",
-      date: "09/05/2024",
-      department: "Dentistry",
-      doctor: "Dr. Kamrul Hasan",
-      message:
-        "Your dental procedure has been scheduled for next Wednesday. Please confirm your attendance.",
-      status: "pending",
-    },
-    {
-      key: "9",
-      _id: "09",
-      patientName: "Shabana Akter",
-      address: "Gulshan, Dhaka.",
-      mobile: "01855667788",
-      date: "10/05/2024",
-      department: "ENT",
-      doctor: "Dr. Nasima Sultana",
-      message:
-        "Please visit the clinic for a follow-up regarding your recent ENT examination.",
-      status: "cancel",
-    },
-    {
-      key: "10",
-      _id: "10",
-      patientName: "Nasir Uddin",
-      address: "Farmgate, Dhaka.",
-      mobile: "01766778899",
-      date: "11/05/2024",
-      department: "Psychiatry",
-      doctor: "Dr. Sharmin Akhter",
-      message:
-        "Your counseling session is scheduled for next Friday. Please ensure to be on time.",
-      status: "approve",
-    },
-  ];
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [totalItems, setTotalItems] = useState(100);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
   const [viewDetailsModalOpen, setViewDetailsModalOpen] = useState(false);
   const [appointmentData, setAppointmentData] = useState<TAppointment>(
-    {} as TAppointment
+    {} as TAppointment,
   );
 
-  console.log(isLoading);
-  let params: Record<string, unknown> = {};
-  params.limit = 10;
-  params.page = currentPage;
-  const dataFetch = async () => {
-    setIsLoading(true);
-
-    // setDoctorsData();
-    setTotalItems(550);
-    setItemsPerPage(10);
-    setIsLoading(false);
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onChange: TableProps<any>["onChange"] = (
-    pagination,
-    filters,
-    sorter,
-    extra
-  ) => {
-    console.log("params", pagination, filters, sorter, extra);
-  };
   const handleUpdateStatus = async (data: string, id: string) => {
     console.log(data);
     console.log(id);
 
-    // const tostId = toast.loading("Status Updating...");
-    // try {
-    // const payload = {
-    //     id,
-    //     data: { status: data?.key },
-    //   };
+    const tostId = toast.loading("Status Updating...");
+    try {
+      const payload = {
+        id,
+        data,
+      };
 
-    //   const res = await updateAdaptionStatus(payload).unwrap();
-    //   res && toast.success("Status Updated", { id: tostId, duration: 2000 });
-    // } catch (error) {
-    //   console.log("error---=>", error);
-    //   toast.error("something went wrong", { id: tostId, duration: 2000 });
-    // }
-  };
-  const handleViewDetails = (appointment: TAppointment) => {
-    setViewDetailsModalOpen(true);
-    setAppointmentData(appointment);
-    console.log("Edit", appointment);
-  };
-  const handleDelete = (id: string) => {
-    // Handle delete action
-    console.log("Delete", id);
+      const res = await updateAppointment(payload).unwrap();
+      res && toast.success("Status Updated", { id: tostId, duration: 2000 });
+    } catch (error) {
+      console.log("error---=>", error);
+      toast.error("something went wrong", { id: tostId, duration: 2000 });
+    }
   };
 
-  useEffect(() => {
-    dataFetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage]);
+  const handlePaginationChange = (page: number) => {
+    setParams((prevParams) => [
+      ...prevParams.filter((param) => param.name !== "page"),
+      { name: "page", value: page },
+    ]);
+  };
+
+  const meta = data?.data?.meta;
+  const result = data?.data?.result;
+
+  console.log(result);
 
   return (
     <>
@@ -363,15 +230,14 @@ const AllAppointmentsList = () => {
       </div>
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={result}
         scroll={{ x: 1800 }}
         pagination={false}
-        onChange={onChange}
+        loading={isDataLoading}
       />
       <LabonePagination
-        totalItems={totalItems}
-        itemsPerPage={itemsPerPage}
-        setCurrentPage={setCurrentPage}
+        meta={meta}
+        handlePaginationChange={handlePaginationChange}
       />
       <AppointmentDetails
         viewDetailsModalOpen={viewDetailsModalOpen}

@@ -3,51 +3,48 @@ import { useState } from "react";
 import { Col, Form, Row, Select, TimePicker } from "antd";
 import { toast } from "sonner";
 
-import { useAddDoctorMutation } from "../../redux/features/doctor/doctorApi";
-import { useGetAllDepartmentQuery } from "../../redux/features/department/departmentApi";
+import { useGetAllDoctorsQuery } from "../../redux/features/doctor/doctorApi";
 import { Dayes, formatTime } from "./Schedules.constant";
+import { useAddScheduleMutation } from "../../redux/features/schedules/schedulesApi";
 
-export type Interest = {
+export type TDoctor = {
   _id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
 };
 
 const DoctorSchedulesRegForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
-  const [addDoctor] = useAddDoctorMutation();
-  const { data } = useGetAllDepartmentQuery(undefined);
+  const [addSchedules] = useAddScheduleMutation();
+  const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(undefined);
 
   const onSubmit = async (data: any) => {
     const toastId = toast.loading("Adding new doctor...");
 
     const doctorNewData = {
-      doctorId: data?.doctorId,
+      doctorID: data?.doctorId,
       scheduleDay: data?.day,
       startTime: formatTime(data?.startTime),
       endTime: formatTime(data?.endTime),
     };
-    console.log(doctorNewData);
-    // try {
-    //   const res = await addDoctor(doctorNewData);
-    //   if (res) {
-    //     setIsLoading(true);
-    //     toast.success("Successfully added the doctor", { id: toastId });
-    //     form.resetFields();
-    //     setFile([]);
-    //   } else {
-    //     toast.error("Something want wrong!", { id: toastId });
-    //   }
-    // } catch (error: any) {
-    //   toast.error(error.message, { id: toastId });
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    try {
+      const res = await addSchedules(doctorNewData).unwrap();
+      if (res?.success) {
+        setIsLoading(true);
+        toast.success("Successfully added the Schedules", { id: toastId });
+        form.resetFields();
+      } else {
+        toast.error("Something want wrong!", { id: toastId });
+      }
+    } catch (error: any) {
+      toast.error("Something want wrong!", { id: toastId });
+    }
   };
 
-  const interestOptions = data?.data?.result?.map((int: Interest) => ({
-    value: int?._id,
-    label: int?.name,
+  const allDoctors = data?.data?.result?.map((doctor: TDoctor) => ({
+    value: doctor?._id,
+    label: `${doctor?.firstName} ${doctor?.lastName}`,
   }));
 
   return (
@@ -69,10 +66,10 @@ const DoctorSchedulesRegForm = () => {
                   rules={[{ required: true, message: "Doctor is required" }]}
                 >
                   <Select
+                    loading={isDataLoading}
                     showSearch
                     placeholder="Select from here..."
-                    // options={interestOptions}
-                    options={Dayes}
+                    options={allDoctors}
                     className="h-10 *:!rounded-lg !bg-transparent"
                   />
                 </Form.Item>

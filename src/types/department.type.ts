@@ -6,6 +6,7 @@ export type TDepartment = {
   icon?: string;
   details?: string;
 };
+
 export type TUpdateDepartment = {
   updateModalOpen: boolean;
   setUpdateModalOpen: Dispatch<React.SetStateAction<boolean>>;

@@ -143,8 +143,7 @@ const AllMachinesList = () => {
 
   const handleDelete = async (id: string) => {
     const res = await deleteMachine(id).unwrap();
-    console.log(res)
-    if (res?.data?.success) {
+    if (res?.success) {
       toast.success("Machine Delete Successful");
     } else {
       toast.error("Something want wrong!");
