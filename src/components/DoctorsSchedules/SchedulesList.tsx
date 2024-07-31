@@ -14,13 +14,17 @@ import { TSchedule } from "../../types/schedule.type";
 import LabonePagination from "../../utils/Pagination/pagination";
 import UpdateSchedule from "./UpdateSchedule";
 import { TQueryParam } from "../../types/global.type";
-import { useGetAllScheduleQuery } from "../../redux/features/schedules/schedulesApi";
+import {
+  useDeleteScheduleMutation,
+  useGetAllScheduleQuery,
+} from "../../redux/features/schedules/schedulesApi";
+import { toast } from "sonner";
 
 const SchedulesList = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
 
   const { data, isLoading: isDataLoading } = useGetAllScheduleQuery(params);
-  // const [deleteDoctor] = useDeleteDoctorMutation();
+  const [deleteSchedule] = useDeleteScheduleMutation();
 
   const departmentColumns: TableColumnsType<TSchedule> = [
     {
@@ -41,14 +45,20 @@ const SchedulesList = () => {
     },
     {
       title: "Schedule Day",
-      dataIndex: "scheduleDay",
       key: "scheduleDay",
-      width: 200,
+      width: 150,
+      render: (record: TSchedule) => (
+        <p className="capitalize">{record?.scheduleDay}</p>
+      ),
     },
     {
       title: "Schedule Time",
       key: "scheduleTime",
-      render: (record :TSchedule) => <p>{record?.startTime} - {record?.endTime}</p>,
+      render: (record: TSchedule) => (
+        <p>
+          {record?.startTime} - {record?.endTime}
+        </p>
+      ),
       width: 280,
     },
     {
@@ -88,8 +98,13 @@ const SchedulesList = () => {
     setScheduleData(schedule);
   };
 
-  const handleDelete = (id: string) => {
-
+  const handleDelete = async (id: string) => {
+    const res = await deleteSchedule(id).unwrap();
+    if (res?.success) {
+      toast.success("Schedule Delete Successful");
+    } else {
+      toast.error("Something want wrong!");
+    }
     console.log("Delete", id);
   };
 
