@@ -1,5 +1,4 @@
-
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Divider,
@@ -14,56 +13,13 @@ import { AiFillDelete } from "react-icons/ai";
 import { IoSearchOutline } from "react-icons/io5";
 import { TMachine } from "../../types/machine.type";
 import LabonePagination from "../../utils/Pagination/pagination";
-import UpdateMachine from "../Machines/UpdateMachine";
-
-const data = [
-  {
-    key: "1",
-    _id: "1",
-    photo:
-      "https://esskaymachines.com/blog/wp-content/uploads/2020/12/industrial-machinery-imhe-384x288_tcm27-3207.jpg",
-    name: "CT SCAN Machine",
-    country: "Hitachi-Japan",
-    details: "Advanced imaging technology for detailed internal scans.",
-  },
-  {
-    key: "2",
-    _id: "2",
-    photo: "https://i.ytimg.com/vi/l6nysqD9ibc/maxresdefault.jpg",
-    name: "MRI Machine",
-    country: "Siemens-Germany",
-    details:
-      "Uses magnetic fields and radio waves to create detailed images of organs",
-  },
-  {
-    key: "3",
-    _id: "3",
-    photo:
-      "https://esskaymachines.com/blog/wp-content/uploads/2020/12/industrial-machinery-imhe-384x288_tcm27-3207.jpg",
-    name: "Ultrasound Machine",
-    country: "GE Healthcare-USA",
-    details:
-      "Utilizes high-frequency sound waves to capture live images from the inside of the body.",
-  },
-  {
-    key: "4",
-    _id: "4",
-    photo: "https://i.ytimg.com/vi/l6nysqD9ibc/maxresdefault.jpg",
-    name: "X-Ray Machine",
-    country: "Philips-Netherlands",
-    details: "Employs X-rays to view the inside of the body, especially bones.",
-  },
-  {
-    key: "5",
-    _id: "5",
-    photo:
-      "https://esskaymachines.com/blog/wp-content/uploads/2020/12/industrial-machinery-imhe-384x288_tcm27-3207.jpg",
-    name: "PET Scan Machine",
-    country: "Toshiba-Japan",
-    details:
-      "Combines nuclear medicine and biochemical analysis to produce images of the body's function.",
-  },
-];
+import { TQueryParam } from "../../types/global.type";
+import {
+  useDeleteDiagnosticMachineMutation,
+  useGetAllDiagnosticMachineQuery,
+} from "../../redux/features/diagonisticMachine/diagonisticMachineApi";
+import { toast } from "sonner";
+import UpdateDiagnosticMachine from "./UpdateDiagnosticMachine";
 
 const DiagnosticsAllMachinesList = () => {
   const machinesColumns: TableColumnsType<TMachine> = [
@@ -123,50 +79,38 @@ const DiagnosticsAllMachinesList = () => {
     },
   ];
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchText, setSearchText] = useState("");
-  const [totalItems, setTotalItems] = useState<number>(100);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [machineData, setMachineData] = useState<TMachine>({} as TMachine);
 
-  console.log(isLoading);
-  //   Filter on object
-  // eslint-disable-next-line prefer-const
-  let params: Record<string, unknown> = {};
+  const [params, setParams] = useState<TQueryParam[]>([]);
 
-  if (searchText?.trim() !== "") {
-    params.searchTerm = searchText;
-  }
-
-  params.limit = 10;
-  params.page = currentPage;
-
-  const dataFetch = async () => {
-    setIsLoading(true);
-
-    // setDoctorsData();
-    setTotalItems(550);
-    setItemsPerPage(10);
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    dataFetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText, currentPage, machineData]);
+  const { data, isLoading: isDataLoading } =
+    useGetAllDiagnosticMachineQuery(params);
+  const [deleteDiagnosticMachine] = useDeleteDiagnosticMachineMutation();
 
   const handleUpdateData = (machine: TMachine) => {
     setUpdateModalOpen(true);
     setMachineData(machine);
-    // console.log("Edit", machine);
   };
 
-  const handleDelete = (id: string) => {
-    // Handle delete action
-    console.log("Delete", id);
+  const handleDelete = async (id: string) => {
+    const res = await deleteDiagnosticMachine(id).unwrap();
+    if (res?.success) {
+      toast.success("Diagnostic Machine Delete Successful");
+    } else {
+      toast.error("Something want wrong!");
+    }
   };
+
+  const handlePaginationChange = (page: number) => {
+    setParams((prevParams) => [
+      ...prevParams.filter((param) => param.name !== "page"),
+      { name: "page", value: page },
+    ]);
+  };
+
+  const meta = data?.data?.meta;
+  const result = data?.data?.result;
 
   return (
     <>
@@ -182,22 +126,24 @@ const DiagnosticsAllMachinesList = () => {
             prefix={<IoSearchOutline />}
             placeholder="Search"
             className="focus:placeholder:!text-primary"
-            onChange={(e) => setSearchText(e.target.value)}
+            onChange={(e) =>
+              setParams([{ name: "searchTerm", value: e.target.value }])
+            }
           />
         </div>
       </div>
       <Table
         columns={machinesColumns}
-        dataSource={data}
+        dataSource={result}
         scroll={{ x: 900 }}
+        loading={isDataLoading}
         pagination={false}
       />
       <LabonePagination
- 
-        itemsPerPage={itemsPerPage}
-        setCurrentPage={setCurrentPage}
+        meta={meta}
+        handlePaginationChange={handlePaginationChange}
       />
-      <UpdateMachine
+      <UpdateDiagnosticMachine
         updateModalOpen={updateModalOpen}
         setUpdateModalOpen={setUpdateModalOpen}
         machineData={machineData}
