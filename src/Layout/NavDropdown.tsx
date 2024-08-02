@@ -3,21 +3,22 @@ import { useState } from "react";
 import { LiaAngleDownSolid, LiaAngleUpSolid } from "react-icons/lia";
 import { FiLogOut } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { useGetUserQuery } from "../redux/features/user/userApi";
 
 const NavDropDown = () => {
-
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  console.log(setIsLoading);
+  const { data } = useGetUserQuery(undefined);
+  const user = data?.data;
   const navigate = useNavigate();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDropdownVisibleChange = (visible: any) => {
     setDropdownVisible(visible);
   };
 
   const handelLogOut = async () => {
     localStorage.removeItem("accessToken");
-    navigate('/login')
+    navigate("/login");
   };
 
   const items: MenuProps["items"] = [
@@ -25,7 +26,7 @@ const NavDropDown = () => {
       label: (
         <div className="p-2 flex items-center !w-[235px]">
           <Image
-            src="https://i.ibb.co/CtjVFXW/jahid-prof.jpg"
+            src={user?.photo}
             width={40}
             height={40}
             alt="Profile"
@@ -33,12 +34,10 @@ const NavDropDown = () => {
           />
           <div className="ml-4">
             <h2 className="text-sm text-primary font-semibold">
-              {/* {data?.firstName + " " + data?.lastName} */}
-              LabOne
+              {user?.firstName + " " + user?.lastName}
             </h2>
             <p className="text-sm whitespace-normal text-wrap break-words !w-[145px]">
-              {/* {data?.email} */}
-              labone@gmail.com
+              {user?.email}
             </p>
           </div>
         </div>
@@ -62,8 +61,6 @@ const NavDropDown = () => {
     },
   ];
 
-  if (isLoading) return null;
-
   return (
     <Dropdown
       open={dropdownVisible}
@@ -75,13 +72,17 @@ const NavDropDown = () => {
         <div className="flex items-center justify-end">
           {/* <IoIosNotificationsOutline className="w-8 h-8 text-secondary" /> */}
           <Image
-            src="https://i.ibb.co/CtjVFXW/jahid-prof.jpg"
+            src={user?.photo}
             alt="Profile"
             width={32}
             height={32}
             className="w-[32px] h-[32px] object-cover rounded-full mr-4"
           />
-          <h2 className="text-sm font-semibold text-primary mx-2">LabOne</h2>
+          <h2 className="text-sm font-semibold text-primary mx-2">
+            <h2 className="text-sm text-primary font-semibold">
+              {user?.firstName + " " + user?.lastName}
+            </h2>
+          </h2>
           {dropdownVisible ? (
             <LiaAngleUpSolid className="w-4 h-4 text-secondary" />
           ) : (
