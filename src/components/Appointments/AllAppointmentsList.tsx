@@ -37,7 +37,7 @@ const AllAppointmentsList = () => {
           Approve
         </div>
       ),
-      key: "approve",
+      key: "approved",
     },
     {
       label: (
@@ -46,7 +46,7 @@ const AllAppointmentsList = () => {
           Cancel
         </span>
       ),
-      key: "cancel",
+      key: "canceled",
     },
   ];
 
@@ -79,6 +79,7 @@ const AllAppointmentsList = () => {
     {
       title: "Address",
       dataIndex: "address",
+      width: 280,
     },
     {
       title: "Mobile",
@@ -90,6 +91,7 @@ const AllAppointmentsList = () => {
     },
     {
       title: "Doctor",
+      width: 300,
       render: (data: TAppointment) => (
         <p>
           {data?.doctorID?.firstName} {data?.doctorID?.lastName}
@@ -188,20 +190,15 @@ const AllAppointmentsList = () => {
   );
 
   const handleUpdateStatus = async (data: string, id: string) => {
-    console.log(data);
-    console.log(id);
-
     const tostId = toast.loading("Status Updating...");
     try {
       const payload = {
         id,
-        data,
+        data: { status: data },
       };
-
       const res = await updateAppointment(payload).unwrap();
       res && toast.success("Status Updated", { id: tostId, duration: 2000 });
     } catch (error) {
-      console.log("error---=>", error);
       toast.error("something went wrong", { id: tostId, duration: 2000 });
     }
   };
@@ -215,8 +212,6 @@ const AllAppointmentsList = () => {
 
   const meta = data?.data?.meta;
   const result = data?.data?.result;
-
-  console.log(result);
 
   return (
     <>

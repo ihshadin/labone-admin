@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-// import ProtectedRoute from "../Layout/ProtectedRoute";
 import MainLayout from "../Layout/MainLayout";
 import NotFoundPage from "../pages/ErrorPage/NotFoundPage";
 import Home from "../pages/Home/Home";
@@ -23,14 +22,15 @@ import DiagnosticsAllMachines from "../pages/Machines/DiagnosticsAllMachines";
 import AddDoctorSchedules from "../pages/DoctorsSchedules/AddDoctorSchedules";
 import AllDiagnosticSchedules from "../pages/DiagnosticDoctorsSchedules/AllDiagnosticSchedules";
 import AddDiagnosticDoctorSchedules from "../pages/DiagnosticDoctorsSchedules/AddDiagnosticDoctorSchedules";
+import ProtectedRoute from "../Layout/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      // <ProtectedRoute>
-      <MainLayout />
-      // </ProtectedRoute>
+      <ProtectedRoute>
+        <MainLayout />
+      </ProtectedRoute>
     ),
     children: [
       {
