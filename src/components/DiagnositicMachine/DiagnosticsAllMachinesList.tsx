@@ -193,7 +193,7 @@ const DiagnosticsAllMachinesList = () => {
         pagination={false}
       />
       <LabonePagination
-        totalItems={totalItems}
+ 
         itemsPerPage={itemsPerPage}
         setCurrentPage={setCurrentPage}
       />

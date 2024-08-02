@@ -8,7 +8,7 @@ import { useAddDoctorMutation } from "../../redux/features/doctor/doctorApi";
 import { useGetAllDepartmentQuery } from "../../redux/features/department/departmentApi";
 import { uploadImageInCloudinary } from "../../utils/UploadImage/UploadImageInCloudinay";
 
-export type Interest = {
+export type TDepartment = {
   _id: string;
   name: string;
 };
@@ -19,7 +19,7 @@ const DoctorRegForm = () => {
   const [form] = Form.useForm();
   const [addDoctor] = useAddDoctorMutation();
   const { data } = useGetAllDepartmentQuery(undefined);
-  
+
   const onSubmit = async (data: TDoctor) => {
     const toastId = toast.loading("Adding new doctor...");
 
@@ -42,16 +42,15 @@ const DoctorRegForm = () => {
     };
 
     try {
-      const res = await addDoctor(doctorNewData);
-      if(res){
+      const res = await addDoctor(doctorNewData).unwrap();
+      if (res?.success) {
         setIsLoading(true);
         toast.success("Successfully added the doctor", { id: toastId });
         form.resetFields();
-        setFile([]); 
-      } else{
+        setFile([]);
+      } else {
         toast.error("Something want wrong!", { id: toastId });
       }
-      
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     } finally {
@@ -59,8 +58,7 @@ const DoctorRegForm = () => {
     }
   };
 
-
-  const interestOptions = data?.data?.result?.map((int: Interest) => ({
+  const departmentOptions = data?.data?.result?.map((int: TDepartment) => ({
     value: int?._id,
     label: int?.name,
   }));
@@ -81,10 +79,13 @@ const DoctorRegForm = () => {
                   label="First Name"
                   name="firstName"
                   tooltip="Here you have to input the doctor's first name."
-                  rules={[{ required: true, message: "First Name is required" }]}
+                  rules={[
+                    { required: true, message: "First Name is required" },
+                  ]}
                 >
                   <Input
-                    type="text"  autoComplete="off"
+                    type="text"
+                    autoComplete="off"
                     placeholder="Write here..."
                     className="h-10 border border-[#C4CAD4] !rounded-lg"
                   />
@@ -108,20 +109,19 @@ const DoctorRegForm = () => {
             </Row>
 
             <Row gutter={16}>
-              
               <Col span={24} md={{ span: 24 }}>
                 <Form.Item
-                tooltip="Here you have to input the doctor's email."
-                rules={[{ required: true, message: "Email is required" }]}
-
-                label="Email Address" name="email">
+                  tooltip="Here you have to input the doctor's email."
+                  rules={[{ required: true, message: "Email is required" }]}
+                  label="Email Address"
+                  name="email"
+                >
                   <Input
                     type="email"
                     placeholder="Write here..."
                     className="h-10 border border-[#C4CAD4] !rounded-lg"
                   />
                 </Form.Item>
-               
               </Col>
             </Row>
             <Row gutter={16}>
@@ -142,7 +142,7 @@ const DoctorRegForm = () => {
                 </Form.Item>
               </Col>
               <Col span={24} md={{ span: 12 }}>
-              <Form.Item
+                <Form.Item
                   label="Serial No"
                   name="serialNumber"
                   tooltip="Here you have to input the doctor's serial number."
@@ -170,7 +170,7 @@ const DoctorRegForm = () => {
                   <Select
                     showSearch
                     placeholder="Select from here..."
-                    options={interestOptions}
+                    options={departmentOptions}
                     className="h-10 *:!rounded-lg !bg-transparent"
                   />
                 </Form.Item>

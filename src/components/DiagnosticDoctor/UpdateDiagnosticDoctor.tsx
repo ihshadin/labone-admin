@@ -7,10 +7,10 @@ import { TDoctor, TUpdateDoctor } from "../../types/doctor.type";
 import UploadImageWithPreview from "../../utils/UploadImage/UploadImageWithPreview";
 import { useGetAllDepartmentQuery } from "../../redux/features/department/departmentApi";
 import { uploadImageInCloudinary } from "../../utils/UploadImage/UploadImageInCloudinay";
-import { useUpdateDoctorMutation } from "../../redux/features/doctor/doctorApi";
-import { TDepartment } from "./DoctorRegForm";
+import { TDepartment } from "../Doctors/DoctorRegForm";
+import { useUpdateDiagnosticDoctorMutation } from "../../redux/features/diagnosticDoctor/diagnosticDoctorApi";
 
-const UpdateDoctor = ({
+const UpdateDiagnosticDoctor = ({
   updateModalOpen,
   setUpdateModalOpen,
   doctorData,
@@ -19,10 +19,10 @@ const UpdateDoctor = ({
   const [file, setFile] = useState<any>([]);
   const [form] = Form.useForm();
   const { data } = useGetAllDepartmentQuery(undefined);
-  const [updateDoctor] = useUpdateDoctorMutation();
+  const [updateDiagnosticDoctor] = useUpdateDiagnosticDoctorMutation();
 
   const onSubmit = async (data: TDoctor) => {
-    const toastId = toast.loading("Updating doctor info...");
+    const toastId = toast.loading("Updating Diagnostic doctor info...");
 
     let imageLink;
 
@@ -45,15 +45,13 @@ const UpdateDoctor = ({
         : doctorData?.departmentID?._id,
     };
 
-    // console.log({ doctorNewData });
-
     const updateInfo = {
       id: doctorData?._id,
       data: doctorNewData,
     };
 
     try {
-      const res = await updateDoctor(updateInfo).unwrap();
+      const res = await updateDiagnosticDoctor(updateInfo).unwrap();
 
       if (res?.success) {
         setIsLoading(true);
@@ -68,29 +66,6 @@ const UpdateDoctor = ({
       setIsLoading(false);
     }
   };
-
-  // const interestOptions = [
-  //   { value: "Travel", label: "Travel" },
-  //   { value: "Food and Cooking", label: "Food and Cooking" },
-  //   { value: "Fitness and Health", label: "Fitness and Health" },
-  //   { value: "Music", label: "Music" },
-  //   { value: "Art and Design", label: "Art and Design" },
-  //   { value: "Reading", label: "Reading" },
-  //   { value: "Technology", label: "Technology" },
-  //   { value: "Sports", label: "Sports" },
-  //   { value: "Gardening", label: "Gardening" },
-  //   { value: "Movies and TV Shows", label: "Movies and TV Shows" },
-  //   { value: "Photography", label: "Photography" },
-  //   { value: "Writing", label: "Writing" },
-  //   { value: "Gaming", label: "Gaming" },
-  //   { value: "Fashion", label: "Fashion" },
-  //   { value: "DIY Projects", label: "DIY Projects" },
-  //   { value: "Learning Languages", label: "Learning Languages" },
-  //   { value: "Social Media", label: "Social Media" },
-  //   { value: "Volunteering", label: "Volunteering" },
-  //   { value: "Pets", label: "Pets" },
-  //   { value: "Outdoors", label: "Outdoors" },
-  // ];
 
   useEffect(() => {
     form.resetFields();
@@ -291,7 +266,7 @@ const UpdateDoctor = ({
                 type="submit"
                 disabled={isLoading ? true : false}
               >
-                {isLoading ? "Loading..." : "Update Doctor"}
+                {isLoading ? "Loading..." : "Update Diagnostic Doctor"}
               </button>
             </div>
           </Row>
@@ -301,4 +276,4 @@ const UpdateDoctor = ({
   );
 };
 
-export default UpdateDoctor;
+export default UpdateDiagnosticDoctor;

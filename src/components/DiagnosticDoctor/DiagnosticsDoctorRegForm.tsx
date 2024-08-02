@@ -1,73 +1,65 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Col, Form, Input, Row, Select } from "antd";
-// import Dragger from "antd/es/upload/Dragger";
-// import { LuUploadCloud } from "react-icons/lu";
 import { toast } from "sonner";
 import { TDoctor } from "../../types/doctor.type";
 import UploadImageWithPreview from "../../utils/UploadImage/UploadImageWithPreview";
-import { useAddDoctorMutation } from "../../redux/features/doctor/doctorApi";
 import { useGetAllDepartmentQuery } from "../../redux/features/department/departmentApi";
 import { uploadImageInCloudinary } from "../../utils/UploadImage/UploadImageInCloudinay";
-
-export type Interest = {
-  _id: string;
-  name: string;
-};
+import { TDepartment } from "../Doctors/DoctorRegForm";
+import { useAddDiagnosticDoctorMutation } from "../../redux/features/diagnosticDoctor/diagnosticDoctorApi";
 
 const DiagnosticsDoctorRegForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<any>([]);
-  const [imageLink, setImageLink] = useState<string>("");
   const [form] = Form.useForm();
-  const [addDoctor] = useAddDoctorMutation();
+  const [addDiagnosticDoctor] = useAddDiagnosticDoctorMutation();
   const { data } = useGetAllDepartmentQuery(undefined);
-  
+
   const onSubmit = async (data: TDoctor) => {
-    const toastId = toast.loading("Adding new doctor...");
+    const toastId = toast.loading("Adding new Diagnostic doctor...");
 
     let imageLink;
     if (file) {
       imageLink = await uploadImageInCloudinary(file, toastId);
     }
 
-    console.log({ imageLink });
+    const doctorNewData = {
+      firstName: data?.firstName,
+      lastName: data?.lastName,
+      serialNumber: Number(data?.serialNumber),
+      image: imageLink,
+      email: data?.email,
+      specialization: data?.specialization,
+      degree: data?.degree,
+      address: data?.address,
+      contactNumber: data?.contactNumber,
+      departmentID: data.department,
+    };
 
-    // const doctorNewData = {
-    //   firstName: data.firstName,
-    //   lastName: data.lastName,
-    //   serialNumber: data.contactNumber,
-    //   image: data.contactNumber,
-    //   email: data.email,
-    //   department: data.department,
-    //   specialization: data.specialization,
-    //   degree: data.degree,
-    //   address: data.address,
-    //   contactNumber: data.address,
-    //   departmentID: data.address,
-    // };
-    // console.log({ doctorNewData });
-
-    // try {
-    //   // addDoctor();
-    //   setIsLoading(true);
-    //   toast.success("Successfully added the doctor", { id: toastId });
-    // } catch (error: any) {
-    //   toast.error(error.message, { id: toastId });
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    try {
+      const res = await addDiagnosticDoctor(doctorNewData).unwrap();
+      if (res?.success) {
+        setIsLoading(true);
+        toast.success("Successfully added the Diagnostic doctor", {
+          id: toastId,
+        });
+        form.resetFields();
+        setFile([]);
+      } else {
+        toast.error("Something want wrong!", { id: toastId });
+      }
+    } catch (error: any) {
+      toast.error(error.message, { id: toastId });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
-  //   setFile(newFileList);
-  // };
-
-  const interestOptions = data?.data?.result?.map((int: Interest) => ({
+  const departmentOptions = data?.data?.result?.map((int: TDepartment) => ({
     value: int?._id,
     label: int?.name,
   }));
-  // console.log(interests)
 
   return (
     <>
@@ -85,10 +77,13 @@ const DiagnosticsDoctorRegForm = () => {
                   label="First Name"
                   name="firstName"
                   tooltip="Here you have to input the doctor's first name."
-                  rules={[{ required: true, message: "First Name is required" }]}
+                  rules={[
+                    { required: true, message: "First Name is required" },
+                  ]}
                 >
                   <Input
-                    type="text"  autoComplete="off"
+                    type="text"
+                    autoComplete="off"
                     placeholder="Write here..."
                     className="h-10 border border-[#C4CAD4] !rounded-lg"
                   />
@@ -112,20 +107,19 @@ const DiagnosticsDoctorRegForm = () => {
             </Row>
 
             <Row gutter={16}>
-              
               <Col span={24} md={{ span: 24 }}>
                 <Form.Item
-                tooltip="Here you have to input the doctor's email."
-                rules={[{ required: true, message: "Email is required" }]}
-
-                label="Email Address" name="email">
+                  tooltip="Here you have to input the doctor's email."
+                  rules={[{ required: true, message: "Email is required" }]}
+                  label="Email Address"
+                  name="email"
+                >
                   <Input
                     type="email"
                     placeholder="Write here..."
                     className="h-10 border border-[#C4CAD4] !rounded-lg"
                   />
                 </Form.Item>
-               
               </Col>
             </Row>
             <Row gutter={16}>
@@ -146,7 +140,7 @@ const DiagnosticsDoctorRegForm = () => {
                 </Form.Item>
               </Col>
               <Col span={24} md={{ span: 12 }}>
-              <Form.Item
+                <Form.Item
                   label="Serial No"
                   name="serialNumber"
                   tooltip="Here you have to input the doctor's serial number."
@@ -174,7 +168,7 @@ const DiagnosticsDoctorRegForm = () => {
                   <Select
                     showSearch
                     placeholder="Select from here..."
-                    options={interestOptions}
+                    options={departmentOptions}
                     className="h-10 *:!rounded-lg !bg-transparent"
                   />
                 </Form.Item>
@@ -182,7 +176,7 @@ const DiagnosticsDoctorRegForm = () => {
               <Col span={24} md={{ span: 12 }} lg={{ span: 12 }}>
                 <Form.Item
                   label="Specialty"
-                  name="specialty"
+                  name="specialization"
                   tooltip="Here you have to input the doctor's specialty."
                   rules={[{ required: true, message: "Specialty is required" }]}
                 >
@@ -228,22 +222,7 @@ const DiagnosticsDoctorRegForm = () => {
               </Col>
             </Row>
 
-            {/* <Row>
-              <div className="w-full pb-4">
-                <p className="font-medium mb-1.5">Doctor Image</p>
-                <Dragger onChange={handleChange} maxCount={1}>
-                  <div className="flex justify-center py-4">
-                    <p className="border shadow px-2 py-3 w-16 flex items-center justify-center rounded">
-                      <LuUploadCloud fontSize={27} />
-                    </p>
-                  </div>
-                  <p className="font-medium tracking-[2px]">Click to upload</p>
-                  <p className="pb-2">
-                    Drag & drop or select a photo from your computer.
-                  </p>
-                </Dragger>
-              </div>
-            </Row> */}
+           
 
             <Row>
               <div className="flex items-center justify-end w-full">
