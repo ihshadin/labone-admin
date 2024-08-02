@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import { Col, Form, Input, Row } from "antd";
 // import Dragger from "antd/es/upload/Dragger";
@@ -27,6 +28,7 @@ const ProfileSettingsForm = () => {
       firstName: data?.firstName,
       lastName: data?.lastName,
     };
+    
 
     const payload = {
       id: user?._id,
