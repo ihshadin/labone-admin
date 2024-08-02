@@ -72,6 +72,7 @@ export const baseApi = createApi({
     "appointment",
     "schedule",
     "diagnosticDoctor",
+    "diagnosticMachine",
   ],
   refetchOnMountOrArgChange: 30,
   endpoints: () => ({}),
