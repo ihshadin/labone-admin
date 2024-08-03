@@ -1,6 +1,9 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { FaUserDoctor } from "react-icons/fa6";
+import { LuCalendarClock, LuCalendarSearch, LuGitBranch } from "react-icons/lu";
+import { GrVirtualMachine } from "react-icons/gr";
+import { BiUserPlus } from "react-icons/bi";
 
 // import Swiper and modules styles
 import "swiper/css";
@@ -9,9 +12,6 @@ import "swiper/css/pagination";
 
 // Custom CSS
 import "./DataContainer.css";
-import { LuCalendarClock, LuCalendarSearch, LuGitBranch } from "react-icons/lu";
-import { GrVirtualMachine } from "react-icons/gr";
-import { BiUserPlus } from "react-icons/bi";
 
 const items = [
   {
