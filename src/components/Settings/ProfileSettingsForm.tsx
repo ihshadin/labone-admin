@@ -19,7 +19,6 @@ const ProfileSettingsForm = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [file, setFile] = useState<any>([]);
   const [form] = Form.useForm();
-  const [imageLink, setImageLink] = useState("");
 
   const onSubmit = async (data: TProfile) => {
     const toastId = toast.loading("Adding new doctor...");
@@ -28,18 +27,19 @@ const ProfileSettingsForm = () => {
       firstName: data?.firstName,
       lastName: data?.lastName,
     };
-    
-
-    const payload = {
-      id: user?._id,
-      data: profileData,
-    };
 
     try {
-      const res = await userUpdate(payload).unwrap();
-      console.log(res);
-      setIsLoading(true);
-      toast.success("Profile Information change Successfully", { id: toastId });
+      const res = await userUpdate(profileData).unwrap();
+      if (res?.success) {
+        setIsLoading(true);
+
+        toast.success("Profile Information change Successfully", {
+          id: toastId,
+        });
+      } else {
+        toast.error("Something want wrong!", { id: toastId });
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     } finally {
@@ -53,9 +53,8 @@ const ProfileSettingsForm = () => {
       firstName: user?.firstName,
       lastName: user?.lastName,
     });
-    setImageLink(user?.photo);
   }, []);
-
+  console.log(user);
   return (
     <>
       <Row>
@@ -118,7 +117,7 @@ const ProfileSettingsForm = () => {
                 <UploadImageWithPreview
                   setFile={setFile}
                   aspectRatio={1 / 1}
-                  defaultImage={imageLink}
+                  defaultImage={user?.photo}
                   ratioName="oneOne"
                 />
               </Col>

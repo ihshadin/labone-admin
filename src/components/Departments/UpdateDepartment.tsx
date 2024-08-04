@@ -39,9 +39,10 @@ const UpdateDepartment = ({
     };
 
     try {
-      const res = await updateDepartment(updateInfo);
+      const res = await updateDepartment(updateInfo).unwrap();
+      console.log(res)
 
-      if (res) {
+      if (res?.success) {
         setIsLoading(true);
         setUpdateModalOpen(false);
         toast.success("Successfully updated the Department", { id: toastId });

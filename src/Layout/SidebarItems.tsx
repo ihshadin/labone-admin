@@ -1,3 +1,4 @@
+
 import { BiSolidDashboard, BiUserPlus } from "react-icons/bi";
 
 import { FaUserDoctor } from "react-icons/fa6";
@@ -72,7 +73,7 @@ export const sidebarItems = [
   },
   {
     key: 10,
-    label: <p className="text-base pl-4">Diagnostics </p>,
+    label: <p className="text-lg font-semibold border-t-2"> Diagnostics</p>,
   },
   {
     key: 7,
@@ -101,12 +102,20 @@ export const sidebarItems = [
   {
     key: 875,
     icon: <FaUserDoctor />,
-    label: <Link to={"/all-diagnostic-doctors-schedules"}>Di. All Doctor's Schedules</Link>,
+    label: (
+      <Link to={"/all-diagnostic-doctors-schedules"}>
+        Di. All Doctor's Schedules
+      </Link>
+    ),
     children: [
       {
         key: 879,
         icon: <BiUserPlus />,
-        label: <Link to={"/add-diagnostic-doctor-schedules"}>Di. Add Doctor's Schedules</Link>,
+        label: (
+          <Link to={"/add-diagnostic-doctor-schedules"}>
+            Di. Add Doctor's Schedules
+          </Link>
+        ),
       },
     ],
   },

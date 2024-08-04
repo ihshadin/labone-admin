@@ -13,11 +13,11 @@ const userApi = baseApi.injectEndpoints({
     }),
 
     updateUser: builder.mutation({
-      query: (args) => {
+      query: (data) => {
         return {
-          url: `/user/${args?.id}`,
+          url: `/user/me/`,
           method: "PATCH",
-          body: args?.data,
+          body: data,
         };
       },
       invalidatesTags: ["user"],

@@ -15,6 +15,7 @@ import {
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:5000/api/v1",
+  // baseUrl: "https://labone-backend.vercel.app/api/v1",
   credentials: "include",
   prepareHeaders: (headers) => {
     const token = getUserInfo();
