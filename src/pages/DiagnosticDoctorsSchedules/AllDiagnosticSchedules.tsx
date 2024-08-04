@@ -1,9 +1,8 @@
-
 import { Link } from "react-router-dom";
 import { LuCornerRightDown } from "react-icons/lu";
-import DiagnosticsAllMachinesList from "../../components/DiagnositicMachine/DiagnosticsAllMachinesList";
+import DiagnosticSchedulesList from "../../components/DiagnosticDoctorsSchedules/DiagnosticSchedulesList";
 
-const DiagnosticsAllMachines = () => {
+const AllDiagnosticSchedules = () => {
   return (
     <>
       <section className="flex items-center justify-between">
@@ -12,22 +11,22 @@ const DiagnosticsAllMachines = () => {
             Lab One
           </Link>
           <span>/</span>
-          <span>All Diagnostic Machine</span>
+          <span>All Diagnostic Doctor's Schedules</span>
         </div>
         <Link
-          to="/add-diagnostic-machine"
+          to="/add-diagnostic-doctor-schedules"
           className="flex items-center gap-2 bg-primary hover:bg-accent text-white hover:text-white px-4 py-2.5 rounded-lg transition duration-150"
-          title="Add Machine"
+          title="Add Diagnostic Schedule"
         >
-          <span>Add Diagnostic Machine</span>
+          <span>Add Diagnostic Schedule</span>
           <LuCornerRightDown />
         </Link>
       </section>
-      <section className="bg-white/40 bg-blend-color-burn border p-5 my-5 rounded-xl w-full ">
-        <DiagnosticsAllMachinesList />
+      <section className="bg-white/40 bg-blend-color-burn border p-5 my-5 rounded-xl w-full">
+        <DiagnosticSchedulesList />
       </section>
     </>
   );
 };
 
-export default DiagnosticsAllMachines;
+export default AllDiagnosticSchedules;

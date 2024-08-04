@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-// import ProtectedRoute from "../Layout/ProtectedRoute";
 import MainLayout from "../Layout/MainLayout";
 import NotFoundPage from "../pages/ErrorPage/NotFoundPage";
 import Home from "../pages/Home/Home";
@@ -21,14 +20,17 @@ import AllDiagnosticsDoctors from "../pages/Doctors/AllDiagnosticsDoctors";
 import DiagnosticsAddMachines from "../pages/Machines/DiagnosticsAddMachines";
 import DiagnosticsAllMachines from "../pages/Machines/DiagnosticsAllMachines";
 import AddDoctorSchedules from "../pages/DoctorsSchedules/AddDoctorSchedules";
+import AllDiagnosticSchedules from "../pages/DiagnosticDoctorsSchedules/AllDiagnosticSchedules";
+import AddDiagnosticDoctorSchedules from "../pages/DiagnosticDoctorsSchedules/AddDiagnosticDoctorSchedules";
+import ProtectedRoute from "../Layout/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      // <ProtectedRoute>
-      <MainLayout />
-      // </ProtectedRoute>
+      <ProtectedRoute>
+        <MainLayout />
+      </ProtectedRoute>
     ),
     children: [
       {
@@ -82,6 +84,14 @@ const router = createBrowserRouter([
       {
         path: "/add-doctor-schedules",
         element: <AddDoctorSchedules />,
+      },
+      {
+        path: "/all-diagnostic-doctors-schedules",
+        element: <AllDiagnosticSchedules />,
+      },
+      {
+        path: "/add-diagnostic-doctor-schedules",
+        element: <AddDiagnosticDoctorSchedules />,
       },
       {
         path: "/all-appointments",

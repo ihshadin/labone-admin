@@ -1,5 +1,5 @@
+
 import { BiSolidDashboard, BiUserPlus } from "react-icons/bi";
-import { FaHospital } from "react-icons/fa";
 
 import { FaUserDoctor } from "react-icons/fa6";
 import { GrVirtualMachine, GrVmMaintenance } from "react-icons/gr";
@@ -73,8 +73,7 @@ export const sidebarItems = [
   },
   {
     key: 10,
-    icon: <FaHospital />,
-    label: <span>Diagnostics</span>,
+    label: <p className="text-lg font-semibold border-t-2"> Diagnostics</p>,
   },
   {
     key: 7,
@@ -97,6 +96,26 @@ export const sidebarItems = [
         key: 84,
         icon: <GrVmMaintenance />,
         label: <Link to={"/add-diagnostic-machine"}>Di. Add Machine</Link>,
+      },
+    ],
+  },
+  {
+    key: 875,
+    icon: <FaUserDoctor />,
+    label: (
+      <Link to={"/all-diagnostic-doctors-schedules"}>
+        Di. All Doctor's Schedules
+      </Link>
+    ),
+    children: [
+      {
+        key: 879,
+        icon: <BiUserPlus />,
+        label: (
+          <Link to={"/add-diagnostic-doctor-schedules"}>
+            Di. Add Doctor's Schedules
+          </Link>
+        ),
       },
     ],
   },

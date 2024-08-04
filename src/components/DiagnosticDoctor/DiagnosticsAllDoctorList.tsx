@@ -1,5 +1,3 @@
-
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import {
@@ -15,9 +13,13 @@ import { FiEdit2 } from "react-icons/fi";
 import { TDoctor } from "../../types/doctor.type";
 import LabonePagination from "../../utils/Pagination/pagination";
 import { IoSearchOutline } from "react-icons/io5";
-import { useDeleteDoctorMutation, useGetAllDoctorsQuery } from "../../redux/features/doctor/doctorApi";
 import { TQueryParam } from "../../types/global.type";
-import UpdateDoctor from "../Doctors/UpdateDoctor";
+import {
+  useDeleteDiagnosticDoctorMutation,
+  useGetAllDiagnosticDoctorsQuery,
+} from "../../redux/features/diagnosticDoctor/diagnosticDoctorApi";
+import { toast } from "sonner";
+import UpdateDiagnosticDoctor from "./UpdateDiagnosticDoctor";
 
 const DiagnosticsAllDoctorList = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
@@ -25,10 +27,9 @@ const DiagnosticsAllDoctorList = () => {
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [doctorData, setDoctorData] = useState<TDoctor>({} as TDoctor);
 
-  const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(params);
-  const [deleteDoctor, {data: deletedData}] = useDeleteDoctorMutation()
-  console.log("deleted data",deletedData)
-  // const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(undefined);
+  const { data, isLoading: isDataLoading } =
+    useGetAllDiagnosticDoctorsQuery(params);
+  const [deleteDoctor] = useDeleteDiagnosticDoctorMutation();
 
   const doctorsColumns: TableColumnsType<TDoctor> = [
     {
@@ -45,7 +46,7 @@ const DiagnosticsAllDoctorList = () => {
           {data?.firstName} {data?.lastName}
         </p>
       ),
-      width: 170,
+      width: 200,
     },
     {
       title: "Contact Number",
@@ -62,6 +63,7 @@ const DiagnosticsAllDoctorList = () => {
     {
       title: "Department",
       key: "department",
+      width: 200,
       render: (record: TDoctor) => <p>{record?.departmentID?.name}</p>,
     },
     {
@@ -114,62 +116,19 @@ const DiagnosticsAllDoctorList = () => {
     },
   ];
 
-
   const handleUpdateData = (doctor: TDoctor) => {
     setUpdateModalOpen(true);
     setDoctorData(doctor);
   };
 
   const handleDelete = async (id: string) => {
-    // Handle delete action
-     await  deleteDoctor(id)
-    console.log("Delete", id);
+    const res = await deleteDoctor(id).unwrap();
+    if (res?.success) {
+      toast.success("Diagnostic Doctor Delete Successful");
+    } else {
+      toast.error("Something want wrong!");
+    }
   };
-
-
-  // const datas = [
-  //   {
-  //     key: "1",
-  //     _id: "1",
-  //     fullName: "ডাঃ আরিফা আখতার",
-  //     serialNumber: 1,
-  //     contactNumber: 123456789,
-  //     email: "john@example.com",
-  //     department: "Gynaecology",
-  //     specialty: "স্ত্রী রোগ, প্রসূতি বিদ্যা ও বন্ধ্যাত্ব বিশেষজ্ঞ ও সার্জন।",
-  //     degree:
-  //       "এমবিবিএস (ডিএমসি), বিসিএস (স্বাস্থ্য), এমসিপিএস, এফসিপিএস (গাইনি এন্ড অবস), এমআরসিওজি (লন্ডন,ইউকে), রিপ্রোডাক্টিভ এন্ডোক্রাইনোলজি এন্ড ইনফার্টিলিটি কোর্স (বিএসএমএমইউ) কনসালটেন্ট (গাইনি এন্ড অবস), ঢাকা মেডিকেল কলেজ হাসপাতাল, ঢাকা।",
-  //     address: "মোজারমিল বাসস্ট্যান্ড, কাশিমপুর, গাজীপুর।",
-  //     doctorImage: imageTest,
-  //   },
-  //   {
-  //     key: "2",
-  //     _id: "2",
-  //     fullName: "ডাঃ রুখসানা পারভীন",
-  //     serialNumber: 2,
-  //     contactNumber: 123456789,
-  //     email: "john@example.com",
-  //     department: "Gynaecology",
-  //     specialty: "স্ত্রী রোগ ও প্রসূতি বিদ্যা বিশেষজ্ঞ ও সার্জন।",
-  //     degree:
-  //       "এমবিবিএস, বিসিএস (স্বাস্থ্য), স্পেশাল ট্রেনিং ইন গাইনি অনকলোজী এমসিপিএস (গাইনি এন্ড অবস্), এফসিপিএস (গাইনি এন্ড অবস্)। আর এস, জাতীয় ক্যান্সার গবেষণা ইনস্টিটিউট ও হাসপাতাল, মহাখালী, ঢাকা ।",
-  //     address: "মোজারমিল বাসস্ট্যান্ড, কাশিমপুর, গাজীপুর।",
-  //     doctorImage: imageTest,
-  //   },
-  //   {
-  //     key: "3",
-  //     _id: "3",
-  //     fullName: "John Brown",
-  //     serialNumber: 3,
-  //     contactNumber: 123456789,
-  //     email: "john@example.com",
-  //     department: "Cardiology",
-  //     specialty: "Cardiologist",
-  //     degree: "MD",
-  //     address: "123 Street, City",
-  //     doctorImage: imageTest,
-  //   },
-  // ];
 
   const handlePaginationChange = (page: number) => {
     setParams((prevParams) => [
@@ -213,7 +172,7 @@ const DiagnosticsAllDoctorList = () => {
         meta={meta}
         handlePaginationChange={handlePaginationChange}
       />
-      <UpdateDoctor
+      <UpdateDiagnosticDoctor
         updateModalOpen={updateModalOpen}
         setUpdateModalOpen={setUpdateModalOpen}
         doctorData={doctorData}

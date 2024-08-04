@@ -2,59 +2,71 @@ import { useState } from "react";
 import {
   Button,
   Divider,
-  Image,
   Input,
   Popconfirm,
   Table,
   TableColumnsType,
 } from "antd";
-import { FiEdit2 } from "react-icons/fi";
 import { AiFillDelete } from "react-icons/ai";
+import { FiEdit2 } from "react-icons/fi";
 import { IoSearchOutline } from "react-icons/io5";
-import { TMachine } from "../../types/machine.type";
+import { TSchedule } from "../../types/schedule.type";
 import LabonePagination from "../../utils/Pagination/pagination";
 import { TQueryParam } from "../../types/global.type";
-import {
-  useDeleteDiagnosticMachineMutation,
-  useGetAllDiagnosticMachineQuery,
-} from "../../redux/features/diagonisticMachine/diagonisticMachineApi";
 import { toast } from "sonner";
-import UpdateDiagnosticMachine from "./UpdateDiagnosticMachine";
+import {
+  useDeleteDiagnosticScheduleMutation,
+  useGetAllDiagnosticScheduleQuery,
+} from "../../redux/features/diagnosticSchedules/diagnosticSchedulesApi";
+import UpdateDiagnosticSchedule from "./UpdateDiagnosticSchedule";
 
-const DiagnosticsAllMachinesList = () => {
-  const machinesColumns: TableColumnsType<TMachine> = [
+const DiagnosticSchedulesList = () => {
+  const [params, setParams] = useState<TQueryParam[]>([]);
+
+  const { data, isLoading: isDataLoading } =
+    useGetAllDiagnosticScheduleQuery(params);
+  const [deleteDiagnosticSchedule] = useDeleteDiagnosticScheduleMutation();
+
+  const departmentColumns: TableColumnsType<TSchedule> = [
     {
-      title: "Machine Image",
-      dataIndex: "photo",
-      key: "photo",
-      align: "center",
-      width: 130,
-      render: (photoUrl) => (
-        <Image className="!w-16 !h-12 object-cover" src={photoUrl} />
+      title: "Doctor Name",
+      key: "doctorName",
+      width: 350,
+      render: (record: TSchedule) => (
+        <p>
+          {record?.doctorID?.firstName} {record?.doctorID?.firstName}
+        </p>
       ),
     },
     {
-      title: "Machine Name",
-      dataIndex: "name",
-      key: "name",
-      width: 250,
+      title: "Doctor Specialty",
+      key: "doctorSpecialty",
+      width: 270,
+      render: (record) => <p>{record?.doctorID?.specialization}</p>,
     },
     {
-      title: "Machine Origin",
-      dataIndex: "country",
-      key: "country",
-      width: 200,
+      title: "Schedule Day",
+      key: "scheduleDay",
+      width: 150,
+      render: (record: TSchedule) => (
+        <p className="capitalize">{record?.scheduleDay}</p>
+      ),
     },
     {
-      title: "Details",
-      dataIndex: "details",
-      key: "details",
+      title: "Schedule Time",
+      key: "scheduleTime",
+      render: (record: TSchedule) => (
+        <p>
+          {record?.startTime} - {record?.endTime}
+        </p>
+      ),
+      width: 280,
     },
     {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      width: 140,
+      width: 130,
       align: "center",
       fixed: "right",
       render: (_, record) => (
@@ -63,8 +75,8 @@ const DiagnosticsAllMachinesList = () => {
             <FiEdit2 fontSize={16} />
           </Button>
           <Popconfirm
-            title="Delete the Machine"
-            description="Are you sure to delete this Machine?"
+            title="Delete the Department"
+            description="Are you sure to delete this Department?"
             placement="topRight"
             onConfirm={() => handleDelete(record._id)}
             okText="Yes"
@@ -80,23 +92,17 @@ const DiagnosticsAllMachinesList = () => {
   ];
 
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
-  const [machineData, setMachineData] = useState<TMachine>({} as TMachine);
+  const [scheduleData, setScheduleData] = useState<TSchedule>({} as TSchedule);
 
-  const [params, setParams] = useState<TQueryParam[]>([]);
-
-  const { data, isLoading: isDataLoading } =
-    useGetAllDiagnosticMachineQuery(params);
-  const [deleteDiagnosticMachine] = useDeleteDiagnosticMachineMutation();
-
-  const handleUpdateData = (machine: TMachine) => {
+  const handleUpdateData = (schedule: TSchedule) => {
     setUpdateModalOpen(true);
-    setMachineData(machine);
+    setScheduleData(schedule);
   };
 
   const handleDelete = async (id: string) => {
-    const res = await deleteDiagnosticMachine(id).unwrap();
+    const res = await deleteDiagnosticSchedule(id).unwrap();
     if (res?.success) {
-      toast.success("Diagnostic Machine Delete Successful");
+      toast.success("Diagnostic Schedule Delete Successful");
     } else {
       toast.error("Something want wrong!");
     }
@@ -117,7 +123,7 @@ const DiagnosticsAllMachinesList = () => {
       <div className="flex items-center gap-5 md:gap-16 mb-5 md:mb-8">
         <div className="grow">
           <Divider orientation="left" className="!my-0 !text-xl !text-primary">
-            All Diagnostic Machine List
+            Diagnostic Doctor's Schedules List
           </Divider>
         </div>
         <div className="w-[250px]">
@@ -133,23 +139,23 @@ const DiagnosticsAllMachinesList = () => {
         </div>
       </div>
       <Table
-        columns={machinesColumns}
+        columns={departmentColumns}
         dataSource={result}
         scroll={{ x: 900 }}
-        loading={isDataLoading}
         pagination={false}
+        loading={isDataLoading}
       />
       <LabonePagination
         meta={meta}
         handlePaginationChange={handlePaginationChange}
       />
-      <UpdateDiagnosticMachine
+      <UpdateDiagnosticSchedule
         updateModalOpen={updateModalOpen}
         setUpdateModalOpen={setUpdateModalOpen}
-        machineData={machineData}
+        scheduleData={scheduleData}
       />
     </>
   );
 };
 
-export default DiagnosticsAllMachinesList;
+export default DiagnosticSchedulesList;

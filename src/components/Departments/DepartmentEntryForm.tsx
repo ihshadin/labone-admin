@@ -29,8 +29,8 @@ const DepartmentEntryForm = () => {
     };
 
     try {
-      const res = await addDepartment(departmentData);
-      if (res) {
+      const res = await addDepartment(departmentData).unwrap();
+      if (res?.success) {
         setIsLoading(true);
         toast.success("Successfully added the Department", { id: toastId });
         form.resetFields();
