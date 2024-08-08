@@ -15,7 +15,6 @@ const UpdateDiagnosticDoctor = ({
   setUpdateModalOpen,
   doctorData,
 }: TUpdateDoctor) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<any>([]);
   const [form] = Form.useForm();
   const { data } = useGetAllDepartmentQuery(undefined);
@@ -54,16 +53,13 @@ const UpdateDiagnosticDoctor = ({
       const res = await updateDiagnosticDoctor(updateInfo).unwrap();
 
       if (res?.success) {
-        setIsLoading(true);
         setUpdateModalOpen(false);
         toast.success("Successfully updated the doctor", { id: toastId });
       } else {
         toast.error("Something want wrong!", { id: toastId });
       }
     } catch (error: any) {
-      toast.error(error.message, { id: toastId });
-    } finally {
-      setIsLoading(false);
+      toast.error("Something want wrong!", { id: toastId });
     }
   };
 
@@ -264,9 +260,8 @@ const UpdateDiagnosticDoctor = ({
               <button
                 className="cursor-pointer hover:bg-gray-950 px-4 py-1.5 bg-primary font-medium  text-white rounded-lg"
                 type="submit"
-                disabled={isLoading ? true : false}
               >
-                {isLoading ? "Loading..." : "Update Diagnostic Doctor"}
+                Update Diagnostic Doctor
               </button>
             </div>
           </Row>

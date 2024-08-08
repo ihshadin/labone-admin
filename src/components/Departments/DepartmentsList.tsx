@@ -61,13 +61,11 @@ import { toast } from "sonner";
 // ];
 
 const DepartmentsList = () => {
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params, setParams] = useState<TQueryParam[]>([
+    { name: "limit", value: 10 },
+  ]);
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    refetch,
-  } = useGetAllDepartmentQuery(params);
+  const { data, isLoading: isDataLoading } = useGetAllDepartmentQuery(params);
 
   const [deleteDepartment] = useDeleteDepartmentMutation();
 
@@ -131,18 +129,36 @@ const DepartmentsList = () => {
   };
 
   const handleDelete = async (id: string) => {
-    await deleteDepartment(id);
-    toast.success("Department Delete Successful");
+    const res = await deleteDepartment(id).unwrap();
+    if (res?.success) {
+      toast.success("Department Delete Successful");
+    } else {
+      toast.error("Something want wrong!");
+    }
   };
 
   const handlePaginationChange = (page: number) => {
-    setParams((prevParams) => [
-      ...prevParams.filter((param) => param.name !== "page"),
-      { name: "page", value: page },
-    ]);
-    refetch();
+    setParams((prevParams) => {
+      const filteredParams = prevParams?.filter(
+        (param) => param.name !== "page",
+      );
+
+      // Check if "limit" with value 10 exists
+      const limitExists = prevParams.some(
+        (param) => param.name === "limit" && param.value === 10,
+      );
+
+      // Build the new params array
+      const newParams = [...filteredParams, { name: "page", value: page }];
+
+      // If "limit" with value 10 does not exist, add it
+      if (!limitExists) {
+        newParams.push({ name: "limit", value: 10 });
+      }
+
+      return newParams;
+    });
   };
-  console.log(data?.data);
 
   const meta = data?.data?.meta;
   const result = data?.data?.result;
@@ -162,7 +178,10 @@ const DepartmentsList = () => {
             placeholder="Search"
             className="focus:placeholder:!text-primary"
             onChange={(e) =>
-              setParams([{ name: "searchTerm", value: e.target.value }])
+              setParams([
+                { name: "searchTerm", value: e.target.value },
+                { name: "limit", value: 10 },
+              ])
             }
           />
         </div>

@@ -5,32 +5,13 @@ import { toast } from "sonner";
 import { TChangePass } from "../../types/changPass.type";
 import { useChangePasswordMutation } from "../../redux/features/auth/authApi";
 import { useNavigate } from "react-router-dom";
+import { passwordRules } from "../Users/userConstant";
 
 const ChangePassForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [changePass] = useChangePasswordMutation();
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const passwordRules = [
-    { required: true, message: "Password is required" },
-    {
-      validator(_: any, value: string) {
-        if (!value) {
-          return Promise.resolve();
-        }
-        const passwordRegex =
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        if (passwordRegex.test(value)) {
-          return Promise.resolve();
-        }
-        return Promise.reject(
-          new Error(
-            "Password must be at least 8 characters long, and include uppercase, lowercase, number, and special character",
-          ),
-        );
-      },
-    },
-  ];
 
   const onSubmit = async (data: TChangePass) => {
     const toastId = toast.loading("Change Password...");
