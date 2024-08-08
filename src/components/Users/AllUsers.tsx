@@ -21,7 +21,9 @@ import { TQueryParam } from "../../types/global.type";
 import { toast } from "sonner";
 
 const AllUsers = () => {
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params, setParams] = useState<TQueryParam[]>([
+    { name: "limit", value: 10 },
+  ]);
   const { data } = useGetAllUserQuery(params);
   const [deleteUser] = useDeleteUserMutation();
 
@@ -87,7 +89,6 @@ const AllUsers = () => {
   ];
 
   const handleDelete = async (id: string) => {
-
     const res = await deleteUser(id).unwrap();
     if (res?.success) {
       toast.success("User Delete Successful");
@@ -100,6 +101,7 @@ const AllUsers = () => {
     setParams((prevParams) => [
       ...prevParams.filter((param) => param.name !== "page"),
       { name: "page", value: page },
+      { name: "limit", value: 10 },
     ]);
   };
 
@@ -121,7 +123,10 @@ const AllUsers = () => {
             placeholder="Search"
             className="focus:placeholder:!text-primary"
             onChange={(e) =>
-              setParams([{ name: "searchTerm", value: e.target.value }])
+              setParams([
+                { name: "searchTerm", value: e.target.value },
+                { name: "limit", value: 10 },
+              ])
             }
           />
         </div>

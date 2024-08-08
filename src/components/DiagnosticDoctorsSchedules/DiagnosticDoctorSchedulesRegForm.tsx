@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
 import { Col, Form, Row, Select, TimePicker } from "antd";
 import { toast } from "sonner";
 import { useGetAllDiagnosticDoctorsQuery } from "../../redux/features/diagnosticDoctor/diagnosticDoctorApi";
@@ -13,14 +12,12 @@ export type TDoctor = {
 };
 
 const DiagnosticDoctorSchedulesRegForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const [addDiagnosticSchedules] = useAddDiagnosticScheduleMutation();
   const { data, isLoading: isDataLoading } =
     useGetAllDiagnosticDoctorsQuery(undefined);
 
   const onSubmit = async (data: any) => {
-    setIsLoading(true);
     const toastId = toast.loading("Adding new doctor...");
 
     const doctorNewData = {
@@ -32,7 +29,6 @@ const DiagnosticDoctorSchedulesRegForm = () => {
     try {
       const res = await addDiagnosticSchedules(doctorNewData).unwrap();
       if (res?.success) {
-        setIsLoading(false);
         toast.success("Successfully added the Diagnostic Schedules", {
           id: toastId,
         });
@@ -131,9 +127,8 @@ const DiagnosticDoctorSchedulesRegForm = () => {
                 <button
                   className="cursor-pointer hover:bg-gray-950 px-4 py-1.5 bg-primary font-medium  text-white rounded-lg"
                   type="submit"
-                  disabled={isLoading ? true : false}
                 >
-                  {isLoading ? "Loading..." : "Add Diagnostic Doctor Schedule"}
+                  Add Diagnostic Doctor Schedule
                 </button>
               </div>
             </Row>

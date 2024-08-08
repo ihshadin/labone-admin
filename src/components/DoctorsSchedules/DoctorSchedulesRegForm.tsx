@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+
 import { Col, Form, Row, Select, TimePicker } from "antd";
 import { toast } from "sonner";
 
@@ -14,15 +14,12 @@ export type TDoctor = {
 };
 
 const DoctorSchedulesRegForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const [addSchedules] = useAddScheduleMutation();
   const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(undefined);
 
   const onSubmit = async (data: any) => {
     const toastId = toast.loading("Adding new doctor...");
-    setIsLoading(true);
-
     const doctorNewData = {
       doctorID: data?.doctorId,
       scheduleDay: data?.day,
@@ -30,14 +27,11 @@ const DoctorSchedulesRegForm = () => {
       endTime: data?.endTime,
     };
 
-    console.log("startTime:", data?.startTime, "endTime:", data?.endTime);
-
     try {
       const res = await addSchedules(doctorNewData).unwrap();
       if (res?.success) {
         toast.success("Successfully added the Schedules", { id: toastId });
         form.resetFields();
-        setIsLoading(false);
       } else {
         toast.error("Something want wrong!", { id: toastId });
       }
@@ -132,9 +126,8 @@ const DoctorSchedulesRegForm = () => {
                 <button
                   className="cursor-pointer hover:bg-gray-950 px-4 py-1.5 bg-primary font-medium  text-white rounded-lg"
                   type="submit"
-                  disabled={isLoading}
                 >
-                  {isLoading ? "Loading..." : "Add Doctor Schedule"}
+                  Add Doctor Schedule
                 </button>
               </div>
             </Row>

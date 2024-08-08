@@ -8,7 +8,6 @@ import { uploadImageInCloudinary } from "../../utils/UploadImage/UploadImageInCl
 import { useAddDepartmentMutation } from "../../redux/features/department/departmentApi";
 
 const DepartmentEntryForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<any>([]);
   const [form] = Form.useForm();
 
@@ -31,7 +30,6 @@ const DepartmentEntryForm = () => {
     try {
       const res = await addDepartment(departmentData).unwrap();
       if (res?.success) {
-        setIsLoading(true);
         toast.success("Successfully added the Department", { id: toastId });
         form.resetFields();
         setFile([]);
@@ -40,8 +38,6 @@ const DepartmentEntryForm = () => {
       }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -106,9 +102,8 @@ const DepartmentEntryForm = () => {
                   <button
                     className="cursor-pointer hover:bg-gray-950 px-4 py-1.5 bg-primary font-medium  text-white rounded-lg"
                     type="submit"
-                    disabled={isLoading ? true : false}
                   >
-                    {isLoading ? "Loading..." : "Add New Department"}
+                    Add New Department
                   </button>
                 </div>
               </Col>

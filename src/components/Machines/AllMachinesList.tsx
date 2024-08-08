@@ -127,7 +127,10 @@ const AllMachinesList = () => {
       ),
     },
   ];
-  const [params, setParams] = useState<TQueryParam[]>([]);
+
+  const [params, setParams] = useState<TQueryParam[]>([
+    { name: "limit", value: 10 },
+  ]);
 
   const { data, isLoading: isDataLoading } = useGetAllMachineQuery(params);
   const [deleteMachine] = useDeleteMachineMutation();
@@ -154,6 +157,7 @@ const AllMachinesList = () => {
     setParams((prevParams) => [
       ...prevParams.filter((param) => param.name !== "page"),
       { name: "page", value: page },
+      { name: "limit", value: 10 },
     ]);
   };
 
@@ -175,7 +179,10 @@ const AllMachinesList = () => {
             placeholder="Search"
             className="focus:placeholder:!text-primary"
             onChange={(e) =>
-              setParams([{ name: "searchTerm", value: e.target.value }])
+              setParams([
+                { name: "searchTerm", value: e.target.value },
+                { name: "limit", value: 10 },
+              ])
             }
           />
         </div>
