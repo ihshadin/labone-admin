@@ -1,62 +1,61 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export const Dayes = [
+export const Days = [
   {
-    value: "saturday",
+    value: "Saturday",
     label: "Saturday",
   },
   {
-    value: "sunday",
+    value: "Sunday",
     label: "Sunday",
   },
   {
-    value: "monday",
+    value: "Monday",
     label: "Monday",
   },
   {
-    value: "tuesday",
+    value: "Tuesday",
     label: "Tuesday",
   },
   {
-    value: "wednesday",
+    value: "Wednesday",
     label: "Wednesday",
   },
   {
-    value: "thursday",
+    value: "Thursday",
     label: "Thursday",
   },
   {
-    value: "friday",
+    value: "Friday",
     label: "Friday",
   },
 ];
 
 // formatTime function to handle time strings correctly
-export const formatTime = (time: any) => {
-  // Handle cases where time might already be in a valid date format
-  const parsedTime = Date.parse(time);
+// export const formatTime = (time: any) => {
+//   // Handle cases where time might already be in a valid date format
+//   const parsedTime = Date.parse(time);
 
-  // If time is a valid date string
-  if (!isNaN(parsedTime)) {
-    const date = new Date(parsedTime);
-    return date.toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    });
-  }
+//   // If time is a valid date string
+//   if (!isNaN(parsedTime)) {
+//     const date = new Date(parsedTime);
+//     return date.toLocaleTimeString("en-US", {
+//       hour: "numeric",
+//       minute: "numeric",
+//       hour12: true,
+//     });
+//   }
 
-  // Handle cases where time is a time string like "5:29 PM"
-  const date = new Date();
-  const [hours, minutesPart] = time.split(":");
-  const minutes = minutesPart.slice(0, 2);
-  const ampm = minutesPart.slice(3).toUpperCase();
+//   // Handle cases where time is a time string like "5:29 PM"
+//   const date = new Date();
+//   const [hours, minutesPart] = time.split(":");
+//   const minutes = minutesPart.slice(0, 2);
+//   const ampm = minutesPart.slice(3).toUpperCase();
 
-  date.setHours(ampm === "PM" ? parseInt(hours, 10) + 12 : parseInt(hours, 10));
-  date.setMinutes(parseInt(minutes, 10));
+//   date.setHours(ampm === "PM" ? parseInt(hours, 10) + 12 : parseInt(hours, 10));
+//   date.setMinutes(parseInt(minutes, 10));
 
-  return date.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  });
-};
+//   return date.toLocaleTimeString("en-US", {
+//     hour: "numeric",
+//     minute: "numeric",
+//     hour12: true,
+//   });
+// };

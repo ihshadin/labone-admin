@@ -4,7 +4,7 @@ import { Col, Form, Row, Select, TimePicker } from "antd";
 import { toast } from "sonner";
 import { useGetAllDiagnosticDoctorsQuery } from "../../redux/features/diagnosticDoctor/diagnosticDoctorApi";
 import { useAddDiagnosticScheduleMutation } from "../../redux/features/diagnosticSchedules/diagnosticSchedulesApi";
-import { Dayes, formatTime } from "./DiagnosticSchedules.constant";
+import { Days } from "./DiagnosticSchedules.constant";
 
 export type TDoctor = {
   _id: string;
@@ -26,14 +26,16 @@ const DiagnosticDoctorSchedulesRegForm = () => {
     const doctorNewData = {
       doctorID: data?.doctorID,
       scheduleDay: data?.day,
-      startTime: formatTime(data?.startTime),
-      endTime: formatTime(data?.endTime),
+      startTime: data?.startTime,
+      endTime: data?.endTime,
     };
     try {
       const res = await addDiagnosticSchedules(doctorNewData).unwrap();
       if (res?.success) {
         setIsLoading(false);
-        toast.success("Successfully added the Diagnostic Schedules", { id: toastId });
+        toast.success("Successfully added the Diagnostic Schedules", {
+          id: toastId,
+        });
         form.resetFields();
       } else {
         toast.error("Something want wrong!", { id: toastId });
@@ -85,7 +87,7 @@ const DiagnosticDoctorSchedulesRegForm = () => {
                   <Select
                     showSearch
                     placeholder="Select from here..."
-                    options={Dayes}
+                    options={Days}
                     className="h-10 *:!rounded-lg !bg-transparent"
                   />
                 </Form.Item>
