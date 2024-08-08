@@ -124,6 +124,13 @@ export const sidebarItems = [
     key: 45,
     icon: <LuUserCircle2 />,
     label: <Link to={"/users"}>Users</Link>,
+    children: [
+      {
+        key: 46,
+        icon: <BiUserPlus />,
+        label: <Link to={"/add-user"}>Add User</Link>,
+      },
+    ],
   },
   {
     key: 9,

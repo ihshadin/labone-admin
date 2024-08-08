@@ -24,6 +24,7 @@ import PendingAppointments from "../pages/Appointments/PendingAppointments";
 import ApprovedAppointments from "../pages/Appointments/ApprovedAppointments";
 import CancelAppointments from "../pages/Appointments/CancelAppointments";
 import AddDoctorSchedules from "../pages/DoctorsSchedules/AddDoctorSchedules";
+import AddUser from "../pages/Users/AddUser";
 
 const router = createBrowserRouter([
   {
@@ -109,6 +110,10 @@ const router = createBrowserRouter([
       {
         path: "/settings",
         element: <Settings />,
+      },
+      {
+        path: "/add-user",
+        element: <AddUser/>,
       },
       {
         path: "*",
