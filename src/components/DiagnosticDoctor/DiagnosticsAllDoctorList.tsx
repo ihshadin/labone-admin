@@ -133,11 +133,26 @@ const DiagnosticsAllDoctorList = () => {
   };
 
   const handlePaginationChange = (page: number) => {
-    setParams((prevParams) => [
-      ...prevParams.filter((param) => param.name !== "page"),
-      { name: "page", value: page },
-      { name: "limit", value: 10 },
-    ]);
+    setParams((prevParams) => {
+      const filteredParams = prevParams?.filter(
+        (param) => param.name !== "page",
+      );
+
+      // Check if "limit" with value 10 exists
+      const limitExists = prevParams.some(
+        (param) => param.name === "limit" && param.value === 10,
+      );
+
+      // Build the new params array
+      const newParams = [...filteredParams, { name: "page", value: page }];
+
+      // If "limit" with value 10 does not exist, add it
+      if (!limitExists) {
+        newParams.push({ name: "limit", value: 10 });
+      }
+
+      return newParams;
+    });
   };
 
   const meta = data?.data?.meta;

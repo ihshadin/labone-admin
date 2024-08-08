@@ -19,7 +19,7 @@ const DoctorSchedulesRegForm = () => {
   const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(undefined);
 
   const onSubmit = async (data: any) => {
-    const toastId = toast.loading("Adding new doctor...");
+    const toastId = toast.loading("Adding new Schedules...");
     const doctorNewData = {
       doctorID: data?.doctorId,
       scheduleDay: data?.day,
