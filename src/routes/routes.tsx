@@ -23,6 +23,7 @@ import AddDoctorSchedules from "../pages/DoctorsSchedules/AddDoctorSchedules";
 import AllDiagnosticSchedules from "../pages/DiagnosticDoctorsSchedules/AllDiagnosticSchedules";
 import AddDiagnosticDoctorSchedules from "../pages/DiagnosticDoctorsSchedules/AddDiagnosticDoctorSchedules";
 import ProtectedRoute from "../Layout/ProtectedRoute";
+import AddUser from "../pages/Users/AddUser";
 
 const router = createBrowserRouter([
   {
@@ -104,6 +105,10 @@ const router = createBrowserRouter([
       {
         path: "/settings",
         element: <Settings />,
+      },
+      {
+        path: "/add-user",
+        element: <AddUser/>,
       },
       {
         path: "*",

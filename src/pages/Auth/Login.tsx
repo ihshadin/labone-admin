@@ -111,7 +111,7 @@ const Login = () => {
               <Row>
                 <div className="flex items-center justify-center w-[96%]">
                   <button
-                    className="cursor-pointer w-full hover:bg-gray-950 py-2 bg-primary font-medium  text-white rounded-lg"
+                    className="cursor-pointer w-full hover:bg-gray-950 py-2  bg-primary font-medium  text-white rounded-lg"
                     type="submit"
                     disabled={isLoading ? true : false}
                   >

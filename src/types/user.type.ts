@@ -6,6 +6,7 @@ export type TUsers = {
   lastName: string;
   email: string;
   userImage: string;
+  password?: string;
   status: "owner" | "admin" | "patient";
 };
 export type TUsersData= {
