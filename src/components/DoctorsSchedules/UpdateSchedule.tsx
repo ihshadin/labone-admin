@@ -5,7 +5,7 @@ import { Col, Divider, Form, Modal, Row, Select, TimePicker } from "antd";
 import { toast } from "sonner";
 import { TSchedule, TUpdateSchedule } from "../../types/schedule.type";
 import { useGetAllDoctorsQuery } from "../../redux/features/doctor/doctorApi";
-import { Dayes, formatTime } from "./Schedules.constant";
+import { Days } from "./Schedules.constant";
 import { TDoctor } from "./DoctorSchedulesRegForm";
 import { useUpdateScheduleMutation } from "../../redux/features/schedules/schedulesApi";
 
@@ -27,12 +27,8 @@ const UpdateSchedule = ({
       scheduleDay: data?.scheduleDay
         ? data?.scheduleDay
         : scheduleData?.scheduleDay,
-      startTime: data?.startTime
-        ? formatTime(data?.startTime)
-        : formatTime(scheduleData?.startTime),
-      endTime: data?.endTime
-        ? formatTime(data?.endTime)
-        : formatTime(scheduleData?.endTime),
+      startTime: data?.startTime ? data?.startTime : scheduleData?.startTime,
+      endTime: data?.endTime ? data?.endTime : scheduleData?.endTime,
     };
 
     // console.log("update doctor data", updatedData);
@@ -54,7 +50,6 @@ const UpdateSchedule = ({
       toast.error("Something want wrong!", { id: toastId });
     }
   };
-
 
   const allDoctors = data?.data?.result?.map((doctor: TDoctor) => ({
     value: doctor?._id,
@@ -110,7 +105,7 @@ const UpdateSchedule = ({
               <Select
                 showSearch
                 placeholder="Select from here..."
-                options={Dayes}
+                options={Days}
                 className="h-10 *:!rounded-lg !bg-transparent"
               />
             </Form.Item>
