@@ -22,6 +22,7 @@ import { toast } from "sonner";
 import UpdateDiagnosticMachine from "./UpdateDiagnosticMachine";
 
 const DiagnosticsAllMachinesList = () => {
+  
   const machinesColumns: TableColumnsType<TMachine> = [
     {
       title: "Machine Image",
@@ -82,7 +83,9 @@ const DiagnosticsAllMachinesList = () => {
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [machineData, setMachineData] = useState<TMachine>({} as TMachine);
 
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params, setParams] = useState<TQueryParam[]>([
+    { name: "limit", value: 10 },
+  ]);
 
   const { data, isLoading: isDataLoading } =
     useGetAllDiagnosticMachineQuery(params);
@@ -106,6 +109,7 @@ const DiagnosticsAllMachinesList = () => {
     setParams((prevParams) => [
       ...prevParams.filter((param) => param.name !== "page"),
       { name: "page", value: page },
+      { name: "limit", value: 10 },
     ]);
   };
 
@@ -127,7 +131,10 @@ const DiagnosticsAllMachinesList = () => {
             placeholder="Search"
             className="focus:placeholder:!text-primary"
             onChange={(e) =>
-              setParams([{ name: "searchTerm", value: e.target.value }])
+              setParams([
+                { name: "searchTerm", value: e.target.value },
+                { name: "limit", value: 10 },
+              ])
             }
           />
         </div>

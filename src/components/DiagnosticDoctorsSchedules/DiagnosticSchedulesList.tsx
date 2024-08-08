@@ -112,6 +112,7 @@ const DiagnosticSchedulesList = () => {
     setParams((prevParams) => [
       ...prevParams.filter((param) => param.name !== "page"),
       { name: "page", value: page },
+      { name: "limit", value: 10 },
     ]);
   };
 

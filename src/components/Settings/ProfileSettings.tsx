@@ -4,8 +4,8 @@ import ProfileSettingsForm from "./ProfileSettingsForm";
 import ChangePassForm from "./ChangePassForm";
 
 const ProfileSettings = () => {
-    return (
-        <>
+  return (
+    <>
       <section className="flex items-center justify-between">
         <div className="text-base flex items-center gap-2 md:gap-3">
           <Link to="/" className="text-primary">
@@ -14,47 +14,36 @@ const ProfileSettings = () => {
           <span>/</span>
           <span>Settings</span>
         </div>
-        {/* <Link
-          to="/all-doctors"
-          className="flex items-center gap-2 bg-primary hover:bg-accent text-white hover:text-white px-4 py-2.5 rounded-lg transition duration-150"
-          title="All Doctors"
-        >
-          <span>All Doctors</span>
-          <LuCornerRightUp />
-        </Link> */}
       </section>
       <div className="flex gap-10">
-    {/* Profile Information */}
-      <section className="bg-white/40 bg-blend-color-burn border p-3 md:p-8 my-10 rounded-xl w-full max-w-[800px] mx-auto">
-        <div className=" text-center">
-          <h2 className="text-primary text-xl font-semibold">
-            Profile Settings
-          </h2>
-          <Divider plain>Change your Personal Information</Divider>
-          
-        </div>
-        <div className="mt-8 md:mt-10">
-          <ProfileSettingsForm/>
-        </div>
-      </section>
-      {/* Change Password */}
+        {/* Profile Information */}
+        <section className="bg-white/40 bg-blend-color-burn border p-3 md:p-8 my-10 rounded-xl w-full max-w-[800px] mx-auto">
+          <div className=" text-center">
+            <h2 className="text-primary text-xl font-semibold">
+              Profile Settings
+            </h2>
+            <Divider plain>Change your Personal Information</Divider>
+          </div>
+          <div className="mt-8 md:mt-10">
+            <ProfileSettingsForm />
+          </div>
+        </section>
+        {/* Change Password */}
 
-      <section className="bg-white/40 bg-blend-color-burn border p-3 md:p-8 my-10 rounded-xl w-full max-w-[800px] mx-auto  h-full">
-        <div className=" text-center">
-          <h2 className="text-primary text-xl font-semibold">
-          Change Password
-          </h2>
-          <Divider plain>Change Your Password</Divider>
-          
-        </div>
-        <div className="mt-8 md:mt-10">
-          <ChangePassForm/>
-        </div>
-      </section>
+        <section className="bg-white/40 bg-blend-color-burn border p-3 md:p-8 my-10 rounded-xl w-full max-w-[800px] mx-auto  h-full">
+          <div className=" text-center">
+            <h2 className="text-primary text-xl font-semibold">
+              Change Password
+            </h2>
+            <Divider plain>Change Your Password</Divider>
+          </div>
+          <div className="mt-8 md:mt-10">
+            <ChangePassForm />
+          </div>
+        </section>
       </div>
-     
     </>
-    );
+  );
 };
 
 export default ProfileSettings;

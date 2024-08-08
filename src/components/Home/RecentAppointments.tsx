@@ -5,8 +5,8 @@ import { TAppointment } from "../../types/appointment.type";
 import { useGetRecentAppointmentDataQuery } from "../../redux/features/meta/metaApi";
 
 const RecentAppointments = () => {
-  const {data} = useGetRecentAppointmentDataQuery(undefined);
-  
+  const { data } = useGetRecentAppointmentDataQuery(undefined);
+
   const columns: TableColumnsType<TAppointment> = [
     {
       title: "Patient Name",
@@ -127,7 +127,6 @@ const RecentAppointments = () => {
   // ];
 
   const [isLoading, setIsLoading] = useState(true);
-
   console.log(isLoading);
   const dataFetch = async () => {
     setIsLoading(true);
@@ -139,7 +138,7 @@ const RecentAppointments = () => {
     pagination,
     filters,
     sorter,
-    extra
+    extra,
   ) => {
     console.log("params", pagination, filters, sorter, extra);
   };

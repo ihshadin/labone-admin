@@ -22,7 +22,9 @@ import { toast } from "sonner";
 import UpdateDiagnosticDoctor from "./UpdateDiagnosticDoctor";
 
 const DiagnosticsAllDoctorList = () => {
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params, setParams] = useState<TQueryParam[]>([
+    { name: "limit", value: 10 },
+  ]);
 
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [doctorData, setDoctorData] = useState<TDoctor>({} as TDoctor);
@@ -134,6 +136,7 @@ const DiagnosticsAllDoctorList = () => {
     setParams((prevParams) => [
       ...prevParams.filter((param) => param.name !== "page"),
       { name: "page", value: page },
+      { name: "limit", value: 10 },
     ]);
   };
 
@@ -156,7 +159,10 @@ const DiagnosticsAllDoctorList = () => {
             placeholder="Search"
             className="focus:placeholder:!text-primary"
             onChange={(e) =>
-              setParams([{ name: "searchTerm", value: e.target.value }])
+              setParams([
+                { name: "searchTerm", value: e.target.value },
+                { name: "limit", value: 10 },
+              ])
             }
           />
         </div>

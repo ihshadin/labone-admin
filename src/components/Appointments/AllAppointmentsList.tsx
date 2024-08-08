@@ -23,7 +23,10 @@ import { TQueryParam } from "../../types/global.type";
 import { toast } from "sonner";
 
 const AllAppointmentsList = () => {
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params, setParams] = useState<TQueryParam[]>([
+    { name: "limit", value: 10 },
+  ]);
+  
   const [deleteAppointment] = useDeleteAppointmentMutation();
 
   const { data, isLoading: isDataLoading } = useGetAllAppointmentQuery(params);
@@ -207,6 +210,7 @@ const AllAppointmentsList = () => {
     setParams((prevParams) => [
       ...prevParams.filter((param) => param.name !== "page"),
       { name: "page", value: page },
+      { name: "limit", value: 10 },
     ]);
   };
 

@@ -49,7 +49,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
       credentials: "include",
     });
     const data = await res.json();
-    console.log(data);
 
     if (data?.data?.accessToken) {
       await storeUserInfo(data?.data?.accessToken);

@@ -40,7 +40,6 @@ const UpdateDepartment = ({
 
     try {
       const res = await updateDepartment(updateInfo).unwrap();
-      console.log(res)
 
       if (res?.success) {
         setIsLoading(true);

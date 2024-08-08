@@ -19,9 +19,12 @@ import {
   useGetAllScheduleQuery,
 } from "../../redux/features/schedules/schedulesApi";
 import { toast } from "sonner";
+import {  formatTime } from "./Schedules.constant";
 
 const SchedulesList = () => {
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params, setParams] = useState<TQueryParam[]>([
+    { name: "limit", value: 10 },
+  ]);
 
   const { data, isLoading: isDataLoading } = useGetAllScheduleQuery(params);
   const [deleteSchedule] = useDeleteScheduleMutation();
@@ -56,14 +59,13 @@ const SchedulesList = () => {
       key: "scheduleTime",
       render: (record: TSchedule) => (
         <p>
-          {record?.startTime} - {record?.endTime}
+          {formatTime(record?.startTime)} - {formatTime(record?.endTime)}
         </p>
       ),
       width: 280,
     },
     {
       title: "Action",
-      dataIndex: "action",
       key: "action",
       width: 130,
       align: "center",
@@ -105,13 +107,13 @@ const SchedulesList = () => {
     } else {
       toast.error("Something want wrong!");
     }
-    console.log("Delete", id);
   };
 
   const handlePaginationChange = (page: number) => {
     setParams((prevParams) => [
       ...prevParams.filter((param) => param.name !== "page"),
       { name: "page", value: page },
+      { name: "limit", value: 10 },
     ]);
   };
 
@@ -133,7 +135,10 @@ const SchedulesList = () => {
             placeholder="Search"
             className="focus:placeholder:!text-primary"
             onChange={(e) =>
-              setParams([{ name: "searchTerm", value: e.target.value }])
+              setParams([
+                { name: "searchTerm", value: e.target.value },
+                { name: "limit", value: 10 },
+              ])
             }
           />
         </div>

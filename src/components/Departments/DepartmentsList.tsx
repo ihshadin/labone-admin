@@ -61,7 +61,9 @@ import { toast } from "sonner";
 // ];
 
 const DepartmentsList = () => {
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params, setParams] = useState<TQueryParam[]>([
+    { name: "limit", value: 10 },
+  ]);
 
   const {
     data,
@@ -131,18 +133,24 @@ const DepartmentsList = () => {
   };
 
   const handleDelete = async (id: string) => {
-    await deleteDepartment(id);
-    toast.success("Department Delete Successful");
+    const res = await deleteDepartment(id).unwrap();
+    if (res?.success) {
+      toast.success("Department Delete Successful");
+    } else {
+      toast.error("Something want wrong!");
+    }
   };
 
   const handlePaginationChange = (page: number) => {
     setParams((prevParams) => [
-      ...prevParams.filter((param) => param.name !== "page"),
+      ...prevParams.filter(
+        (param) => param.name !== "page" && param.name !== "limit",
+      ),
       { name: "page", value: page },
+      { name: "limit", value: 10 },
     ]);
     refetch();
   };
-  console.log(data?.data);
 
   const meta = data?.data?.meta;
   const result = data?.data?.result;
@@ -162,7 +170,10 @@ const DepartmentsList = () => {
             placeholder="Search"
             className="focus:placeholder:!text-primary"
             onChange={(e) =>
-              setParams([{ name: "searchTerm", value: e.target.value }])
+              setParams([
+                { name: "searchTerm", value: e.target.value },
+                { name: "limit", value: 10 },
+              ])
             }
           />
         </div>
