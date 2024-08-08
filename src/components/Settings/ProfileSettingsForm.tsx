@@ -58,6 +58,7 @@ const ProfileSettingsForm = () => {
       firstName: user?.firstName,
       lastName: user?.lastName,
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
   return (
