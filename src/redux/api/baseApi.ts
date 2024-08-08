@@ -67,6 +67,7 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
   tagTypes: [
+    "meta",
     "user",
     "doctor",
     "machine",

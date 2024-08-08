@@ -1,8 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import { Col, Form, Input, Row } from "antd";
-// import Dragger from "antd/es/upload/Dragger";
-// import { LuUploadCloud } from "react-icons/lu";
 import { toast } from "sonner";
 import UploadImageWithPreview from "../../utils/UploadImage/UploadImageWithPreview";
 import { TProfile } from "../../types/profileSetting.type";
@@ -10,6 +7,7 @@ import {
   useGetUserQuery,
   useUpdateUserMutation,
 } from "../../redux/features/user/userApi";
+import { uploadImageInCloudinary } from "../../utils/UploadImage/UploadImageInCloudinay";
 
 const ProfileSettingsForm = () => {
   const { data } = useGetUserQuery(undefined);
@@ -23,9 +21,16 @@ const ProfileSettingsForm = () => {
   const onSubmit = async (data: TProfile) => {
     const toastId = toast.loading("Adding new doctor...");
 
+    let imageLink;
+
+    if (file) {
+      imageLink = await uploadImageInCloudinary(file, toastId);
+    }
+
     const profileData = {
       firstName: data?.firstName,
       lastName: data?.lastName,
+      photo: imageLink ? imageLink : user?.photo,
     };
 
     try {
@@ -54,7 +59,7 @@ const ProfileSettingsForm = () => {
       lastName: user?.lastName,
     });
   }, []);
-  console.log(user);
+  
   return (
     <>
       <Row>
