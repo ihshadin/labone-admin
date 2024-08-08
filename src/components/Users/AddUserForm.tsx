@@ -4,16 +4,15 @@ import { TUsers } from "../../types/user.type";
 import { uploadImageInCloudinary } from "../../utils/UploadImage/UploadImageInCloudinay";
 import { toast } from "sonner";
 import UploadImageWithPreview from "../../utils/UploadImage/UploadImageWithPreview";
-
-export type Interest = {
-  _id: string;
-  name: string;
-};
+import { useAddNewUserMutation } from "../../redux/features/user/userApi";
+import { passwordRules } from "./userConstant";
 
 const AddUserForm = () => {
   const [isLoading, setIsLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [file, setFile] = useState<any>([]);
   const [form] = Form.useForm();
+  const [addNewUser] = useAddNewUserMutation();
 
   const onSubmit = async (data: TUsers) => {
     const toastId = toast.loading("Adding new user...");
@@ -26,22 +25,22 @@ const AddUserForm = () => {
     const userNewData = {
       firstName: data?.firstName,
       lastName: data?.lastName,
-      image: imageLink,
+      photo: imageLink,
       email: data?.email,
       password: data?.password,
     };
     try {
-      const res = await addUser (userNewData);
-      if (res) {
+      const res = await addNewUser(userNewData).unwrap();
+      if (res?.success) {
         setIsLoading(true);
-        toast.success("Successfully added the doctor", { id: toastId });
+        toast.success("Successfully added the User", { id: toastId });
         form.resetFields();
         setFile([]);
       } else {
         toast.error("Something want wrong!", { id: toastId });
       }
     } catch (error: any) {
-      toast.error(error.message, { id: toastId });
+      toast.error("Something want wrong!", { id: toastId });
     } finally {
       setIsLoading(false);
     }
@@ -110,9 +109,9 @@ const AddUserForm = () => {
               <Col span={24} md={{ span: 12 }}>
                 <Form.Item
                   label="Password"
-                  name="Password"
+                  name="password"
                   tooltip="Here you have to input the user password."
-                  rules={[{ required: true, message: "Password is required" }]}
+                  rules={passwordRules}
                 >
                   <Input.Password
                     type="password"
@@ -122,123 +121,14 @@ const AddUserForm = () => {
                 </Form.Item>
               </Col>
             </Row>
-            {/* <Row gutter={16}>
-                <Col span={24} md={{ span: 12 }}>
-                  <Form.Item
-                    label="Password"
-                    name="Password"
-                    tooltip="Here you have to input the user password."
-                    rules={[
-                      { required: true, message: "Password is required" },
-                    ]}
-                  >
-                    <Input
-                      type="password"
-                      placeholder="Write here..."
-                      className="h-10 border border-[#C4CAD4] !rounded-lg"
-                    />
-                  </Form.Item>
-                </Col>
-                <Col span={24} md={{ span: 12 }}>
-              <Form.Item
-                  label="Serial No"
-                  name="serialNumber"
-                  tooltip="Here you have to input the doctor's serial number."
-                  rules={[{ required: true, message: "Serial no is required" }]}
-                >
-                  <Input
-                    type="number"
-                    placeholder="Write here..."
-                    className="h-10 border border-[#C4CAD4] !rounded-lg"
-                  />
-                </Form.Item>
-              </Col>
-              </Row> */}
-
-            {/* <Row gutter={16}>
-              <Col span={24} md={{ span: 12 }} lg={{ span: 12 }}>
-                <Form.Item
-                  label="Department"
-                  name="department"
-                  tooltip="Here you have to input the doctor's department."
-                  rules={[
-                    { required: true, message: "Department is required" },
-                  ]}
-                >
-                  <Select
-                    showSearch
-                    placeholder="Select from here..."
-                    options={interestOptions}
-                    className="h-10 *:!rounded-lg !bg-transparent"
-                  />
-                </Form.Item>
-              </Col>
-              <Col span={24} md={{ span: 12 }} lg={{ span: 12 }}>
-                <Form.Item
-                  label="Specialty"
-                  name="specialization"
-                  tooltip="Here you have to input the doctor's specialty."
-                  rules={[{ required: true, message: "Specialty is required" }]}
-                >
-                  <Input
-                    type="text"
-                    placeholder="Write here..."
-                    className="h-10 border border-[#C4CAD4] !rounded-lg"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-
-            <Row gutter={16}>
-              <Col span={24} md={{ span: 12 }} lg={{ span: 12 }}>
-                <Form.Item
-                  label="Degree"
-                  name="degree"
-                  tooltip="What's the degree of the doctor."
-                  rules={[{ required: true, message: "Degree is required" }]}
-                >
-                  <Input.TextArea
-                    placeholder="Write here..."
-                    className="border border-[#C4CAD4] !rounded-lg"
-                    rows={4}
-                  />
-                </Form.Item>
-              </Col>
-              <Col span={24} md={{ span: 12 }} lg={{ span: 12 }}>
-                <Form.Item label="Address" name="address">
-                  <Input.TextArea
-                    placeholder="Write here..."
-                    className="border border-[#C4CAD4] !rounded-lg"
-                    rows={4}
-                  />
-                </Form.Item>
-              </Col>
-            </Row> */}
 
             <Row>
               <Col span={24}>
                 <p className="font-medium mb-1.5">User Image</p>
-                
+
                 <UploadImageWithPreview setFile={setFile} />
               </Col>
             </Row>
-
-            {/* <Row>
-              <div className="w-full pb-4">
-                <p className="font-medium mb-1.5">Doctor Image</p>
-                <Dragger onChange={handleChange} maxCount={1}>
-                  <div className="flex justify-center py-4">
-                    <p className="border shadow px-2 py-3 w-16 flex items-center justify-center rounded">
-                      <LuUploadCloud fontSize={27} />
-                    </p>
-                  </div>
-                  <p className="font-medium tracking-[2px]">Click to upload</p>
-                  <p className="pb-2">
-                    Drag & drop or select a photo from your computer.
-                  </p>
-                </Dragger>
-              </div>
-            </Row> */}
 
             <Row>
               <div className="flex items-center justify-end w-full">
