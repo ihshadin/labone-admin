@@ -24,8 +24,13 @@ const MainLayout = () => {
             position: "sticky",
             top: "0",
             left: "0",
+            overflow: "auto",
+            scrollbarWidth: "revert"
           }}
+          className="customScroll"
+          
           width={250}
+
           // collapsible
         >
           <Link to="/">

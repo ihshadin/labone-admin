@@ -63,7 +63,11 @@ import { toast } from "sonner";
 const DepartmentsList = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
 
-  const { data, isLoading: isDataLoading } = useGetAllDepartmentQuery(params);
+  const {
+    data,
+    isLoading: isDataLoading,
+    refetch,
+  } = useGetAllDepartmentQuery(params);
 
   const [deleteDepartment] = useDeleteDepartmentMutation();
 
@@ -132,12 +136,13 @@ const DepartmentsList = () => {
   };
 
   const handlePaginationChange = (page: number) => {
-    console.log(page);
     setParams((prevParams) => [
       ...prevParams.filter((param) => param.name !== "page"),
       { name: "page", value: page },
     ]);
+    refetch();
   };
+  console.log(data?.data);
 
   const meta = data?.data?.meta;
   const result = data?.data?.result;

@@ -2,6 +2,7 @@ import { ApexOptions } from "apexcharts";
 import ReactApexChart from "react-apexcharts";
 import { LuCornerRightUp } from "react-icons/lu";
 import { Link } from "react-router-dom";
+import { useGetDepartmentDataQuery } from "../../../redux/features/meta/metaApi";
 
 const options: ApexOptions = {
   colors: ["#0a8848", "#80CAEE"],
@@ -83,10 +84,12 @@ const options: ApexOptions = {
 // }
 
 const ChartTwo = () => {
+  const {data} = useGetDepartmentDataQuery(undefined);
+
   const series = [
     {
       name: "Department Doctors",
-      data: [30, 65, 36, 30, 45, 35, 64],
+      data: data?.data,
     },
   ];
   // const [state, setState] = useState<ChartTwoState>({

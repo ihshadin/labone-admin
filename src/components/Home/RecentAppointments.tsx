@@ -2,8 +2,11 @@
 import { useEffect, useState } from "react";
 import { Table, TableColumnsType, TableProps } from "antd";
 import { TAppointment } from "../../types/appointment.type";
+import { useGetRecentAppointmentDataQuery } from "../../redux/features/meta/metaApi";
 
 const RecentAppointments = () => {
+  const {data} = useGetRecentAppointmentDataQuery(undefined);
+  
   const columns: TableColumnsType<TAppointment> = [
     {
       title: "Patient Name",
@@ -16,7 +19,7 @@ const RecentAppointments = () => {
     // },
     {
       title: "Mobile",
-      dataIndex: "mobile",
+      dataIndex: "mobileNumber",
     },
     {
       title: "Date",
@@ -55,73 +58,73 @@ const RecentAppointments = () => {
       },
     },
   ];
-  const data = [
-    {
-      key: "1",
-      _id: "01",
-      patientName: "Mukta Khatun",
-      address: "Mozarmil Bus Stand, Kashimpur, Gazipur.",
-      mobile: "01829566586",
-      date: "02/05/2024",
-      department: "Gynecology",
-      doctor: "Dr. Arifa Akhter",
-      message:
-        "Your recent test results are available. Please visit the clinic for a detailed discussion.",
-      status: "cancel",
-    },
-    {
-      key: "2",
-      _id: "02",
-      patientName: "Rahim Uddin",
-      address: "Dhanmondi, Dhaka.",
-      mobile: "01711223344",
-      date: "03/05/2024",
-      department: "Cardiology",
-      doctor: "Dr. Mahmudul Hasan",
-      message:
-        "Your recent test results are available. Please visit the clinic for a detailed discussion.",
-      status: "pending",
-    },
-    {
-      key: "3",
-      _id: "03",
-      patientName: "Ayesha Siddiqua",
-      address: "Uttara, Dhaka.",
-      mobile: "01999887766",
-      date: "04/05/2024",
-      department: "Pediatrics",
-      doctor: "Dr. Jannatul Ferdous",
-      message:
-        "Your child's vaccination schedule is due next week. Please book an appointment.",
-      status: "cancel",
-    },
-    {
-      key: "4",
-      _id: "04",
-      patientName: "Karim Hossain",
-      address: "Chittagong Road, Narayanganj.",
-      mobile: "01612345678",
-      date: "05/05/2024",
-      department: "Orthopedics",
-      doctor: "Dr. Anisur Rahman",
-      message:
-        "The X-ray reports are ready. Kindly collect them from the reception.",
-      status: "approve",
-    },
-    {
-      key: "5",
-      _id: "05",
-      patientName: "Sumaiya Begum",
-      address: "Sylhet Sadar, Sylhet.",
-      mobile: "01876543210",
-      date: "06/05/2024",
-      department: "Dermatology",
-      doctor: "Dr. Fatema Tuz Zohra",
-      message:
-        "Your follow-up appointment is scheduled for next Monday. Please confirm your availability.",
-      status: "pending",
-    },
-  ];
+  // const data = [
+  //   {
+  //     key: "1",
+  //     _id: "01",
+  //     patientName: "Mukta Khatun",
+  //     address: "Mozarmil Bus Stand, Kashimpur, Gazipur.",
+  //     mobile: "01829566586",
+  //     date: "02/05/2024",
+  //     department: "Gynecology",
+  //     doctor: "Dr. Arifa Akhter",
+  //     message:
+  //       "Your recent test results are available. Please visit the clinic for a detailed discussion.",
+  //     status: "cancel",
+  //   },
+  //   {
+  //     key: "2",
+  //     _id: "02",
+  //     patientName: "Rahim Uddin",
+  //     address: "Dhanmondi, Dhaka.",
+  //     mobile: "01711223344",
+  //     date: "03/05/2024",
+  //     department: "Cardiology",
+  //     doctor: "Dr. Mahmudul Hasan",
+  //     message:
+  //       "Your recent test results are available. Please visit the clinic for a detailed discussion.",
+  //     status: "pending",
+  //   },
+  //   {
+  //     key: "3",
+  //     _id: "03",
+  //     patientName: "Ayesha Siddiqua",
+  //     address: "Uttara, Dhaka.",
+  //     mobile: "01999887766",
+  //     date: "04/05/2024",
+  //     department: "Pediatrics",
+  //     doctor: "Dr. Jannatul Ferdous",
+  //     message:
+  //       "Your child's vaccination schedule is due next week. Please book an appointment.",
+  //     status: "cancel",
+  //   },
+  //   {
+  //     key: "4",
+  //     _id: "04",
+  //     patientName: "Karim Hossain",
+  //     address: "Chittagong Road, Narayanganj.",
+  //     mobile: "01612345678",
+  //     date: "05/05/2024",
+  //     department: "Orthopedics",
+  //     doctor: "Dr. Anisur Rahman",
+  //     message:
+  //       "The X-ray reports are ready. Kindly collect them from the reception.",
+  //     status: "approve",
+  //   },
+  //   {
+  //     key: "5",
+  //     _id: "05",
+  //     patientName: "Sumaiya Begum",
+  //     address: "Sylhet Sadar, Sylhet.",
+  //     mobile: "01876543210",
+  //     date: "06/05/2024",
+  //     department: "Dermatology",
+  //     doctor: "Dr. Fatema Tuz Zohra",
+  //     message:
+  //       "Your follow-up appointment is scheduled for next Monday. Please confirm your availability.",
+  //     status: "pending",
+  //   },
+  // ];
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -149,7 +152,7 @@ const RecentAppointments = () => {
     <>
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={data?.data}
         scroll={{ x: 950 }}
         pagination={false}
         onChange={onChange}

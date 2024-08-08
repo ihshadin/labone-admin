@@ -1,6 +1,5 @@
 
 import { Link } from "react-router-dom";
-import AllMachinesList from "../../components/Machines/AllMachinesList";
 import { LuCornerRightDown } from "react-icons/lu";
 import DiagnosticsAllMachinesList from "../../components/DiagnositicMachine/DiagnosticsAllMachinesList";
 

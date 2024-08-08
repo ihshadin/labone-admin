@@ -1,5 +1,6 @@
 import { ApexOptions } from "apexcharts";
 import ReactApexChart from "react-apexcharts";
+import { useGetAppointmentDataQuery } from "../../../redux/features/meta/metaApi";
 
 const options: ApexOptions = {
   colors: ["#0a8848", "#80CAEE"],
@@ -122,10 +123,11 @@ const options: ApexOptions = {
 };
 
 const ChartOne = () => {
+  const { data } = useGetAppointmentDataQuery(undefined);
   const series = [
     {
       name: "Appointments",
-      data: [30, 65, 36, 30, 45, 35, 64, 52, 59, 36, 39, 51],
+      data: data?.data,
     },
   ];
 
