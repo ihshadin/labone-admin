@@ -4,6 +4,7 @@ export type TUsers = {
   _id: string;
   firstName: string;
   lastName: string;
+  photo: string;
   email: string;
   userImage: string;
   password?: string;

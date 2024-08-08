@@ -1,6 +1,6 @@
 import { LuCornerRightDown } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
-// import AllUsers from '../../components/Users/AllUsers';
+import AllUsers from '../../components/Users/AllUsers';
 
 const Users = () => {
     return (
@@ -23,7 +23,7 @@ const Users = () => {
         </Link>
         </section>
         <section className="bg-white/40 bg-blend-color-burn border p-5 my-5 rounded-xl w-full ">
-          {/* <AllUsers/> */}
+          <AllUsers/>
         </section>
       </>
     );
