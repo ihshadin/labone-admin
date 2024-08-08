@@ -16,7 +16,7 @@ import { useGetMetaDataQuery } from "../../redux/features/meta/metaApi";
 
 const DataContainer = () => {
   const { data } = useGetMetaDataQuery(undefined);
-  
+
   const items = [
     {
       title: "Total Appointments",

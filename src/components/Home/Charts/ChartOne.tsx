@@ -1,133 +1,122 @@
+import { useState } from "react";
 import { ApexOptions } from "apexcharts";
 import ReactApexChart from "react-apexcharts";
 import { useGetAppointmentDataQuery } from "../../../redux/features/meta/metaApi";
 
-const options: ApexOptions = {
-  colors: ["#0a8848", "#80CAEE"],
-  stroke: {
-    curve: "smooth",
-    width: 2.3,
-  },
-  chart: {
-    height: 335,
-    type: "area",
-    dropShadow: {
-      enabled: true,
-      color: "#623CEA14",
-      top: 10,
-      blur: 4,
-      left: 0,
-      opacity: 0.1,
-    },
+const ChartOne = () => {
+  const [duration, setDuration] = useState("all");
+  const { data } = useGetAppointmentDataQuery(duration);
 
-    toolbar: {
+  const options: ApexOptions = {
+    colors: ["#0a8848", "#80CAEE"],
+    stroke: {
+      curve: "smooth",
+      width: 2.3,
+    },
+    chart: {
+      height: 335,
+      type: "area",
+      dropShadow: {
+        enabled: true,
+        color: "#623CEA14",
+        top: 10,
+        blur: 4,
+        left: 0,
+        opacity: 0.1,
+      },
+
+      toolbar: {
+        show: false,
+      },
+    },
+    legend: {
       show: false,
     },
-  },
-  legend: {
-    show: false,
-  },
-  dataLabels: {
-    enabled: false,
-  },
-  responsive: [
-    {
-      breakpoint: 1024,
-      options: {
-        chart: {
-          height: 300,
+    dataLabels: {
+      enabled: false,
+    },
+    responsive: [
+      {
+        breakpoint: 1024,
+        options: {
+          chart: {
+            height: 300,
+          },
+        },
+      },
+      {
+        breakpoint: 1366,
+        options: {
+          chart: {
+            height: 350,
+          },
+        },
+      },
+    ],
+    grid: {
+      xaxis: {
+        lines: {
+          show: true,
+        },
+      },
+      yaxis: {
+        lines: {
+          show: true,
         },
       },
     },
-    {
-      breakpoint: 1366,
-      options: {
-        chart: {
-          height: 350,
-        },
-      },
-    },
-  ],
-  grid: {
-    xaxis: {
-      lines: {
-        show: true,
+    markers: {
+      size: 0,
+      colors: "#0a8848",
+      strokeColors: ["#3056D3", "#80CAEE"],
+      strokeWidth: 0,
+      strokeOpacity: 0.9,
+      strokeDashArray: 0,
+      fillOpacity: 1,
+      discrete: [],
+      hover: {
+        size: undefined,
+        sizeOffset: 1,
       },
     },
     yaxis: {
-      lines: {
-        show: true,
+      labels: {
+        show: false,
       },
     },
-  },
-  markers: {
-    size: 0,
-    colors: "#0a8848",
-    strokeColors: ["#3056D3", "#80CAEE"],
-    strokeWidth: 0,
-    strokeOpacity: 0.9,
-    strokeDashArray: 0,
-    fillOpacity: 1,
-    discrete: [],
-    hover: {
-      size: undefined,
-      sizeOffset: 1,
-    },
-  },
-  yaxis: {
-    labels: {
-      show: false,
-    },
-  },
-  xaxis: {
-    labels: {
-      rotateAlways: true,
-      rotate: -45,
-      style: {
-        fontSize: "12px",
-        fontWeight: 300,
-        colors: [
-          "#00263E",
-          "#00263E",
-          "#00263E",
-          "#00263E",
-          "#00263E",
-          "#00263E",
-          "#00263E",
-          "#00263E",
-          "#00263E",
-        ],
+    xaxis: {
+      labels: {
+        rotateAlways: true,
+        rotate: -45,
+        style: {
+          fontSize: "12px",
+          fontWeight: 300,
+          colors: [
+            "#00263E",
+            "#00263E",
+            "#00263E",
+            "#00263E",
+            "#00263E",
+            "#00263E",
+            "#00263E",
+            "#00263E",
+            "#00263E",
+          ],
+        },
       },
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
+      categories: data?.data?.map((item: Record<string, unknown>) => item.name),
     },
-    axisBorder: {
-      show: false,
-    },
-    axisTicks: {
-      show: false,
-    },
-    categories: [
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-    ],
-  },
-};
-
-const ChartOne = () => {
-  const { data } = useGetAppointmentDataQuery(undefined);
+  };
   const series = [
     {
       name: "Appointments",
-      data: data?.data,
+      data: data?.data?.map((item: Record<string, unknown>) => item.quantity),
     },
   ];
 
@@ -146,10 +135,10 @@ const ChartOne = () => {
         </div>
         <div className="flex w-full max-w-45 justify-end">
           <div className="inline-flex items-center rounded-md bg-whiter gap-2 *:rounded-md *:py-1 *:px-3 *:text-xs *:bg-primary *:text-white [&_*:hover]:bg-primary/80">
-            <button>12 Months</button>
-            <button>30 Days</button>
-            <button>7 Days</button>
-            <button>24 Hours</button>
+            <button onClick={() => setDuration("year")}>12 Months</button>
+            <button onClick={() => setDuration("month")}>30 Days</button>
+            <button onClick={() => setDuration("week")}>7 Days</button>
+            <button onClick={() => setDuration("hours")}>24 Hours</button>
           </div>
         </div>
       </div>

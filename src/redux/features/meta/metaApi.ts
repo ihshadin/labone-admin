@@ -20,20 +20,16 @@ const metaApi = baseApi.injectEndpoints({
       },
       providesTags: ["meta"],
     }),
-
     getAppointmentData: builder.query({
-      query: (args) => {
-        const params = new URLSearchParams();
-
-        if (args) {
-          args?.forEach((item: TQueryParam) => {
-            params?.append(item.name, item.value as string);
-          });
-        }
+      query: (duration) => {
+        // if (args) {
+        //   args?.forEach((item: TQueryParam) => {
+        //     params?.append(item.name, item.value as string);
+        //   });
+        // }
         return {
-          url: "/meta/appointment-chart",
+          url: `/meta/appointment-chart?duration=${duration}`,
           method: "GET",
-          params,
         };
       },
       providesTags: ["meta"],
@@ -55,7 +51,6 @@ const metaApi = baseApi.injectEndpoints({
       },
       providesTags: ["meta"],
     }),
-    
     getRecentAppointmentData: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
@@ -73,6 +68,23 @@ const metaApi = baseApi.injectEndpoints({
       },
       providesTags: ["meta"],
     }),
+    getLiveSchedulesData: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+
+        if (args) {
+          args?.forEach((item: TQueryParam) => {
+            params?.append(item.name, item.value as string);
+          });
+        }
+        return {
+          url: "/meta/live-schedule",
+          method: "GET",
+          params,
+        };
+      },
+      providesTags: ["meta"],
+    }),
   }),
 });
 
@@ -81,4 +93,5 @@ export const {
   useGetAppointmentDataQuery,
   useGetDepartmentDataQuery,
   useGetRecentAppointmentDataQuery,
+  useGetLiveSchedulesDataQuery,
 } = metaApi;
