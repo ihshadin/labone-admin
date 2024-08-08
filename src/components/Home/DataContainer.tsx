@@ -1,6 +1,9 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { FaUserDoctor } from "react-icons/fa6";
+import { LuCalendarClock, LuCalendarSearch, LuGitBranch } from "react-icons/lu";
+import { GrVirtualMachine } from "react-icons/gr";
+import { BiUserPlus } from "react-icons/bi";
 
 // import Swiper and modules styles
 import "swiper/css";
@@ -9,44 +12,44 @@ import "swiper/css/pagination";
 
 // Custom CSS
 import "./DataContainer.css";
-import { LuCalendarClock, LuCalendarSearch, LuGitBranch } from "react-icons/lu";
-import { GrVirtualMachine } from "react-icons/gr";
-import { BiUserPlus } from "react-icons/bi";
-
-const items = [
-  {
-    title: "Total Appointments",
-    quentity: 4744,
-    icon: <LuCalendarClock />,
-  },
-  {
-    title: "Pending Appointments",
-    quentity: 500,
-    icon: <LuCalendarSearch />,
-  },
-  {
-    title: "Total Doctors",
-    quentity: 900,
-    icon: <FaUserDoctor />,
-  },
-  {
-    title: "Total Machines",
-    quentity: 20,
-    icon: <GrVirtualMachine />,
-  },
-  {
-    title: "Total Departments",
-    quentity: 361,
-    icon: <LuGitBranch />,
-  },
-  {
-    title: "Total Schedules",
-    quentity: 361,
-    icon: <BiUserPlus />,
-  },
-];
+import { useGetMetaDataQuery } from "../../redux/features/meta/metaApi";
 
 const DataContainer = () => {
+  const { data } = useGetMetaDataQuery(undefined);
+  
+  const items = [
+    {
+      title: "Total Appointments",
+      quentity: data?.data?.totalAppointments,
+      icon: <LuCalendarClock />,
+    },
+    {
+      title: "Pending Appointments",
+      quentity: data?.data?.totalPendingAppointments,
+      icon: <LuCalendarSearch />,
+    },
+    {
+      title: "Total Doctors",
+      quentity: data?.data?.totalDoctors,
+      icon: <FaUserDoctor />,
+    },
+    {
+      title: "Total Machines",
+      quentity: data?.data?.totalMachines,
+      icon: <GrVirtualMachine />,
+    },
+    {
+      title: "Total Departments",
+      quentity: data?.data?.totalDepartments,
+      icon: <LuGitBranch />,
+    },
+    {
+      title: "Total Schedules",
+      quentity: data?.data?.totalSchedules,
+      icon: <BiUserPlus />,
+    },
+  ];
+
   return (
     <div>
       <Swiper

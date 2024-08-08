@@ -2,10 +2,9 @@
 import { useState } from "react";
 import { Col, Form, Row, Select, TimePicker } from "antd";
 import { toast } from "sonner";
-
-import { useGetAllDoctorsQuery } from "../../redux/features/doctor/doctorApi";
-import { Days } from "./Schedules.constant";
-import { useAddScheduleMutation } from "../../redux/features/schedules/schedulesApi";
+import { useGetAllDiagnosticDoctorsQuery } from "../../redux/features/diagnosticDoctor/diagnosticDoctorApi";
+import { useAddDiagnosticScheduleMutation } from "../../redux/features/diagnosticSchedules/diagnosticSchedulesApi";
+import { Days } from "./DiagnosticSchedules.constant";
 
 export type TDoctor = {
   _id: string;
@@ -13,31 +12,31 @@ export type TDoctor = {
   lastName: string;
 };
 
-const DoctorSchedulesRegForm = () => {
+const DiagnosticDoctorSchedulesRegForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
-  const [addSchedules] = useAddScheduleMutation();
-  const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(undefined);
+  const [addDiagnosticSchedules] = useAddDiagnosticScheduleMutation();
+  const { data, isLoading: isDataLoading } =
+    useGetAllDiagnosticDoctorsQuery(undefined);
 
   const onSubmit = async (data: any) => {
-    const toastId = toast.loading("Adding new doctor...");
     setIsLoading(true);
+    const toastId = toast.loading("Adding new doctor...");
 
     const doctorNewData = {
-      doctorID: data?.doctorId,
+      doctorID: data?.doctorID,
       scheduleDay: data?.day,
       startTime: data?.startTime,
       endTime: data?.endTime,
     };
-
-    console.log("startTime:", data?.startTime, "endTime:", data?.endTime);
-
     try {
-      const res = await addSchedules(doctorNewData).unwrap();
+      const res = await addDiagnosticSchedules(doctorNewData).unwrap();
       if (res?.success) {
-        toast.success("Successfully added the Schedules", { id: toastId });
-        form.resetFields();
         setIsLoading(false);
+        toast.success("Successfully added the Diagnostic Schedules", {
+          id: toastId,
+        });
+        form.resetFields();
       } else {
         toast.error("Something want wrong!", { id: toastId });
       }
@@ -65,7 +64,7 @@ const DoctorSchedulesRegForm = () => {
               <Col span={24} md={{ span: 12 }} lg={{ span: 12 }}>
                 <Form.Item
                   label="Select Doctor"
-                  name="doctorId"
+                  name="doctorID"
                   tooltip="Here you have select doctor's."
                   rules={[{ required: true, message: "Doctor is required" }]}
                 >
@@ -132,9 +131,9 @@ const DoctorSchedulesRegForm = () => {
                 <button
                   className="cursor-pointer hover:bg-gray-950 px-4 py-1.5 bg-primary font-medium  text-white rounded-lg"
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isLoading ? true : false}
                 >
-                  {isLoading ? "Loading..." : "Add Doctor Schedule"}
+                  {isLoading ? "Loading..." : "Add Diagnostic Doctor Schedule"}
                 </button>
               </div>
             </Row>
@@ -145,4 +144,4 @@ const DoctorSchedulesRegForm = () => {
   );
 };
 
-export default DoctorSchedulesRegForm;
+export default DiagnosticDoctorSchedulesRegForm;

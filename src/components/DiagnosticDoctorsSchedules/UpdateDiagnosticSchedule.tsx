@@ -4,20 +4,21 @@
 import { Col, Divider, Form, Modal, Row, Select, TimePicker } from "antd";
 import { toast } from "sonner";
 import { TSchedule, TUpdateSchedule } from "../../types/schedule.type";
-import { useGetAllDoctorsQuery } from "../../redux/features/doctor/doctorApi";
-import { Days } from "./Schedules.constant";
-import { TDoctor } from "./DoctorSchedulesRegForm";
-import { useUpdateScheduleMutation } from "../../redux/features/schedules/schedulesApi";
+import { Days } from "./DiagnosticSchedules.constant";
+import { TDoctor } from "./DiagnosticDoctorSchedulesRegForm";
+import { useGetAllDiagnosticDoctorsQuery } from "../../redux/features/diagnosticDoctor/diagnosticDoctorApi";
+import { useUpdateDiagnosticScheduleMutation } from "../../redux/features/diagnosticSchedules/diagnosticSchedulesApi";
 
-const UpdateSchedule = ({
+const UpdateDiagnosticSchedule = ({
   updateModalOpen,
   setUpdateModalOpen,
   scheduleData,
 }: TUpdateSchedule) => {
   const [form] = Form.useForm();
 
-  const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(undefined);
-  const [updateSchedule] = useUpdateScheduleMutation();
+  const { data, isLoading: isDataLoading } =
+    useGetAllDiagnosticDoctorsQuery(undefined);
+  const [updateDiagnosticSchedule] = useUpdateDiagnosticScheduleMutation();
 
   const onSubmit = async (data: TSchedule) => {
     const toastId = toast.loading("Updating Schedule info...");
@@ -39,10 +40,12 @@ const UpdateSchedule = ({
     };
 
     try {
-      const res = await updateSchedule(updateInfo).unwrap();
+      const res = await updateDiagnosticSchedule(updateInfo).unwrap();
       if (res?.success) {
         setUpdateModalOpen(false);
-        toast.success("Successfully updated the schedule", { id: toastId });
+        toast.success("Successfully updated the Diagnostic schedule", {
+          id: toastId,
+        });
       } else {
         toast.error("Something want wrong!", { id: toastId });
       }
@@ -68,10 +71,10 @@ const UpdateSchedule = ({
     >
       <div className="text-center mb-10">
         <h2 className="text-primary text-xl font-semibold">
-          Details of the Schedule
+          Details of the Diagnostic Schedule
         </h2>
         <Divider plain className="!my-1">
-          Edit Schedule's infos
+          Edit Diagnostic Schedule's infos
         </Divider>
       </div>
       <Form
@@ -146,7 +149,7 @@ const UpdateSchedule = ({
               className="cursor-pointer hover:bg-gray-950 px-4 py-1.5 bg-primary font-medium  text-white rounded-lg"
               type="submit"
             >
-              Update Doctor Schedule
+              Update Diagnostic Schedule
             </button>
           </div>
         </Row>
@@ -155,4 +158,4 @@ const UpdateSchedule = ({
   );
 };
 
-export default UpdateSchedule;
+export default UpdateDiagnosticSchedule;

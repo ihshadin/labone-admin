@@ -25,8 +25,8 @@ const ChangePassForm = () => {
         }
         return Promise.reject(
           new Error(
-            "Password must be at least 8 characters long, and include uppercase, lowercase, number, and special character"
-          )
+            "Password must be at least 8 characters long, and include uppercase, lowercase, number, and special character",
+          ),
         );
       },
     },
@@ -48,6 +48,7 @@ const ChangePassForm = () => {
       } else {
         toast.success("Password Change Successfully", { id: toastId });
         navigate("/login");
+        localStorage.removeItem("accessToken");
         form.resetFields();
       }
     } catch (error: any) {
@@ -75,7 +76,12 @@ const ChangePassForm = () => {
                   name="currentPassword"
                   tooltip="Here you have to input your Current Password."
                   hasFeedback
-                  rules={[{ required: true, message: "Current Password is required!" }]}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Current Password is required!",
+                    },
+                  ]}
                 >
                   <Input.Password
                     type="password"
@@ -117,7 +123,7 @@ const ChangePassForm = () => {
                           return Promise.resolve();
                         }
                         return Promise.reject(
-                          new Error("The two passwords do not match!")
+                          new Error("The two passwords do not match!"),
                         );
                       },
                     }),

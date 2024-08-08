@@ -1,65 +1,60 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
+import { TMachine, TUpdateMachine } from "../../types/machine.type";
 import { Col, Divider, Form, Input, Modal, Row } from "antd";
-import { toast } from "sonner";
 import UploadImageWithPreview from "../../utils/UploadImage/UploadImageWithPreview";
-import { TDepartment, TUpdateDepartment } from "../../types/department.type";
+import { toast } from "sonner";
 import { uploadImageInCloudinary } from "../../utils/UploadImage/UploadImageInCloudinay";
-import { useUpdateDepartmentMutation } from "../../redux/features/department/departmentApi";
+import { useUpdateDiagnosticMachineMutation } from "../../redux/features/diagonisticMachine/diagonisticMachineApi";
 
-const UpdateDepartment = ({
+const UpdateDiagnosticMachine = ({
   updateModalOpen,
   setUpdateModalOpen,
-  departmentData,
-}: TUpdateDepartment) => {
-  const [isLoading, setIsLoading] = useState(false);
+  machineData,
+}: TUpdateMachine) => {
   const [file, setFile] = useState<any>([]);
   const [form] = Form.useForm();
+  const [updateDiagnosticMachine] = useUpdateDiagnosticMachineMutation();
 
-  const [updateDepartment] = useUpdateDepartmentMutation();
-
-  const onSubmit = async (data: TDepartment) => {
-    const toastId = toast.loading("Updating Department info...");
-
+  const onSubmit = async (data: TMachine) => {
+    const toastId = toast.loading("Updating Machine info...");
     let imageLink;
+
     if (file) {
       imageLink = await uploadImageInCloudinary(file, toastId);
     }
 
-    const updateDepartmentData = {
-      name: data.name,
-      details: data.details,
-      icon: imageLink ? imageLink : departmentData?.icon,
+    const updatedData = {
+      name: data?.name,
+      country: data?.country,
+      details: data?.details,
+      photo: imageLink ? imageLink : data?.photo,
     };
 
     const updateInfo = {
-      id: departmentData?._id,
-      data: updateDepartmentData,
+      id: machineData?._id,
+      data: updatedData,
     };
 
     try {
-      const res = await updateDepartment(updateInfo).unwrap();
-      console.log(res)
+      const res = await updateDiagnosticMachine(updateInfo).unwrap();
 
       if (res?.success) {
-        setIsLoading(true);
         setUpdateModalOpen(false);
-        toast.success("Successfully updated the Department", { id: toastId });
+        toast.success("Successfully updated the machine", { id: toastId });
       } else {
         toast.error("Something want wrong!", { id: toastId });
       }
     } catch (error: any) {
-      toast.error(error.message, { id: toastId });
-    } finally {
-      setIsLoading(false);
+      toast.error("Something want wrong!", { id: toastId });
     }
   };
 
   useEffect(() => {
     form.resetFields();
-    form.setFieldsValue(departmentData);
-  }, [departmentData]);
+    form.setFieldsValue(machineData);
+  }, [machineData]);
 
   return (
     <Modal
@@ -73,27 +68,41 @@ const UpdateDepartment = ({
     >
       <div className="text-center mb-10">
         <h2 className="text-primary text-xl font-semibold">
-          Details of the Department
+          Details of the Diagnostic machine
         </h2>
         <Divider plain className="!my-1">
-          Edit department's infos
+          Edit Diagnostic machine's info
         </Divider>
       </div>
       <Form
         form={form}
-        initialValues={departmentData}
+        initialValues={machineData}
         onFinish={onSubmit}
         requiredMark={false}
         layout="vertical"
       >
         <Row gutter={16}>
-          <Col span={24}>
+          <Col span={24} md={{ span: 12 }}>
             <Form.Item
-              label="Department Name"
+              label="Machine Name"
               name="name"
-              tooltip="Here you have to input the Department name."
+              tooltip="Here you have to input the machine name."
+              rules={[{ required: true, message: "Machine Name is required" }]}
+            >
+              <Input
+                type="text"
+                placeholder="Write here..."
+                className="h-10 border border-[#C4CAD4] !rounded-lg"
+              />
+            </Form.Item>
+          </Col>
+          <Col span={24} md={{ span: 12 }}>
+            <Form.Item
+              label="Machine Origin"
+              name="country"
+              tooltip="Here you have to input the machine Origin."
               rules={[
-                { required: true, message: "Department Name is required" },
+                { required: true, message: "Machine Origin is required" },
               ]}
             >
               <Input
@@ -108,9 +117,9 @@ const UpdateDepartment = ({
         <Row gutter={16}>
           <Col span={24}>
             <Form.Item
-              label="Department Details"
+              label="Machine Details"
               name="details"
-              tooltip="Describe about the Department."
+              tooltip="Describe about the machine."
               rules={[{ required: true, message: "Details is required" }]}
             >
               <Input.TextArea
@@ -124,12 +133,12 @@ const UpdateDepartment = ({
 
         <Row>
           <Col span={24}>
-            <p className="font-medium mb-1.5">Department Icon</p>
+            <p className="font-medium mb-1.5">Doctor Image</p>
             <UploadImageWithPreview
               setFile={setFile}
-              defaultImage={departmentData?.icon}
-              aspectRatio={1 / 1}
-              ratioName="oneOne"
+              defaultImage={machineData.photo}
+              aspectRatio={4 / 3}
+              ratioName="fourThree"
             />
           </Col>
         </Row>
@@ -146,9 +155,9 @@ const UpdateDepartment = ({
               <button
                 className="cursor-pointer hover:bg-gray-950 px-4 py-1.5 bg-primary font-medium  text-white rounded-lg"
                 type="submit"
-                disabled={isLoading ? true : false}
+        
               >
-                {isLoading ? "Loading..." : "Update Department"}
+                Update Machine
               </button>
             </div>
           </Col>
@@ -158,4 +167,4 @@ const UpdateDepartment = ({
   );
 };
 
-export default UpdateDepartment;
+export default UpdateDiagnosticMachine;

@@ -1,29 +1,17 @@
 import { Dispatch } from "react";
+import { TDoctor } from "./doctor.type";
 
 export type TAppointment = {
   _id: string;
   patientName: string;
   address: string;
-  mobile: number;
-  date: string;
+  mobileNumber: number;
+  appointmentDate: string;
   department: string;
-  doctor: string;
+  doctorID: TDoctor;
   message: string;
   status: "cancel" | "approve" | "pending";
 };
-
-export type TAppointments = {
-  _id: string;
-  patientName: string;
-  address: string;
-  mobile: number;
-  date: string;
-  department: string;
-  doctor: string;
-  message: string;
-  status: string;
-};
-
 
 export type TViewAppointmentModal = {
   viewDetailsModalOpen: boolean;

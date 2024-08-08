@@ -1,9 +1,9 @@
 import { TQueryParam } from "../../../types/global.type";
 import { baseApi } from "../../api/baseApi";
 
-const appointmentApi = baseApi.injectEndpoints({
+const diagnosticMachineApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllAppointment: builder.query({
+    getAllDiagnosticMachine: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
 
@@ -12,53 +12,52 @@ const appointmentApi = baseApi.injectEndpoints({
             params?.append(item.name, item.value as string);
           });
         }
-
         return {
-          url: "/appointment",
+          url: "/diagnostic-machine",
           method: "GET",
           params,
         };
       },
-      providesTags: ["appointment"],
+      providesTags: ["diagnosticMachine"],
     }),
 
-    addAppointment: builder.mutation({
+    addDiagnosticMachine: builder.mutation({
       query: (data) => {
         return {
-          url: "/appointment",
+          url: "/diagnostic-machine",
           method: "POST",
           body: data,
         };
       },
-      invalidatesTags: ["appointment"],
+      invalidatesTags: ["diagnosticMachine"],
     }),
 
-    deleteAppointment: builder.mutation({
+    deleteDiagnosticMachine: builder.mutation({
       query: (id) => {
         return {
-          url: `/appointment/${id}`,
+          url: `/diagnostic-machine/${id}`,
           method: "DELETE",
         };
       },
-      invalidatesTags: ["appointment"],
+      invalidatesTags: ["diagnosticMachine"],
     }),
 
-    updateAppointment: builder.mutation({
+    updateDiagnosticMachine: builder.mutation({
       query: (args) => {
         return {
-          url: `/appointment/${args?.id}`,
+          url: `/diagnostic-machine/${args?.id}`,
           method: "PATCH",
           body: args?.data,
         };
       },
-      invalidatesTags: ["appointment"],
+      invalidatesTags: ["diagnosticMachine"],
     }),
   }),
 });
 
 export const {
-  useAddAppointmentMutation,
-  useDeleteAppointmentMutation,
-  useGetAllAppointmentQuery,
-  useUpdateAppointmentMutation,
-} = appointmentApi;
+  useAddDiagnosticMachineMutation,
+  useDeleteDiagnosticMachineMutation,
+  useGetAllDiagnosticMachineQuery,
+  useUpdateDiagnosticMachineMutation,
+} = diagnosticMachineApi;

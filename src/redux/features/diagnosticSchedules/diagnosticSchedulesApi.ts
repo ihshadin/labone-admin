@@ -1,9 +1,9 @@
 import { TQueryParam } from "../../../types/global.type";
 import { baseApi } from "../../api/baseApi";
 
-const appointmentApi = baseApi.injectEndpoints({
+const diagnosticScheduleApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllAppointment: builder.query({
+    getAllDiagnosticSchedule: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
 
@@ -14,51 +14,51 @@ const appointmentApi = baseApi.injectEndpoints({
         }
 
         return {
-          url: "/appointment",
+          url: "/diagnostic-schedule",
           method: "GET",
           params,
         };
       },
-      providesTags: ["appointment"],
+      providesTags: ["diagnosticSchedule"],
     }),
 
-    addAppointment: builder.mutation({
+    addDiagnosticSchedule: builder.mutation({
       query: (data) => {
         return {
-          url: "/appointment",
+          url: "/diagnostic-schedule",
           method: "POST",
           body: data,
         };
       },
-      invalidatesTags: ["appointment"],
+      invalidatesTags: ["diagnosticSchedule"],
     }),
 
-    deleteAppointment: builder.mutation({
+    deleteDiagnosticSchedule: builder.mutation({
       query: (id) => {
         return {
-          url: `/appointment/${id}`,
+          url: `/diagnostic-schedule/${id}`,
           method: "DELETE",
         };
       },
-      invalidatesTags: ["appointment"],
+      invalidatesTags: ["diagnosticSchedule"],
     }),
 
-    updateAppointment: builder.mutation({
+    updateDiagnosticSchedule: builder.mutation({
       query: (args) => {
         return {
-          url: `/appointment/${args?.id}`,
+          url: `/diagnostic-schedule/${args?.id}`,
           method: "PATCH",
           body: args?.data,
         };
       },
-      invalidatesTags: ["appointment"],
+      invalidatesTags: ["diagnosticSchedule"],
     }),
   }),
 });
 
 export const {
-  useAddAppointmentMutation,
-  useDeleteAppointmentMutation,
-  useGetAllAppointmentQuery,
-  useUpdateAppointmentMutation,
-} = appointmentApi;
+  useAddDiagnosticScheduleMutation,
+  useDeleteDiagnosticScheduleMutation,
+  useGetAllDiagnosticScheduleQuery,
+  useUpdateDiagnosticScheduleMutation,
+} = diagnosticScheduleApi;

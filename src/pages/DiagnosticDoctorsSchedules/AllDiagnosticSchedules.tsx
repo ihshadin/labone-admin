@@ -1,10 +1,8 @@
-
-
 import { Link } from "react-router-dom";
 import { LuCornerRightDown } from "react-icons/lu";
-import PendingAppointmentsList from "../../components/Appointments/PendingAppointmentsList";
+import DiagnosticSchedulesList from "../../components/DiagnosticDoctorsSchedules/DiagnosticSchedulesList";
 
-const PendingAppointments = () => {
+const AllDiagnosticSchedules = () => {
   return (
     <>
       <section className="flex items-center justify-between">
@@ -13,23 +11,22 @@ const PendingAppointments = () => {
             Lab One
           </Link>
           <span>/</span>
-          <span>Pending Appointments</span>
+          <span>All Diagnostic Doctor's Schedules</span>
         </div>
         <Link
-          to="/all-appointments"
+          to="/add-diagnostic-doctor-schedules"
           className="flex items-center gap-2 bg-primary hover:bg-accent text-white hover:text-white px-4 py-2.5 rounded-lg transition duration-150"
-          title="Add Doctor"
+          title="Add Diagnostic Schedule"
         >
-          <span>All Appointments</span>
+          <span>Add Diagnostic Schedule</span>
           <LuCornerRightDown />
         </Link>
       </section>
-      <section className="bg-white/40 bg-blend-color-burn border p-5 my-5 rounded-xl w-full ">
-        <PendingAppointmentsList />
+      <section className="bg-white/40 bg-blend-color-burn border p-5 my-5 rounded-xl w-full">
+        <DiagnosticSchedulesList />
       </section>
     </>
   );
 };
 
-export default PendingAppointments;
-
+export default AllDiagnosticSchedules;

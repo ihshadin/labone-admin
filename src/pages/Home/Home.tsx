@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import HeroSection from "../../components/Home/HeroSection";
 import DataContainer from "../../components/Home/DataContainer";
 import ChartOne from "../../components/Home/Charts/ChartOne";
 import ChartTwo from "../../components/Home/Charts/ChartTwo";
@@ -7,7 +6,6 @@ import RecentAppointments from "../../components/Home/RecentAppointments";
 import { LuCornerRightUp } from "react-icons/lu";
 import LiveSchedule from "../../components/Home/LiveSchedule";
 import LiveTimer from "../../components/Home/LiveTimer";
-import { IoCalendarOutline } from "react-icons/io5";
 
 const Home = () => {
   return (
