@@ -4,14 +4,7 @@ import { TDoctor } from "./doctor.type";
 export type TSchedule = {
   _id: string;
   doctorID?: TDoctor;
-  scheduleDay:
-    | "Monday"
-    | "Tuesday"
-    | "Wednesday"
-    | "Thursday"
-    | "Friday"
-    | "Saturday"
-    | "Sunday";
+  scheduleDay: string;
   startTime: string;
   endTime: string;
 };
