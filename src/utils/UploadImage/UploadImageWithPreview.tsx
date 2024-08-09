@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   GetProp,
@@ -15,7 +15,6 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import staticDefault from "../../assets/image/preview.jpg";
 import "../../styles/uploadImage.css";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const UploadImageWithPreview = ({
   setFile,
   defaultImage,
@@ -24,27 +23,46 @@ const UploadImageWithPreview = ({
 }: TUploadImage) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+  useEffect(() => {
+    if (defaultImage) {
+      setFileList([
+        {
+          uid: "2",
+          name: "Labone.png",
+          status: "done",
+          url: defaultImage,
+        },
+      ]);
+    } else {
+      setFileList([
+        {
+          uid: "2",
+          name: "Labone.png",
+          status: "done",
+          url: staticDefault,
+        },
+      ]);
+    }
+  }, [defaultImage]);
 
   const props: UploadProps = {
     name: "file",
+    fileList,
     onChange(info) {
-      if (info.file.status !== "uploading") {
-        //   console.log(info.file, info.fileList);
-      }
+      setFileList(info.fileList);
+      setFile(info.fileList);
+
       if (info.file.status === "done") {
         message.success(`${info.file.name} file uploaded successfully`);
       } else if (info.file.status === "error") {
         message.error(`${info.file.name} file upload failed.`);
       }
     },
-    defaultFileList: [
-      {
-        uid: "2",
-        name: "Store-Image.png",
-        status: "done",
-        url: defaultImage ? defaultImage : staticDefault,
-      },
-    ],
+    onRemove: () => {
+      setFileList([]);
+    },
   };
 
   const getBase64 = (file: FileType): Promise<string> =>
@@ -63,10 +81,6 @@ const UploadImageWithPreview = ({
     setPreviewOpen(true);
   };
 
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
-    setFile(newFileList);
-  };
-
   return (
     <>
       <div className="flex items-center gap-5 upload-image-circle">
@@ -75,7 +89,6 @@ const UploadImageWithPreview = ({
             {...props}
             listType="picture-card"
             onPreview={handlePreview}
-            onChange={handleChange}
             maxCount={1}
             className={ratioName ? ratioName : "defaultRation"}
           >

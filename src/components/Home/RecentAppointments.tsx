@@ -1,10 +1,11 @@
 import { Table, TableColumnsType } from "antd";
 import { TAppointment } from "../../types/appointment.type";
 import { useGetRecentAppointmentDataQuery } from "../../redux/features/meta/metaApi";
+import { TDoctor } from "../../types/doctor.type";
 
 const RecentAppointments = () => {
   const { data } = useGetRecentAppointmentDataQuery(undefined);
-
+  console.log("Recent Appointments", data);
   const columns: TableColumnsType<TAppointment> = [
     {
       title: "Patient Name",
@@ -32,7 +33,10 @@ const RecentAppointments = () => {
     },
     {
       title: "Doctor",
-      dataIndex: "doctor",
+      dataIndex: "doctorID",
+      render: (record: TDoctor) => {
+        return <span>{record.firstName + " " + record.lastName}</span>;
+      },
     },
     {
       title: "Status",
