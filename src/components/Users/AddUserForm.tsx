@@ -39,6 +39,7 @@ const AddUserForm = () => {
       } else {
         toast.error("Something want wrong!", { id: toastId });
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error("Something want wrong!", { id: toastId });
     } finally {
@@ -126,7 +127,11 @@ const AddUserForm = () => {
               <Col span={24}>
                 <p className="font-medium mb-1.5">User Image</p>
 
-                <UploadImageWithPreview setFile={setFile} />
+                <UploadImageWithPreview
+                  setFile={setFile}
+                  aspectRatio={1 / 1}
+                  ratioName="oneOne"
+                />
               </Col>
             </Row>
 
