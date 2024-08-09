@@ -54,7 +54,7 @@ const UpdateDepartment = ({
       setIsLoading(false);
     }
   };
-
+  // console.log("default image department", depImage);
   useEffect(() => {
     form.resetFields();
     form.setFieldsValue(departmentData);
