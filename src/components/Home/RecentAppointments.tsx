@@ -35,7 +35,7 @@ const RecentAppointments = () => {
       title: "Doctor",
       dataIndex: "doctorID",
       render: (record: TDoctor) => {
-        return <span>{record.firstName + " " + record.lastName}</span>;
+        return <span>{record?.firstName + " " + record?.lastName}</span>;
       },
     },
     {
