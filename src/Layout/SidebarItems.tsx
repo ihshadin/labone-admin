@@ -1,7 +1,7 @@
-
 import { BiSolidDashboard, BiUserPlus } from "react-icons/bi";
 
 import { FaUserDoctor } from "react-icons/fa6";
+import { GiVerticalBanner } from "react-icons/gi";
 import { GrVirtualMachine, GrVmMaintenance } from "react-icons/gr";
 import {
   LuCalendarClock,
@@ -132,13 +132,13 @@ export const sidebarItems = [
     ],
   },
   {
+    key: 10,
+    icon: <GiVerticalBanner />,
+    label: <Link to={"/banners&notice"}>Banners & Notices</Link>,
+  },
+  {
     key: 9,
     icon: <LuSettings />,
     label: <Link to={"/settings"}>Settings</Link>,
   },
-  // {
-  //   key: 9,
-  //   icon: <LuStopCircle />,
-  //   label: <Link to={"/forget-password"}>Forget Password</Link>,
-  // },
 ];
