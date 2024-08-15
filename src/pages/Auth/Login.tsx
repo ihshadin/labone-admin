@@ -78,7 +78,7 @@ const Login = () => {
                   <Form.Item
                     label="Enter your email"
                     name="email"
-                    initialValue={"jahidmorol2@gmail.com"}
+                    // initialValue={"jahidmorol2@gmail.com"}
                     tooltip="Here you have to input  your email."
                     rules={[{ required: true, message: "Email is required" }]}
                   >
@@ -93,7 +93,7 @@ const Login = () => {
                   <Form.Item
                     label="Your Password"
                     name="password"
-                    initialValue={"Jahid00@22"}
+                    // initialValue={"Jahid00@11"}
                     tooltip="Here you have to input your Password."
                     rules={[
                       { required: true, message: "Password is Required!" },
