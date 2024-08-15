@@ -66,14 +66,14 @@ const BannerSection = () => {
                   <Form.Item
                     label="Banner Title"
                     name="title"
-                    tooltip="Here you have to input Banner Title"
+                    tooltip='Write in double quotation ("text") for in highlight title'
                     rules={[
                       { required: true, message: "Banner Title is required" },
                     ]}
                   >
                     <Input
                       type="text"
-                      placeholder="Write here..."
+                      placeholder="Write in quote for in highlight title"
                       className="h-10 border border-[#C4CAD4] !rounded-lg"
                     />
                   </Form.Item>
@@ -95,23 +95,6 @@ const BannerSection = () => {
                   </Form.Item>
                 </Col>
               </Row>
-
-              {/* <Row gutter={16}>
-              <Col span={24}>
-                <Form.Item
-                  label="Department Details"
-                  name="details"
-                  tooltip="Describe about the Department."
-                  rules={[{ required: true, message: "Details is required" }]}
-                >
-                  <Input.TextArea
-                    placeholder="Write here..."
-                    className="border border-[#C4CAD4] !rounded-lg"
-                    rows={4}
-                  />
-                </Form.Item>
-              </Col>
-            </Row> */}
 
               <Row gutter={16}>
                 <Col span={7}>
