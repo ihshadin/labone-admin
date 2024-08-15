@@ -25,10 +25,9 @@ const MainLayout = () => {
             top: "0",
             left: "0",
             overflow: "auto",
-            scrollbarWidth: "revert"
+            scrollbarWidth: "revert",
           }}
           className="customScroll"
-          
           width={250}
 
           // collapsible
@@ -78,7 +77,13 @@ const MainLayout = () => {
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
-            Labone Hospital ©{new Date().getFullYear()} Created by WebSyner
+            Labone Hospital ©{new Date().getFullYear()} Created by{" "}
+            <Link
+              to={"https://www.linkedin.com/company/websyner/"}
+              target="_blank"
+            >
+              WebSyner
+            </Link>
           </Footer>
         </Layout>
       </Layout>

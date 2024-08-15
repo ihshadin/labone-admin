@@ -14,8 +14,8 @@ import {
 } from "../../utils/localStorageAuthManagemet";
 
 const baseQuery = fetchBaseQuery({
-  // baseUrl: "http://localhost:5000/api/v1",
-  baseUrl: "https://labone-backend.vercel.app/api/v1",
+  baseUrl: "http://localhost:5000/api/v1",
+  // baseUrl: "https://labone-backend-pied.vercel.app/api/v1",
   credentials: "include",
   prepareHeaders: (headers) => {
     const token = getUserInfo();
@@ -44,10 +44,14 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   }
 
   if (result?.error?.status === 401) {
-    const res = await fetch("http://localhost:5000/api/v1/auth/refresh-token", {
-      method: "POST",
-      credentials: "include",
-    });
+    const res = await fetch(
+      "http://localhost:5000/api/v1/auth/refresh-token",
+      // "https://labone-backend-pied.vercel.app/api/v1/auth/refresh-token",
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
     const data = await res.json();
 
     if (data?.data?.accessToken) {
@@ -76,6 +80,7 @@ export const baseApi = createApi({
     "diagnosticDoctor",
     "diagnosticMachine",
     "diagnosticSchedule",
+    "notice",
   ],
   refetchOnMountOrArgChange: 30,
   endpoints: () => ({}),
