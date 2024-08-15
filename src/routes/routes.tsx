@@ -24,6 +24,7 @@ import AllDiagnosticSchedules from "../pages/DiagnosticDoctorsSchedules/AllDiagn
 import AddDiagnosticDoctorSchedules from "../pages/DiagnosticDoctorsSchedules/AddDiagnosticDoctorSchedules";
 import ProtectedRoute from "../Layout/ProtectedRoute";
 import AddUser from "../pages/Users/AddUser";
+import BannersNotices from "../pages/Banners&notice/Banners&notice";
 
 const router = createBrowserRouter([
   {
@@ -108,7 +109,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/add-user",
-        element: <AddUser/>,
+        element: <AddUser />,
+      },
+      {
+        path: "/banners&notice",
+        element: <BannersNotices />,
       },
       {
         path: "*",

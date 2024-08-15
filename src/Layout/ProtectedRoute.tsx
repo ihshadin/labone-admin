@@ -5,7 +5,7 @@ import { JwtPayload, verifyToken } from "../utils/verifyToken";
 
 type TProtectedRoute = {
   children: ReactNode;
-  admin?: boolean; 
+  admin?: boolean;
 };
 
 const ProtectedRoute = ({ children }: TProtectedRoute) => {
@@ -17,7 +17,7 @@ const ProtectedRoute = ({ children }: TProtectedRoute) => {
     user = verifyToken(token);
   }
 
-  if (user?.role !== "admin") {
+  if (user?.role !== "admin" && user?.role !== "superAdmin") {
     return <Navigate to="/login" replace={true} />;
   }
 
