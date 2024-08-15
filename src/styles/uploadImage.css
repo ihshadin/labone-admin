@@ -13,11 +13,11 @@
 .ant-upload-wrapper.rightSide .ant-upload-list-item-container {
   width: 515px !important;
   max-width: 100% !important;
-  height: 400px !important;
+  height: 300px !important;
 }
 .ant-upload-wrapper.bannerBg .ant-upload-list-item-container {
   width: 100% !important;
-  height: 400px !important;
+  height: 300px !important;
 }
 .ant-upload-wrapper .ant-upload-list.ant-upload-list-picture-circle {
   align-items: center !important;
