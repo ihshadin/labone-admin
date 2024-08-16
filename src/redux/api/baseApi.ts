@@ -14,13 +14,8 @@ import {
 } from "../../utils/localStorageAuthManagemet";
 
 const baseQuery = fetchBaseQuery({
-<<<<<<< HEAD
-  // baseUrl: "http://localhost:5000/api/v1",
-  baseUrl: "https://labone-backend.vercel.app/api/v1",
-=======
   baseUrl: "http://localhost:5000/api/v1",
   // baseUrl: "https://labone-backend-pied.vercel.app/api/v1",
->>>>>>> c9b8041ad558060843e6e42f7cbf8d86fe6b34ad
   credentials: "include",
   prepareHeaders: (headers) => {
     const token = getUserInfo();
@@ -40,7 +35,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 404) {
-    const errorData = result?.error?.data as { message?: string }; // Define type with optional message property
+    const errorData = result?.error?.data as { message?: string };
     if (errorData && errorData.message) {
       alert(errorData.message);
     } else {
