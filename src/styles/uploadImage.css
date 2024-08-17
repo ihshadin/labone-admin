@@ -45,3 +45,13 @@
 .ant-upload-wrapper button.ant-upload-list-item-action:hover {
   background-color: transparent !important;
 }
+.upload-image-circle {
+  background-color: transparent;
+}
+.upload-image-circle .ant-upload-list-item {
+  background-color: transparent !important;
+}
+
+.ant-upload-list-item img {
+  background-color: transparent !important;
+}
