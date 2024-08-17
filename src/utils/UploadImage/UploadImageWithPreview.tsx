@@ -54,6 +54,8 @@ const UploadImageWithPreview = ({
       setFileList(info.fileList);
       setFile(info.fileList);
 
+      console.log(info);
+
       if (info.file.status === "done") {
         message.success(`${info.file.name} file uploaded successfully`);
       } else if (info.file.status === "error") {
@@ -84,7 +86,11 @@ const UploadImageWithPreview = ({
   return (
     <>
       <div className="flex items-center gap-5 upload-image-circle">
-        <ImgCrop rotationSlider aspect={aspectRatio ? aspectRatio : 25 / 32}>
+        <ImgCrop
+          rotationSlider
+          fillColor="auto"
+          aspect={aspectRatio ? aspectRatio : 25 / 32}
+        >
           <Upload
             {...props}
             listType="picture-card"
