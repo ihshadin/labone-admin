@@ -35,7 +35,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 404) {
-    const errorData = result?.error?.data as { message?: string }; // Define type with optional message property
+    const errorData = result?.error?.data as { message?: string };
     if (errorData && errorData.message) {
       alert(errorData.message);
     } else {
