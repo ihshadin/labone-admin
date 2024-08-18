@@ -8,6 +8,7 @@ import { useGetAllDoctorsQuery } from "../../redux/features/doctor/doctorApi";
 import { Days } from "./Schedules.constant";
 import { TDoctor } from "./DoctorSchedulesRegForm";
 import { useUpdateScheduleMutation } from "../../redux/features/schedules/schedulesApi";
+import { useEffect } from "react";
 
 const UpdateSchedule = ({
   updateModalOpen,
@@ -18,6 +19,13 @@ const UpdateSchedule = ({
 
   const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(undefined);
   const [updateSchedule] = useUpdateScheduleMutation();
+
+  const initialValue = {
+    doctorID: scheduleData?.doctorID?._id,
+    scheduleDay: scheduleData?.scheduleDay,
+    // startTime: scheduleData?.startTime,
+    // endTime: scheduleData?.endTime,
+  };
 
   const onSubmit = async (data: TSchedule) => {
     const toastId = toast.loading("Updating Schedule info...");
@@ -51,6 +59,11 @@ const UpdateSchedule = ({
     }
   };
 
+  useEffect(() => {
+    form.resetFields();
+    form.setFieldsValue(initialValue);
+  }, [scheduleData]);
+
   const allDoctors = data?.data?.result?.map((doctor: TDoctor) => ({
     value: doctor?._id,
     label: `${doctor?.firstName} ${doctor?.lastName}`,
@@ -79,6 +92,7 @@ const UpdateSchedule = ({
         onFinish={onSubmit}
         requiredMark={false}
         layout="vertical"
+        initialValues={initialValue}
       >
         <Row gutter={16}>
           <Col span={24} md={{ span: 12 }} lg={{ span: 12 }}>
