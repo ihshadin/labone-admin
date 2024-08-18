@@ -65,29 +65,6 @@ const UpdateDoctor = ({
     }
   };
 
-  // const interestOptions = [
-  //   { value: "Travel", label: "Travel" },
-  //   { value: "Food and Cooking", label: "Food and Cooking" },
-  //   { value: "Fitness and Health", label: "Fitness and Health" },
-  //   { value: "Music", label: "Music" },
-  //   { value: "Art and Design", label: "Art and Design" },
-  //   { value: "Reading", label: "Reading" },
-  //   { value: "Technology", label: "Technology" },
-  //   { value: "Sports", label: "Sports" },
-  //   { value: "Gardening", label: "Gardening" },
-  //   { value: "Movies and TV Shows", label: "Movies and TV Shows" },
-  //   { value: "Photography", label: "Photography" },
-  //   { value: "Writing", label: "Writing" },
-  //   { value: "Gaming", label: "Gaming" },
-  //   { value: "Fashion", label: "Fashion" },
-  //   { value: "DIY Projects", label: "DIY Projects" },
-  //   { value: "Learning Languages", label: "Learning Languages" },
-  //   { value: "Social Media", label: "Social Media" },
-  //   { value: "Volunteering", label: "Volunteering" },
-  //   { value: "Pets", label: "Pets" },
-  //   { value: "Outdoors", label: "Outdoors" },
-  // ];
-
   useEffect(() => {
     form.resetFields();
     form.setFieldsValue(doctorData);
