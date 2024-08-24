@@ -127,7 +127,7 @@ const router = createBrowserRouter([
         element: <BannersNotices />,
       },
       {
-        path: "/add-lab-photo",
+        path: "/add-about-us-photo",
         element: <AboutUs />,
       },
       {

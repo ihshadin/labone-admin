@@ -153,7 +153,7 @@ export const sidebarItems = [
       {
         key: 701,
         icon: <BiUserPlus />,
-        label: <Link to={"/add-lab-photo"}>Add Lab Photo</Link>,
+        label: <Link to={"/add-about-us-photo"}>Add AboutUs Photo</Link>,
       },
     ],
   },
