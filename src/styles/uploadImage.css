@@ -15,6 +15,11 @@
   max-width: 100% !important;
   height: 300px !important;
 }
+.ant-upload-wrapper.sixteenNine .ant-upload-list-item-container {
+  width: 250px !important;
+  max-width: 100% !important;
+  height: 140px !important;
+}
 .ant-upload-wrapper.bannerBg .ant-upload-list-item-container {
   width: 100% !important;
   height: 300px !important;

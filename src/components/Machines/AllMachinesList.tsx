@@ -98,6 +98,7 @@ const AllMachinesList = () => {
       title: "Details",
       dataIndex: "details",
       key: "details",
+      width: 1400,
     },
     {
       title: "Action",
