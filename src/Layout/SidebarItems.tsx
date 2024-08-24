@@ -10,6 +10,7 @@ import {
   LuSettings,
   LuUserCircle2,
 } from "react-icons/lu";
+import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 export const sidebarItems = [
@@ -85,7 +86,9 @@ export const sidebarItems = [
   },
   {
     key: 10,
-    label: <p className="text-lg font-semibold border-t-2"> Diagnostics</p>,
+    label: (
+      <p className="text-lg font-semibold border-t-2 pt-1"> Diagnostics</p>
+    ),
   },
   {
     key: 7,
@@ -128,6 +131,22 @@ export const sidebarItems = [
             Di. Add Doctor's Schedules
           </Link>
         ),
+      },
+    ],
+  },
+  {
+    key: 10,
+    label: <p className="text-lg font-semibold border-t-2 pt-1">Other</p>,
+  },
+  {
+    key: 7888,
+    icon: <MdOutlineAddPhotoAlternate />,
+    label: <p>Add Photos</p>,
+    children: [
+      {
+        key: 701,
+        icon: <BiUserPlus />,
+        label: <Link to={"/add-lab-photo"}>Add Lab Photo</Link>,
       },
     ],
   },
