@@ -3,6 +3,7 @@ import { BiSolidDashboard, BiUserPlus } from "react-icons/bi";
 import { FaUserDoctor } from "react-icons/fa6";
 import { GiVerticalBanner } from "react-icons/gi";
 import { GrVirtualMachine, GrVmMaintenance } from "react-icons/gr";
+import { IoMdPhotos } from "react-icons/io";
 import {
   LuCalendarClock,
   LuGitBranch,
@@ -11,6 +12,7 @@ import {
   LuUserCircle2,
 } from "react-icons/lu";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import { MdAddPhotoAlternate } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 export const sidebarItems = [
@@ -18,6 +20,11 @@ export const sidebarItems = [
     key: 1,
     icon: <BiSolidDashboard />,
     label: <Link to={"/"}>Dashboard</Link>,
+  },
+  {
+    key: 10,
+    icon: <GiVerticalBanner />,
+    label: <Link to={"/banners&notice"}>Banners & Notices</Link>,
   },
   {
     key: 2,
@@ -57,12 +64,12 @@ export const sidebarItems = [
   },
   {
     key: 7898,
-    icon: <FaUserDoctor />,
+    icon: <IoMdPhotos />,
     label: <Link to={"/all-gallery"}>All Gallery</Link>,
     children: [
       {
         key: 7878,
-        icon: <BiUserPlus />,
+        icon: <MdAddPhotoAlternate />,
         label: <Link to={"/add-gallery"}>Add Gallery</Link>,
       },
     ],
@@ -162,11 +169,7 @@ export const sidebarItems = [
       },
     ],
   },
-  {
-    key: 10,
-    icon: <GiVerticalBanner />,
-    label: <Link to={"/banners&notice"}>Banners & Notices</Link>,
-  },
+
   {
     key: 9,
     icon: <LuSettings />,
