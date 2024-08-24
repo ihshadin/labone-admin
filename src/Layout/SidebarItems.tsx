@@ -55,6 +55,18 @@ export const sidebarItems = [
     ],
   },
   {
+    key: 7898,
+    icon: <FaUserDoctor />,
+    label: <Link to={"/all-gallery"}>All Gallery</Link>,
+    children: [
+      {
+        key: 7878,
+        icon: <BiUserPlus />,
+        label: <Link to={"/add-gallery"}>Add Gallery</Link>,
+      },
+    ],
+  },
+  {
     key: 5,
     icon: <FaUserDoctor />,
     label: <Link to={"/all-doctors-schedules"}>All Doctor's Schedules</Link>,

@@ -73,6 +73,7 @@ export const baseApi = createApi({
     "meta",
     "user",
     "doctor",
+    "gallery",
     "machine",
     "department",
     "appointment",

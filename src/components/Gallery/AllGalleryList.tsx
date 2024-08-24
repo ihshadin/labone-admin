@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import {
   Button,
   Divider,
+  Image,
   Input,
   Popconfirm,
   Table,
@@ -9,65 +11,58 @@ import {
 } from "antd";
 import { AiFillDelete } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
-import { IoSearchOutline } from "react-icons/io5";
-import { TSchedule } from "../../types/schedule.type";
+import { TGallery } from "../../types/gallery.type";
+import UpdateGallery from "./UpdateGallery";
 import LabonePagination from "../../utils/Pagination/pagination";
-import UpdateSchedule from "./UpdateSchedule";
-import { TQueryParam } from "../../types/global.type";
+import { IoSearchOutline } from "react-icons/io5";
 import {
-  useDeleteScheduleMutation,
-  useGetAllScheduleQuery,
-} from "../../redux/features/schedules/schedulesApi";
+  useDeleteGalleryMutation,
+  useGetAllGalleryQuery,
+} from "../../redux/features/gallery/galleryApi";
+import { TQueryParam } from "../../types/global.type";
 import { toast } from "sonner";
-import { formatTime } from "./Schedules.constant";
 
-const SchedulesList = () => {
+const AllGalleryList = () => {
   const [params, setParams] = useState<TQueryParam[]>([
     { name: "limit", value: 10 },
   ]);
 
-  const { data, isLoading: isDataLoading } = useGetAllScheduleQuery(params);
-  const [deleteSchedule] = useDeleteScheduleMutation();
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
+  const [galleryData, setGalleryData] = useState<TGallery>({} as TGallery);
 
-  const departmentColumns: TableColumnsType<TSchedule> = [
+  const { data, isLoading: isDataLoading } = useGetAllGalleryQuery(params);
+  const [deleteGallery] = useDeleteGalleryMutation();
+
+  const GalleryColumns: TableColumnsType<TGallery> = [
     {
-      title: "Doctor Name",
-      key: "doctorName",
-      width: 350,
-      render: (record: TSchedule) => (
-        <p>
-          {record?.doctorID?.firstName} {record?.doctorID?.lastName}
-        </p>
+      title: "Photo",
+      dataIndex: "photo",
+      key: "photo",
+      width: 300,
+      render: (photo: string) => (
+        <Image
+          className="!w-12 !h-12 object-cover rounded-xl"
+          src={photo}
+          alt="LabOne Photo Gallery"
+        />
       ),
     },
     {
-      title: "Doctor Specialty",
-      key: "doctorSpecialty",
-      width: 270,
-      render: (record) => <p>{record?.doctorID?.specialization}</p>,
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
     },
     {
-      title: "Schedule Day",
-      key: "scheduleDay",
-      width: 150,
-      render: (record: TSchedule) => (
-        <p className="capitalize">{record?.scheduleDay}</p>
-      ),
-    },
-    {
-      title: "Schedule Time",
-      key: "scheduleTime",
-      render: (record: TSchedule) => (
-        <p>
-          {formatTime(record?.startTime)} - {formatTime(record?.endTime)}
-        </p>
-      ),
-      width: 280,
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+      // width: 50,
     },
     {
       title: "Action",
+      dataIndex: "action",
       key: "action",
-      width: 130,
+      width: 100,
       align: "center",
       fixed: "right",
       render: (_, record) => (
@@ -75,9 +70,12 @@ const SchedulesList = () => {
           <Button onClick={() => handleUpdateData(record)}>
             <FiEdit2 fontSize={16} />
           </Button>
+          {/* <Button onClick={() => handleDelete(record._id)}>
+            <AiFillDelete fontSize={16} />
+          </Button> */}
           <Popconfirm
-            title="Delete the Department"
-            description="Are you sure to delete this Department?"
+            title="Delete the gallery"
+            description="Are you sure to delete this gallery?"
             placement="topRight"
             onConfirm={() => handleDelete(record._id)}
             okText="Yes"
@@ -92,21 +90,14 @@ const SchedulesList = () => {
     },
   ];
 
-  const [updateModalOpen, setUpdateModalOpen] = useState(false);
-  const [scheduleData, setScheduleData] = useState<TSchedule>({} as TSchedule);
-
-  const handleUpdateData = (schedule: TSchedule) => {
+  const handleUpdateData = (gallery: TGallery) => {
     setUpdateModalOpen(true);
-    setScheduleData(schedule);
+    setGalleryData(gallery);
   };
 
   const handleDelete = async (id: string) => {
-    const res = await deleteSchedule(id).unwrap();
-    if (res?.success) {
-      toast.success("Schedule Delete Successful");
-    } else {
-      toast.error("Something want wrong!");
-    }
+    await deleteGallery(id);
+    toast.success("gallery Delete Successful");
   };
 
   const handlePaginationChange = (page: number) => {
@@ -139,8 +130,9 @@ const SchedulesList = () => {
     <>
       <div className="flex items-center gap-5 md:gap-16 mb-5 md:mb-8">
         <div className="grow">
+          {/* <h2 className="text-primary text-xl font-semibold">gallery list</h2> */}
           <Divider orientation="left" className="!my-0 !text-xl !text-primary">
-            Doctor's Schedules List
+            All Gallery list
           </Divider>
         </div>
         <div className="w-[250px]">
@@ -159,23 +151,23 @@ const SchedulesList = () => {
         </div>
       </div>
       <Table
-        columns={departmentColumns}
+        columns={GalleryColumns}
         dataSource={result}
-        scroll={{ x: 900 }}
-        pagination={false}
+        // scroll={{ x: 1900 }}
         loading={isDataLoading}
+        pagination={false}
       />
       <LabonePagination
         meta={meta}
         handlePaginationChange={handlePaginationChange}
       />
-      <UpdateSchedule
+      <UpdateGallery
         updateModalOpen={updateModalOpen}
         setUpdateModalOpen={setUpdateModalOpen}
-        scheduleData={scheduleData}
+        galleryData={galleryData}
       />
     </>
   );
 };
 
-export default SchedulesList;
+export default AllGalleryList;
