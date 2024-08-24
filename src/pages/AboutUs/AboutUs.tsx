@@ -97,7 +97,7 @@ const AboutUs = () => {
         </div>
       </section>
       <section className="mt-5">
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           {photosTabs.map((tabItem) => (
             <button
               key={tabItem?.key}
