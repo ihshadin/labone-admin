@@ -34,6 +34,16 @@ const photosApi = baseApi.injectEndpoints({
       },
       providesTags: ["photos"],
     }),
+
+    getSinglePhotos: builder.query({
+      query: (id: string) => {
+        return {
+          url: `/about-us/${id}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["photos"],
+    }),
   }),
 });
 
@@ -41,4 +51,5 @@ export const {
   useAddPhotosMutation,
   useRemovePhotosMutation,
   useGetAllPhotosQuery,
+  useGetSinglePhotosQuery,
 } = photosApi;

@@ -27,7 +27,7 @@ import AddUser from "../pages/Users/AddUser";
 import BannersNotices from "../pages/Banners&notice/Banners&notice";
 import AllGallery from "../pages/Gallery/AllGallery";
 import AddGallery from "../pages/Gallery/AddGallery";
-import AddLabPhotos from "../components/Photos/AddLabPhotos";
+import AboutUs from "../pages/AboutUs/AboutUs";
 
 const router = createBrowserRouter([
   {
@@ -128,7 +128,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/add-lab-photo",
-        element: <AddLabPhotos />,
+        element: <AboutUs />,
       },
       {
         path: "*",
