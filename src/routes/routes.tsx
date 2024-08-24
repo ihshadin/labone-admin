@@ -25,6 +25,8 @@ import AddDiagnosticDoctorSchedules from "../pages/DiagnosticDoctorsSchedules/Ad
 import ProtectedRoute from "../Layout/ProtectedRoute";
 import AddUser from "../pages/Users/AddUser";
 import BannersNotices from "../pages/Banners&notice/Banners&notice";
+import AllGallery from "../pages/Gallery/AllGallery";
+import AddGallery from "../pages/Gallery/AddGallery";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +80,14 @@ const router = createBrowserRouter([
       {
         path: "/add-department",
         element: <AddDepartment />,
+      },
+      {
+        path: "/all-gallery",
+        element: <AllGallery />,
+      },
+      {
+        path: "/add-gallery",
+        element: <AddGallery />,
       },
       {
         path: "/all-doctors-schedules",
