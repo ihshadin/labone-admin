@@ -1,5 +1,4 @@
 import { BiSolidDashboard, BiUserPlus } from "react-icons/bi";
-
 import { FaUserDoctor } from "react-icons/fa6";
 import { GiVerticalBanner } from "react-icons/gi";
 import { GrVirtualMachine, GrVmMaintenance } from "react-icons/gr";
@@ -25,6 +24,11 @@ export const sidebarItems = [
     key: 10,
     icon: <GiVerticalBanner />,
     label: <Link to={"/banners&notice"}>Banners & Notices</Link>,
+  },
+  {
+    key: 7888,
+    icon: <MdOutlineAddPhotoAlternate />,
+    label: <Link to={"/add-about-us-photo"}>Add About Us Photo</Link>,
   },
   {
     key: 2,
@@ -144,18 +148,6 @@ export const sidebarItems = [
   {
     key: 10,
     label: <p className="text-lg font-semibold border-t-2 pt-1">Other</p>,
-  },
-  {
-    key: 7888,
-    icon: <MdOutlineAddPhotoAlternate />,
-    label: <p>Add Photos</p>,
-    children: [
-      {
-        key: 701,
-        icon: <BiUserPlus />,
-        label: <Link to={"/add-about-us-photo"}>Add AboutUs Photo</Link>,
-      },
-    ],
   },
   {
     key: 45,
