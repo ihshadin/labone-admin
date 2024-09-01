@@ -28,6 +28,7 @@ import BannersNotices from "../pages/Banners&notice/Banners&notice";
 import AllGallery from "../pages/Gallery/AllGallery";
 import AddGallery from "../pages/Gallery/AddGallery";
 import AboutUs from "../pages/AboutUs/AboutUs";
+import Services from "../pages/Services/Services";
 
 const router = createBrowserRouter([
   {
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
       {
         path: "/add-department",
         element: <AddDepartment />,
+      },
+      {
+        path: "/all-services",
+        element: <Services />,
       },
       {
         path: "/all-gallery",

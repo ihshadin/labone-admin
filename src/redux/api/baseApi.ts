@@ -82,8 +82,9 @@ export const baseApi = createApi({
     "diagnosticMachine",
     "diagnosticSchedule",
     "notice",
+    "service",
     "banner",
-    "photos"
+    "photos",
   ],
   refetchOnMountOrArgChange: 30,
   endpoints: () => ({}),

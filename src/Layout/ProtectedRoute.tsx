@@ -13,15 +13,15 @@ const ProtectedRoute = ({ children }: TProtectedRoute) => {
 
   let user: JwtPayload | undefined;
 
+  if (!token) {
+    return <Navigate to="/login" replace={true} />;
+  }
+
   if (token !== null && typeof token === "string") {
     user = verifyToken(token);
   }
 
   if (user?.role !== "admin" && user?.role !== "superAdmin") {
-    return <Navigate to="/login" replace={true} />;
-  }
-
-  if (!token) {
     return <Navigate to="/login" replace={true} />;
   }
 
