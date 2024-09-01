@@ -15,7 +15,7 @@ import {
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:5000/api/v1",
-  // baseUrl: "https://labone-backend-pied.vercel.app/api/v1",
+  // baseUrl: "https://api.labonehospital.com/api/v1",
   credentials: "include",
   prepareHeaders: (headers) => {
     const token = getUserInfo();
@@ -46,7 +46,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   if (result?.error?.status === 401) {
     const res = await fetch(
       "http://localhost:5000/api/v1/auth/refresh-token",
-      // "https://labone-backend-pied.vercel.app/api/v1/auth/refresh-token",
+      // "https://api.labonehospital.com/api/v1/auth/refresh-token",
       {
         method: "POST",
         credentials: "include",
