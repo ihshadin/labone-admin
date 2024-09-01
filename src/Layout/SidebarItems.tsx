@@ -12,6 +12,7 @@ import {
 } from "react-icons/lu";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import { MdAddPhotoAlternate } from "react-icons/md";
+import { RiServiceLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 export const sidebarItems = [
@@ -66,6 +67,7 @@ export const sidebarItems = [
       },
     ],
   },
+
   {
     key: 7898,
     icon: <IoMdPhotos />,
@@ -89,6 +91,11 @@ export const sidebarItems = [
         label: <Link to={"/add-doctor-schedules"}>Add Doctor's Schedules</Link>,
       },
     ],
+  },
+  {
+    key: 204,
+    icon: <RiServiceLine />,
+    label: <Link to={"/all-services"}>All Services</Link>,
   },
   {
     key: 6,

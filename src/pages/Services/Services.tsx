@@ -2,30 +2,31 @@
 import { useState } from "react";
 import { FaXmark } from "react-icons/fa6";
 import TextArea from "antd/es/input/TextArea";
-import {
-  useAddNoticeMutation,
-  useDeleteNoticeMutation,
-  useGetAllNoticesQuery,
-} from "../../redux/features/notice/noticeApi";
-import { TNotice } from "../../types/notice.type";
+
 import { toast } from "sonner";
+import {
+  useAddServiceMutation,
+  useDeleteServiceMutation,
+  useGetAllServiceQuery,
+} from "../../redux/features/service/serviceApi";
+import { TService } from "../../types/service.type";
 import { Popconfirm } from "antd";
 
-const NoticeSection = () => {
-  const [newNotice, setNewNotice] = useState("");
+const Services = () => {
+  const [newService, setNewService] = useState("");
 
-  const { data } = useGetAllNoticesQuery(undefined);
-  const [removeNotice] = useDeleteNoticeMutation();
-  const [addNotice] = useAddNoticeMutation();
+  const { data } = useGetAllServiceQuery(undefined);
+  const [removeService] = useDeleteServiceMutation();
+  const [addService] = useAddServiceMutation();
 
-  // Handling adding a new notice
-  const handleAddNotice = async () => {
-    const toastId = toast.loading("Adding notice...");
+  // Handling adding a new Service
+  const handleAddService = async () => {
+    const toastId = toast.loading("Adding Service...");
     try {
-      const res = await addNotice({ noticeText: newNotice }).unwrap();
+      const res = await addService({ name: newService }).unwrap();
       if (res?.success) {
-        toast.success("Successfully added the Notice", { id: toastId });
-        setNewNotice("");
+        toast.success("Successfully added the Service", { id: toastId });
+        setNewService("");
       } else {
         toast.error("Something want wrong!", { id: toastId });
       }
@@ -40,14 +41,14 @@ const NoticeSection = () => {
       <div className="flex gap-16 border rounded-xl mt-2.5 px-5 py-7">
         <div className="w-[60%]">
           <ul className="list-inside list-decimal flex flex-col gap-3">
-            {data?.data?.result?.map((notice: TNotice) => (
-              <li key={notice?._id} className="text-base font-medium">
-                {notice?.noticeText}
+            {data?.data?.result?.map((service: TService) => (
+              <li key={service?._id} className="text-base font-medium">
+                {service?.name}
                 <Popconfirm
-                  title="Delete the Notice"
-                  description="Are you sure to delete this Notice?"
+                  title="Delete the Service"
+                  description="Are you sure to delete this Service?"
                   placement="topLeft"
-                  onConfirm={() => removeNotice(notice?._id)}
+                  onConfirm={() => removeService(service?._id)}
                   okText="Yes"
                   cancelText="No"
                 >
@@ -62,15 +63,15 @@ const NoticeSection = () => {
             rows={4}
             className="border border-[#C4CAD4] !rounded-lg"
             placeholder="Write here..."
-            value={newNotice}
-            onChange={(e) => setNewNotice(e.target.value)}
+            value={newService}
+            onChange={(e) => setNewService(e.target.value)}
           />
           <button
-            onClick={handleAddNotice}
+            onClick={handleAddService}
             className="cursor-pointer hover:bg-gray-950 px-4 py-1.5 bg-primary font-medium  text-white rounded-lg"
             type="submit"
           >
-            Add Notice
+            Add Service
           </button>
         </div>
       </div>
@@ -78,4 +79,4 @@ const NoticeSection = () => {
   );
 };
 
-export default NoticeSection;
+export default Services;
