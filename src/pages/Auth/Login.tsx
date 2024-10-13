@@ -28,7 +28,7 @@ const Login = () => {
 
       dispatch(setUser({ user: user, token: userInfo?.data?.accessToken }));
 
-      console.log("--=>", userInfo?.data?.accessToken);
+      // console.log("--=>", userInfo?.data?.accessToken);
 
       if (user?.role === "admin" || user?.role === "superAdmin") {
         toast.success("Logged In successful!", { id: toastId, duration: 2000 });
