@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+
 import { Col, Form, Row, Select, TimePicker } from "antd";
 import { toast } from "sonner";
 
 import { useGetAllDoctorsQuery } from "../../redux/features/doctor/doctorApi";
-import { Dayes, formatTime } from "./Schedules.constant";
+import { Days } from "./Schedules.constant";
 import { useAddScheduleMutation } from "../../redux/features/schedules/schedulesApi";
 
 export type TDoctor = {
@@ -14,24 +14,22 @@ export type TDoctor = {
 };
 
 const DoctorSchedulesRegForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const [addSchedules] = useAddScheduleMutation();
   const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(undefined);
 
   const onSubmit = async (data: any) => {
-    const toastId = toast.loading("Adding new doctor...");
-
+    const toastId = toast.loading("Adding new Schedules...");
     const doctorNewData = {
       doctorID: data?.doctorId,
       scheduleDay: data?.day,
-      startTime: formatTime(data?.startTime),
-      endTime: formatTime(data?.endTime),
+      startTime: data?.startTime,
+      endTime: data?.endTime,
     };
+
     try {
       const res = await addSchedules(doctorNewData).unwrap();
       if (res?.success) {
-        setIsLoading(true);
         toast.success("Successfully added the Schedules", { id: toastId });
         form.resetFields();
       } else {
@@ -84,7 +82,7 @@ const DoctorSchedulesRegForm = () => {
                   <Select
                     showSearch
                     placeholder="Select from here..."
-                    options={Dayes}
+                    options={Days}
                     className="h-10 *:!rounded-lg !bg-transparent"
                   />
                 </Form.Item>
@@ -128,9 +126,8 @@ const DoctorSchedulesRegForm = () => {
                 <button
                   className="cursor-pointer hover:bg-gray-950 px-4 py-1.5 bg-primary font-medium  text-white rounded-lg"
                   type="submit"
-                  disabled={isLoading ? true : false}
                 >
-                  {isLoading ? "Loading..." : "Add Doctor Schedule"}
+                  Add Doctor Schedule
                 </button>
               </div>
             </Row>

@@ -23,6 +23,12 @@ import AddDoctorSchedules from "../pages/DoctorsSchedules/AddDoctorSchedules";
 import AllDiagnosticSchedules from "../pages/DiagnosticDoctorsSchedules/AllDiagnosticSchedules";
 import AddDiagnosticDoctorSchedules from "../pages/DiagnosticDoctorsSchedules/AddDiagnosticDoctorSchedules";
 import ProtectedRoute from "../Layout/ProtectedRoute";
+import AddUser from "../pages/Users/AddUser";
+import BannersNotices from "../pages/Banners&notice/Banners&notice";
+import AllGallery from "../pages/Gallery/AllGallery";
+import AddGallery from "../pages/Gallery/AddGallery";
+import AboutUs from "../pages/AboutUs/AboutUs";
+import Services from "../pages/Services/Services";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +84,18 @@ const router = createBrowserRouter([
         element: <AddDepartment />,
       },
       {
+        path: "/all-services",
+        element: <Services />,
+      },
+      {
+        path: "/all-gallery",
+        element: <AllGallery />,
+      },
+      {
+        path: "/add-gallery",
+        element: <AddGallery />,
+      },
+      {
         path: "/all-doctors-schedules",
         element: <AllSchedules />,
       },
@@ -104,6 +122,18 @@ const router = createBrowserRouter([
       {
         path: "/settings",
         element: <Settings />,
+      },
+      {
+        path: "/add-user",
+        element: <AddUser />,
+      },
+      {
+        path: "/banners&notice",
+        element: <BannersNotices />,
+      },
+      {
+        path: "/add-about-us-photo",
+        element: <AboutUs />,
       },
       {
         path: "*",

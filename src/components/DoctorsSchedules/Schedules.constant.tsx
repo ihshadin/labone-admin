@@ -1,31 +1,30 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export const Dayes = [
+export const Days = [
   {
-    value: "saturday",
+    value: "Saturday",
     label: "Saturday",
   },
   {
-    value: "sunday",
+    value: "Sunday",
     label: "Sunday",
   },
   {
-    value: "monday",
+    value: "Monday",
     label: "Monday",
   },
   {
-    value: "tuesday",
+    value: "Tuesday",
     label: "Tuesday",
   },
   {
-    value: "wednesday",
+    value: "Wednesday",
     label: "Wednesday",
   },
   {
-    value: "thursday",
+    value: "Thursday",
     label: "Thursday",
   },
   {
-    value: "friday",
+    value: "Friday",
     label: "Friday",
   },
 ];
@@ -60,3 +59,6 @@ export const formatTime = (time: any) => {
     hour12: true,
   });
 };
+
+
+

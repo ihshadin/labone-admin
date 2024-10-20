@@ -28,7 +28,9 @@ const Login = () => {
 
       dispatch(setUser({ user: user, token: userInfo?.data?.accessToken }));
 
-      if (user?.role === "admin") {
+      // console.log("--=>", userInfo?.data?.accessToken);
+
+      if (user?.role === "admin" || user?.role === "superAdmin") {
         toast.success("Logged In successful!", { id: toastId, duration: 2000 });
         localStorage.setItem("accessToken", userInfo?.data?.accessToken);
         navigate("/");
@@ -78,7 +80,7 @@ const Login = () => {
                   <Form.Item
                     label="Enter your email"
                     name="email"
-                    initialValue={"jahidmorol2@gmail.com"}
+                    // initialValue={"jahidmorol2@gmail.com"}
                     tooltip="Here you have to input  your email."
                     rules={[{ required: true, message: "Email is required" }]}
                   >
@@ -93,7 +95,7 @@ const Login = () => {
                   <Form.Item
                     label="Your Password"
                     name="password"
-                    initialValue={"Jahid00@22"}
+                    // initialValue={"Jahid00@11"}
                     tooltip="Here you have to input your Password."
                     rules={[
                       { required: true, message: "Password is Required!" },
@@ -111,7 +113,7 @@ const Login = () => {
               <Row>
                 <div className="flex items-center justify-center w-[96%]">
                   <button
-                    className="cursor-pointer w-full hover:bg-gray-950 py-2 bg-primary font-medium  text-white rounded-lg"
+                    className="cursor-pointer w-full hover:bg-gray-950 py-2  bg-primary font-medium  text-white rounded-lg"
                     type="submit"
                     disabled={isLoading ? true : false}
                   >

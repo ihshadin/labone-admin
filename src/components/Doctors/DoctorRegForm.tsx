@@ -14,7 +14,6 @@ export type TDepartment = {
 };
 
 const DoctorRegForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<any>([]);
   const [form] = Form.useForm();
   const [addDoctor] = useAddDoctorMutation();
@@ -44,7 +43,6 @@ const DoctorRegForm = () => {
     try {
       const res = await addDoctor(doctorNewData).unwrap();
       if (res?.success) {
-        setIsLoading(true);
         toast.success("Successfully added the doctor", { id: toastId });
         form.resetFields();
         setFile([]);
@@ -52,9 +50,7 @@ const DoctorRegForm = () => {
         toast.error("Something want wrong!", { id: toastId });
       }
     } catch (error: any) {
-      toast.error(error.message, { id: toastId });
-    } finally {
-      setIsLoading(false);
+      toast.error("Something want wrong!", { id: toastId });
     }
   };
 
@@ -224,31 +220,13 @@ const DoctorRegForm = () => {
               </Col>
             </Row>
 
-            {/* <Row>
-              <div className="w-full pb-4">
-                <p className="font-medium mb-1.5">Doctor Image</p>
-                <Dragger onChange={handleChange} maxCount={1}>
-                  <div className="flex justify-center py-4">
-                    <p className="border shadow px-2 py-3 w-16 flex items-center justify-center rounded">
-                      <LuUploadCloud fontSize={27} />
-                    </p>
-                  </div>
-                  <p className="font-medium tracking-[2px]">Click to upload</p>
-                  <p className="pb-2">
-                    Drag & drop or select a photo from your computer.
-                  </p>
-                </Dragger>
-              </div>
-            </Row> */}
-
             <Row>
               <div className="flex items-center justify-end w-full">
                 <button
                   className="cursor-pointer hover:bg-gray-950 px-4 py-1.5 bg-primary font-medium  text-white rounded-lg"
                   type="submit"
-                  disabled={isLoading ? true : false}
                 >
-                  {isLoading ? "Loading..." : "Add Doctor"}
+                  Add Doctor
                 </button>
               </div>
             </Row>

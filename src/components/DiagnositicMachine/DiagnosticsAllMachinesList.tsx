@@ -22,6 +22,7 @@ import { toast } from "sonner";
 import UpdateDiagnosticMachine from "./UpdateDiagnosticMachine";
 
 const DiagnosticsAllMachinesList = () => {
+  
   const machinesColumns: TableColumnsType<TMachine> = [
     {
       title: "Machine Image",
@@ -82,7 +83,9 @@ const DiagnosticsAllMachinesList = () => {
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [machineData, setMachineData] = useState<TMachine>({} as TMachine);
 
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params, setParams] = useState<TQueryParam[]>([
+    { name: "limit", value: 10 },
+  ]);
 
   const { data, isLoading: isDataLoading } =
     useGetAllDiagnosticMachineQuery(params);
@@ -103,10 +106,26 @@ const DiagnosticsAllMachinesList = () => {
   };
 
   const handlePaginationChange = (page: number) => {
-    setParams((prevParams) => [
-      ...prevParams.filter((param) => param.name !== "page"),
-      { name: "page", value: page },
-    ]);
+    setParams((prevParams) => {
+      const filteredParams = prevParams?.filter(
+        (param) => param.name !== "page",
+      );
+
+      // Check if "limit" with value 10 exists
+      const limitExists = prevParams.some(
+        (param) => param.name === "limit" && param.value === 10,
+      );
+
+      // Build the new params array
+      const newParams = [...filteredParams, { name: "page", value: page }];
+
+      // If "limit" with value 10 does not exist, add it
+      if (!limitExists) {
+        newParams.push({ name: "limit", value: 10 });
+      }
+
+      return newParams;
+    });
   };
 
   const meta = data?.data?.meta;
@@ -127,7 +146,10 @@ const DiagnosticsAllMachinesList = () => {
             placeholder="Search"
             className="focus:placeholder:!text-primary"
             onChange={(e) =>
-              setParams([{ name: "searchTerm", value: e.target.value }])
+              setParams([
+                { name: "searchTerm", value: e.target.value },
+                { name: "limit", value: 10 },
+              ])
             }
           />
         </div>

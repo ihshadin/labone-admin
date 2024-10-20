@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { LuCornerRightDown } from "react-icons/lu";
 import DiagnosticsAllDoctorList from "../../components/DiagnosticDoctor/DiagnosticsAllDoctorList";
@@ -15,7 +14,7 @@ const AllDiagnosticsDoctors = () => {
           <span>Diagnostic All Doctors</span>
         </div>
         <Link
-          to="/add-doctor"
+          to="/add-diagnostics-doctor"
           className="flex items-center gap-2 bg-primary hover:bg-accent text-white hover:text-white px-4 py-2.5 rounded-lg transition duration-150"
           title="Add Doctor"
         >

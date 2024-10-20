@@ -10,6 +10,20 @@
   width: 255px !important;
   height: 255px !important;
 }
+.ant-upload-wrapper.rightSide .ant-upload-list-item-container {
+  width: 515px !important;
+  max-width: 100% !important;
+  height: 300px !important;
+}
+.ant-upload-wrapper.sixteenNine .ant-upload-list-item-container {
+  width: 250px !important;
+  max-width: 100% !important;
+  height: 140px !important;
+}
+.ant-upload-wrapper.bannerBg .ant-upload-list-item-container {
+  width: 100% !important;
+  height: 300px !important;
+}
 .ant-upload-wrapper .ant-upload-list.ant-upload-list-picture-circle {
   align-items: center !important;
 }
@@ -34,5 +48,15 @@
   border-radius: 6px;
 }
 .ant-upload-wrapper button.ant-upload-list-item-action:hover {
+  background-color: transparent !important;
+}
+.upload-image-circle {
+  background-color: transparent;
+}
+.upload-image-circle .ant-upload-list-item {
+  background-color: transparent !important;
+}
+
+.ant-upload-list-item img {
   background-color: transparent !important;
 }

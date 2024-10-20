@@ -18,9 +18,7 @@ const UpdatePassword = () => {
       const updatePassData = {
         newPassword : data.newPassword,
         confirmPassword : data.confirmPassword,
-      };
-      console.log({updatePassData});
-  
+      };  
     //   formData.append("file", file[0]?.originFileObj);
       formData.append("data", JSON.stringify(updatePassData));
   

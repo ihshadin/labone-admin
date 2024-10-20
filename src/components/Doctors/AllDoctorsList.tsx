@@ -22,7 +22,9 @@ import { TQueryParam } from "../../types/global.type";
 import { toast } from "sonner";
 
 const AllDoctorsList = () => {
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params, setParams] = useState<TQueryParam[]>([
+    { name: "limit", value: 10 },
+  ]);
 
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [doctorData, setDoctorData] = useState<TDoctor>({} as TDoctor);
@@ -61,7 +63,8 @@ const AllDoctorsList = () => {
     },
     {
       title: "Department",
-      key: "department",    width: 250,
+      key: "department",
+      width: 250,
       render: (record: TDoctor) => <p>{record?.departmentID?.name}</p>,
     },
     {
@@ -125,10 +128,26 @@ const AllDoctorsList = () => {
   };
 
   const handlePaginationChange = (page: number) => {
-    setParams((prevParams) => [
-      ...prevParams.filter((param) => param.name !== "page"),
-      { name: "page", value: page },
-    ]);
+    setParams((prevParams) => {
+      const filteredParams = prevParams?.filter(
+        (param) => param.name !== "page",
+      );
+
+      // Check if "limit" with value 10 exists
+      const limitExists = prevParams.some(
+        (param) => param.name === "limit" && param.value === 10,
+      );
+
+      // Build the new params array
+      const newParams = [...filteredParams, { name: "page", value: page }];
+
+      // If "limit" with value 10 does not exist, add it
+      if (!limitExists) {
+        newParams.push({ name: "limit", value: 10 });
+      }
+
+      return newParams;
+    });
   };
 
   const meta = data?.data?.meta;
@@ -150,7 +169,10 @@ const AllDoctorsList = () => {
             placeholder="Search"
             className="focus:placeholder:!text-primary"
             onChange={(e) =>
-              setParams([{ name: "searchTerm", value: e.target.value }])
+              setParams([
+                { name: "searchTerm", value: e.target.value },
+                { name: "limit", value: 10 },
+              ])
             }
           />
         </div>

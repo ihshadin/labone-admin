@@ -1,8 +1,8 @@
-
 import { BiSolidDashboard, BiUserPlus } from "react-icons/bi";
-
 import { FaUserDoctor } from "react-icons/fa6";
+import { GiVerticalBanner } from "react-icons/gi";
 import { GrVirtualMachine, GrVmMaintenance } from "react-icons/gr";
+import { IoMdPhotos } from "react-icons/io";
 import {
   LuCalendarClock,
   LuGitBranch,
@@ -10,6 +10,9 @@ import {
   LuSettings,
   LuUserCircle2,
 } from "react-icons/lu";
+import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import { MdAddPhotoAlternate } from "react-icons/md";
+import { RiServiceLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 export const sidebarItems = [
@@ -17,6 +20,16 @@ export const sidebarItems = [
     key: 1,
     icon: <BiSolidDashboard />,
     label: <Link to={"/"}>Dashboard</Link>,
+  },
+  {
+    key: 10,
+    icon: <GiVerticalBanner />,
+    label: <Link to={"/banners&notice"}>Banners & Notices</Link>,
+  },
+  {
+    key: 7888,
+    icon: <MdOutlineAddPhotoAlternate />,
+    label: <Link to={"/add-about-us-photo"}>Add About Us Photo</Link>,
   },
   {
     key: 2,
@@ -54,6 +67,19 @@ export const sidebarItems = [
       },
     ],
   },
+
+  {
+    key: 7898,
+    icon: <IoMdPhotos />,
+    label: <Link to={"/all-gallery"}>All Gallery</Link>,
+    children: [
+      {
+        key: 7878,
+        icon: <MdAddPhotoAlternate />,
+        label: <Link to={"/add-gallery"}>Add Gallery</Link>,
+      },
+    ],
+  },
   {
     key: 5,
     icon: <FaUserDoctor />,
@@ -67,13 +93,20 @@ export const sidebarItems = [
     ],
   },
   {
+    key: 204,
+    icon: <RiServiceLine />,
+    label: <Link to={"/all-services"}>All Services</Link>,
+  },
+  {
     key: 6,
     icon: <LuCalendarClock />,
     label: <Link to={"/all-appointments"}>All Appointments</Link>,
   },
   {
     key: 10,
-    label: <p className="text-lg font-semibold border-t-2"> Diagnostics</p>,
+    label: (
+      <p className="text-lg font-semibold border-t-2 pt-1"> Diagnostics</p>
+    ),
   },
   {
     key: 7,
@@ -120,18 +153,25 @@ export const sidebarItems = [
     ],
   },
   {
+    key: 10,
+    label: <p className="text-lg font-semibold border-t-2 pt-1">Other</p>,
+  },
+  {
     key: 45,
     icon: <LuUserCircle2 />,
     label: <Link to={"/users"}>Users</Link>,
+    children: [
+      {
+        key: 46,
+        icon: <BiUserPlus />,
+        label: <Link to={"/add-user"}>Add User</Link>,
+      },
+    ],
   },
+
   {
     key: 9,
     icon: <LuSettings />,
     label: <Link to={"/settings"}>Settings</Link>,
   },
-  // {
-  //   key: 9,
-  //   icon: <LuStopCircle />,
-  //   label: <Link to={"/forget-password"}>Forget Password</Link>,
-  // },
 ];

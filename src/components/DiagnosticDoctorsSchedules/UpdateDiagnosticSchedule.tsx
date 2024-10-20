@@ -4,7 +4,7 @@
 import { Col, Divider, Form, Modal, Row, Select, TimePicker } from "antd";
 import { toast } from "sonner";
 import { TSchedule, TUpdateSchedule } from "../../types/schedule.type";
-import { Dayes, formatTime } from "./DiagnosticSchedules.constant";
+import { Days } from "./DiagnosticSchedules.constant";
 import { TDoctor } from "./DiagnosticDoctorSchedulesRegForm";
 import { useGetAllDiagnosticDoctorsQuery } from "../../redux/features/diagnosticDoctor/diagnosticDoctorApi";
 import { useUpdateDiagnosticScheduleMutation } from "../../redux/features/diagnosticSchedules/diagnosticSchedulesApi";
@@ -16,7 +16,8 @@ const UpdateDiagnosticSchedule = ({
 }: TUpdateSchedule) => {
   const [form] = Form.useForm();
 
-  const { data, isLoading: isDataLoading } = useGetAllDiagnosticDoctorsQuery(undefined);
+  const { data, isLoading: isDataLoading } =
+    useGetAllDiagnosticDoctorsQuery(undefined);
   const [updateDiagnosticSchedule] = useUpdateDiagnosticScheduleMutation();
 
   const onSubmit = async (data: TSchedule) => {
@@ -27,12 +28,8 @@ const UpdateDiagnosticSchedule = ({
       scheduleDay: data?.scheduleDay
         ? data?.scheduleDay
         : scheduleData?.scheduleDay,
-      startTime: data?.startTime
-        ? formatTime(data?.startTime)
-        : formatTime(scheduleData?.startTime),
-      endTime: data?.endTime
-        ? formatTime(data?.endTime)
-        : formatTime(scheduleData?.endTime),
+      startTime: data?.startTime ? data?.startTime : scheduleData?.startTime,
+      endTime: data?.endTime ? data?.endTime : scheduleData?.endTime,
     };
 
     // console.log("update doctor data", updatedData);
@@ -111,7 +108,7 @@ const UpdateDiagnosticSchedule = ({
               <Select
                 showSearch
                 placeholder="Select from here..."
-                options={Dayes}
+                options={Days}
                 className="h-10 *:!rounded-lg !bg-transparent"
               />
             </Form.Item>

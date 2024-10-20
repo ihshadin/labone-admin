@@ -15,7 +15,6 @@ const UpdateDoctor = ({
   setUpdateModalOpen,
   doctorData,
 }: TUpdateDoctor) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<any>([]);
   const [form] = Form.useForm();
   const { data } = useGetAllDepartmentQuery(undefined);
@@ -56,41 +55,15 @@ const UpdateDoctor = ({
       const res = await updateDoctor(updateInfo).unwrap();
 
       if (res?.success) {
-        setIsLoading(true);
         setUpdateModalOpen(false);
         toast.success("Successfully updated the doctor", { id: toastId });
       } else {
         toast.error("Something want wrong!", { id: toastId });
       }
     } catch (error: any) {
-      toast.error(error.message, { id: toastId });
-    } finally {
-      setIsLoading(false);
+      toast.error("Something want wrong!", { id: toastId });
     }
   };
-
-  // const interestOptions = [
-  //   { value: "Travel", label: "Travel" },
-  //   { value: "Food and Cooking", label: "Food and Cooking" },
-  //   { value: "Fitness and Health", label: "Fitness and Health" },
-  //   { value: "Music", label: "Music" },
-  //   { value: "Art and Design", label: "Art and Design" },
-  //   { value: "Reading", label: "Reading" },
-  //   { value: "Technology", label: "Technology" },
-  //   { value: "Sports", label: "Sports" },
-  //   { value: "Gardening", label: "Gardening" },
-  //   { value: "Movies and TV Shows", label: "Movies and TV Shows" },
-  //   { value: "Photography", label: "Photography" },
-  //   { value: "Writing", label: "Writing" },
-  //   { value: "Gaming", label: "Gaming" },
-  //   { value: "Fashion", label: "Fashion" },
-  //   { value: "DIY Projects", label: "DIY Projects" },
-  //   { value: "Learning Languages", label: "Learning Languages" },
-  //   { value: "Social Media", label: "Social Media" },
-  //   { value: "Volunteering", label: "Volunteering" },
-  //   { value: "Pets", label: "Pets" },
-  //   { value: "Outdoors", label: "Outdoors" },
-  // ];
 
   useEffect(() => {
     form.resetFields();
@@ -289,9 +262,8 @@ const UpdateDoctor = ({
               <button
                 className="cursor-pointer hover:bg-gray-950 px-4 py-1.5 bg-primary font-medium  text-white rounded-lg"
                 type="submit"
-                disabled={isLoading ? true : false}
               >
-                {isLoading ? "Loading..." : "Update Doctor"}
+                Update Doctor
               </button>
             </div>
           </Row>

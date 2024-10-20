@@ -5,9 +5,10 @@ import { Col, Divider, Form, Modal, Row, Select, TimePicker } from "antd";
 import { toast } from "sonner";
 import { TSchedule, TUpdateSchedule } from "../../types/schedule.type";
 import { useGetAllDoctorsQuery } from "../../redux/features/doctor/doctorApi";
-import { Dayes, formatTime } from "./Schedules.constant";
+import { Days } from "./Schedules.constant";
 import { TDoctor } from "./DoctorSchedulesRegForm";
 import { useUpdateScheduleMutation } from "../../redux/features/schedules/schedulesApi";
+import { useEffect } from "react";
 
 const UpdateSchedule = ({
   updateModalOpen,
@@ -19,6 +20,13 @@ const UpdateSchedule = ({
   const { data, isLoading: isDataLoading } = useGetAllDoctorsQuery(undefined);
   const [updateSchedule] = useUpdateScheduleMutation();
 
+  const initialValue = {
+    doctorID: scheduleData?.doctorID?._id,
+    scheduleDay: scheduleData?.scheduleDay,
+    // startTime: scheduleData?.startTime,
+    // endTime: scheduleData?.endTime,
+  };
+
   const onSubmit = async (data: TSchedule) => {
     const toastId = toast.loading("Updating Schedule info...");
 
@@ -27,12 +35,8 @@ const UpdateSchedule = ({
       scheduleDay: data?.scheduleDay
         ? data?.scheduleDay
         : scheduleData?.scheduleDay,
-      startTime: data?.startTime
-        ? formatTime(data?.startTime)
-        : formatTime(scheduleData?.startTime),
-      endTime: data?.endTime
-        ? formatTime(data?.endTime)
-        : formatTime(scheduleData?.endTime),
+      startTime: data?.startTime ? data?.startTime : scheduleData?.startTime,
+      endTime: data?.endTime ? data?.endTime : scheduleData?.endTime,
     };
 
     // console.log("update doctor data", updatedData);
@@ -55,6 +59,10 @@ const UpdateSchedule = ({
     }
   };
 
+  useEffect(() => {
+    form.resetFields();
+    form.setFieldsValue(initialValue);
+  }, [scheduleData]);
 
   const allDoctors = data?.data?.result?.map((doctor: TDoctor) => ({
     value: doctor?._id,
@@ -84,6 +92,7 @@ const UpdateSchedule = ({
         onFinish={onSubmit}
         requiredMark={false}
         layout="vertical"
+        initialValues={initialValue}
       >
         <Row gutter={16}>
           <Col span={24} md={{ span: 12 }} lg={{ span: 12 }}>
@@ -110,7 +119,7 @@ const UpdateSchedule = ({
               <Select
                 showSearch
                 placeholder="Select from here..."
-                options={Dayes}
+                options={Days}
                 className="h-10 *:!rounded-lg !bg-transparent"
               />
             </Form.Item>

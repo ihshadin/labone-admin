@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAppDispatch } from "../../redux/hooks";
 import { toast } from "sonner";
 import image from "../../assets/image/labOneLogo.png";
@@ -52,12 +53,11 @@ const ForgetPassword = () => {
         <div className="w-full text-center pb-10 pt-5 flex justify-center items-center gap-5">
           <img className="inline-block w-20 mt-5" src={image} alt="img" />
           <div className="flex flex-col justify-start items-start">
-          <h1 className="text-xl font-bold pt-4 pb-2">
-            Let’s reset your password
-          </h1>
-          <p>Welcome back, you’ve been missed!</p>
+            <h1 className="text-xl font-bold pt-4 pb-2">
+              Let’s reset your password
+            </h1>
+            <p>Welcome back, you’ve been missed!</p>
           </div>
-          
         </div>
 
         <Row>
@@ -83,11 +83,14 @@ const ForgetPassword = () => {
                       className="h-10 border border-[#C4CAD4] !rounded-lg"
                     />
                   </Form.Item>
-                  <p className="pb-5 text-center">We’ll send a verification link to this email if it matches an existing Labone Hospital account.</p>
+                  <p className="pb-5 text-center">
+                    We’ll send a verification link to this email if it matches
+                    an existing Labone Hospital account.
+                  </p>
                 </Col>
               </Row>
 
-              <Row >
+              <Row>
                 <div className="flex items-center justify-center w-[96%]">
                   <button
                     className="cursor-pointer w-full hover:bg-gray-950 py-2 bg-primary font-medium  text-white rounded-lg"

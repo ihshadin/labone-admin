@@ -40,7 +40,6 @@ const UpdateDepartment = ({
 
     try {
       const res = await updateDepartment(updateInfo).unwrap();
-      console.log(res)
 
       if (res?.success) {
         setIsLoading(true);
@@ -55,7 +54,7 @@ const UpdateDepartment = ({
       setIsLoading(false);
     }
   };
-
+  // console.log("default image department", depImage);
   useEffect(() => {
     form.resetFields();
     form.setFieldsValue(departmentData);
